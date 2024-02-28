@@ -85,17 +85,13 @@ class Pieces_dossier{
   <primary> id : int
 }
 
-class CV{}
-class cover_letter{}
-class IDCard{}
-class Photo{}
-class Diplome{}
+class Type_Piece_dossier{
+  <primary> id : int
+  type : str
+}
 
-CV -|> Pieces_dossier
-cover_letter -|> Pieces_dossier
-IDCard -|> Pieces_dossier
-Photo -|> Pieces_dossier
-Diplome -|> Pieces_dossier
+Pieces_dossier "*" -- "1" Type_Piece_dossier
+
 
 Candidature "*" -- "1" Candidat : "Modifier la candidature"
 Candidature "*" -- "1" Offre
