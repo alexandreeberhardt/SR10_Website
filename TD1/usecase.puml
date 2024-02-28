@@ -1,0 +1,57 @@
+@startuml
+
+
+
+left to right direction
+rectangle Fonctionnalitées {
+"Accepter une candidature" as (f1)
+"Poster une offre" as (f2)
+"Visualiser les offres" as (f3)
+"se connecter" as (f4)
+"inscription" as (f7)
+"Accepter de nouveaux administrateurs" as (f5)
+"Demander à devenir administrateur" as (f6)
+"vérifier la validité du mot de passe" as (f8)
+"Voir les nouvelles demandes d'administration" as (f9)
+"Candidater" as (f10)
+"Se déconnecter" as (f11)
+"Visualiser les candidatures" as (f12)
+"Modifier ou supprimer une offre" as (f13)
+"Valider demande d'enregistrement d'une organisation" as (f14)
+"Visualiser une demande de rejoindre une organisation en tant que recruteur" as (f15)
+"Valider une demande de rejoindre une organisation en tant que recruteur" as (f16)
+"Demander à rejoindre une organisation en tant que recruteur" as (f17)
+"Visualiser ses candidatures " as (f18)
+"Modifier ou supprimer ses candidatures " as (f19)
+
+(f4) .> (f7) : extends
+(f7) .> (f8) : includes
+(f9) .> (f5) : extends
+(f3) .> (f10) :extends
+(f12) .> (f1) : includes
+(f15) .> (f16) : extends
+(f18) .> (f19) : extends
+
+}
+:Administrateur: --> (f5)
+:Administrateur: --> (f9)
+:Administrateur: --> (f14)
+:Recruteur: --> (f1)
+:Recruteur: --> (f2)
+:Recruteur: --> (f12)
+:Recruteur: --> (f13)
+:Recruteur: --> (f15)
+:Utilisateur connecté: --> (f3)
+:Utilisateur connecté: --> (f6)
+:Utilisateur connecté: --> (f7)
+:Utilisateur connecté: --> (f10)
+:Utilisateur connecté: --> (f11)
+:Utilisateur connecté: --> (f17)
+:Utilisateur connecté: --> (f18)
+:Utilisateur connecté: --> (f19)
+:Utilisateur non connecté: --> (f4)
+
+
+
+
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+note "Tous les attributs sont NOT NULL par défaut" as note
+
+
+class Type_Utilisateur{
+  <primary> id : int 
+  nom : str
+}
+
+
+class Utilisateur{
+  <primary> email : str
+  password : str (hash)
+  nom : str
+  prenom : str
+  tel : str
+  creation_date : datetime
+  is_active : int
+}
+note right
+  constraint 0<=is_active<=1
+end note
+
+class Type_Organisation{
+  <primary> name : str
+}
+
+class Organisation{
+  <primary> siret : int
+  name : str
+  adresse : str
+}
+
+class Etat{
+  <primary> id : int
+  description : text
+}
+
+class Offre{
+  <primary> id : int
+  valid_date : datetime
+  indications : text
+}
+
+class Fiche_de_poste{
+  <primary> id : int
+  intitule : str
+
+}
+
+Offre "1" -- "1" Etat
+Utilisateur "1" -- "1" Type_Utilisateur
+Organisation "1" -- "1" Type_Organisation
+@enduml
