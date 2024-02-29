@@ -5,13 +5,14 @@ note "Tous les attributs sont NOT NULL par défaut" as note
 
 
 class Utilisateur{
-  <primary> email : str
+  <primary> id : int
+  email : str
   password : str (hash)
   nom : str
   prenom : str
   tel : str
   creation_date : datetime
-  is_active : int
+  is_active : bool
 }
 note right
   constraint 0<=is_active<=1
@@ -38,13 +39,12 @@ class Organisation{
 }
 
 class Etat{
-  <primary> id : int
-  description : text
+  <primary> etat : text
 }
 
 class Offre{
   <primary> id : int
-  valid_date : datetime
+  expiration : datetime
   indications : text
 }
 
@@ -63,8 +63,7 @@ class Status_de_poste{
   responsable_hierarchique : str
 }
 class Type_metier{
-  <primary> id : int
-  type : str
+  <primary> type : str
 }
 
 class Lieu{
@@ -86,12 +85,12 @@ class Pieces_dossier{
 }
 
 class Type_Piece_dossier{
-  <primary> id : int
-  type : str
+  <primary> type : str
 }
 
 Pieces_dossier "*" -- "1" Type_Piece_dossier
 
+Fiche_de_poste "*" -- "1" Type_metier
 
 Candidature "*" -- "1" Candidat : "Modifier la candidature"
 Candidature "*" -- "1" Offre
