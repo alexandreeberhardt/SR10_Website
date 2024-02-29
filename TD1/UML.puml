@@ -2,8 +2,6 @@
 note "Tous les attributs sont NOT NULL par défaut" as note
 
 
-
-
 class Utilisateur{
   <primary> id : int
   email : str

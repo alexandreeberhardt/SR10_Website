@@ -22,7 +22,6 @@ Utilisateur(#id : int, email : str, nom : str, prenom : str, tel : str,
 Etat_offre(#etat : str)
 Offre(#id : int, expiration : datetime, indications : text, etat -> Etat_offre)
 
-
 Candidature(#id : int, date_candidature : datetime, offre -> Offre, candidat -> Utilisateur)
 
 Type_pieces_dossier(#type : str)
