@@ -4,7 +4,7 @@ note "Tous les attributs sont NOT NULL par défaut" as note
 
 class Utilisateur{
   <primary> id : int
-  email : str
+  email : str UNIQUE
   password : str (hash)
   nom : str
   prenom : str
