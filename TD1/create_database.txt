@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Type_utilisateur(
 
 CREATE TABLE IF NOT EXISTS Utilisateur(
     id_utilisateur INTEGER PRIMARY KEY,
-    email VARCHAR(250) NOT NULL,
+    email VARCHAR(250) UNIQUE NOT NULL,
     nom VARCHAR(50) NOT NULL,
     prenom VARCHAR(50) NOT NULL,
     tel VARCHAR(50) NOT NULL,
