@@ -1,7 +1,7 @@
 <script>
 import "../styles/LoginForm.css"
 export default {
-  name: 'App',
+  name: 'LoginForm',
 }
 </script>
 <template>
