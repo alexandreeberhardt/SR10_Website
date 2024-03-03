@@ -9,8 +9,11 @@ export default {
 }
 </script>
 <template>
-  <p>LoginPage</p>
-  <LoginForm/>
+  <div>
+    <p>LoginPage</p>
+    <LoginForm/>
+  </div>
+
 </template>
 
 
