@@ -4,12 +4,12 @@
 
 left to right direction
 rectangle Fonctionnalitées {
-"Accepter une candidature" as (f1)
+"Accepter ou refuser une candidature" as (f1)
 "Poster une offre" as (f2)
 "Visualiser les offres" as (f3)
 "se connecter" as (f4)
 "inscription" as (f7)
-"Accepter de nouveaux administrateurs" as (f5)
+"Accepter ou refuser de nouveaux administrateurs" as (f5)
 "Demander à devenir administrateur" as (f6)
 "vérifier la validité du mot de passe" as (f8)
 "Voir les nouvelles demandes d'administration" as (f9)
@@ -17,53 +17,40 @@ rectangle Fonctionnalitées {
 "Se déconnecter" as (f11)
 "Visualiser les candidatures valides" as (f12)
 "Modifier ou supprimer une offre" as (f13)
-"Valider demande d'enregistrement d'une organisation" as (f14)
+"Valider ou refuser demande d'enregistrement d'une organisation" as (f14)
 "Visualiser demande d'enregistrement d'une organisation" as (f22)
 "Visualiser une demande de rejoindre une organisation en tant que recruteur" as (f15)
-"Valider une demande de rejoindre une organisation en tant que recruteur" as (f16)
+"Valider ou refuser une demande de rejoindre une organisation en tant que recruteur" as (f16)
 "Demander à rejoindre une organisation en tant que recruteur" as (f17)
 "Visualiser ses candidatures " as (f18)
 "Modifier ou supprimer ses candidatures " as (f19)
-"Refuser de nouveaux administrateurs" as (f20)
-"Filtrer les résultats" as (f21)
 
 
 
-(f4) .> (f7) : extends
+(f4) ..> (f7) : extends
 (f7) .> (f8) : includes
 (f9) .> (f5) : extends
 (f3) .> (f10) :extends
-(f12) .> (f1) : includes
+(f12) .> (f1) : extends
 (f15) .> (f16) : extends
 (f18) .> (f19) : extends
-(f9) .> (f20) : extends
 (f22) .> (f14) : extends
 
 
 }
-:Administrateur: --> (f5)
 :Administrateur: --> (f9)
-:Administrateur: --> (f14)
 :Administrateur: --> (f22)
-
-:Administrateur: --> (f20)
-:Recruteur: --> (f1)
+:Administrateur: --> (f15)
 :Recruteur: --> (f2)
 :Recruteur: --> (f12)
 :Recruteur: --> (f13)
-:Recruteur: --> (f15)
-:Candidat: --> (f3)
 :Candidat: --> (f6)
-:Candidat: --> (f10)
+:Candidat: --> (f3)
 :Candidat: --> (f11)
 :Candidat: --> (f17)
 :Candidat: --> (f18)
-:Candidat: --> (f19)
-
 :Utilisateur non connecté: --> (f7)
 :Utilisateur non connecté: --> (f4)
-
-
 
 
 @enduml
