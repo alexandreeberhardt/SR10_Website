@@ -1,0 +1,34 @@
+.main-wrapper{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    column-gap: 1%;
+}
+
+
+.main-wrapper > div{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+.title-search{
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-filters{
+    grid-column: 2;
+    width: 100%;
+    background-color: aquamarine;
+}
+
+.main-content{
+    grid-column: 1;
+    background-color: aliceblue;
+}
+
+.filters-home{
+    width: 100%;
+}
