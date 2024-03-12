@@ -4,6 +4,7 @@ evals
 
 .DS_Store
 node_modules
+website/nodes_modules
 /dist
 
 
