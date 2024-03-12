@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+}
+.columng {
+    flex: 1; 
+    padding: 10px; 
+    text-align : center;
+    border: 2px solid red;
+    margin-right: 5px;
+}
+.columnd {
+    flex: 1; 
+    padding: 10px; 
+    text-align : start;
+    border: 2px solid blue;
+    margin-left: 5px;
+}
