@@ -1,6 +1,6 @@
 <script>
 import "../../styles/Login.css"
-import LoginForm from "../components/LoginForm.vue";
+import LoginForm from "./LoginForm.vue";
 export default {
   name: 'Login-Form',
   components: {
@@ -17,4 +17,4 @@ export default {
 </template>
 
 
-
+./LoginForm.vue
