@@ -1,8 +1,8 @@
 <script>
-import "../styles/Login.css"
-import LoginForm from "../components/LoginForm.vue";
+import "../../styles/Login.css"
+import LoginForm from "../../components/LoginForm.vue";
 export default {
-  name: 'App',
+  name: 'Login-Form',
   components: {
     LoginForm
   },

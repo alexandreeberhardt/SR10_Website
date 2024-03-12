@@ -1,9 +1,7 @@
 <script>
-import "../styles/Login.css"
+import "../../styles/Login.css"
 export default {
   name: 'HomeCandidat',
-  components: {
-  },
 }
 </script>
 <template>
