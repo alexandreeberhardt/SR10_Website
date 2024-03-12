@@ -1,5 +1,5 @@
 <script>
-import "../styles/LoginForm.css"
+import "../../styles/LoginForm.css"
 export default {
   name: 'LoginForm',
 }

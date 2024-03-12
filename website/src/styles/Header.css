@@ -1,0 +1,43 @@
+.main-wrapper{
+    margin-top: -4.5%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+
+.main-wrapper > div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 1%;
+    width: 100%;
+}
+
+.wrapper-right{
+    justify-content: flex-end;
+}
+.wrapper-left{
+    justify-content: flex-start;
+}
+
+.header-buttons{
+    margin: 1%;
+    height: auto;
+    padding: 1.5%;
+    color: white;
+    background: linear-gradient(125deg, #9181F4, #5038ED);
+    border: 0;
+    border-radius: 16px;
+}
+
+.img-header{
+    width: 25px;
+    height: auto;
+    padding: 1%;
+    padding-right: 5px;
+    margin-top: -5px;
+}
+
+

@@ -2,8 +2,6 @@
 import "./styles/App.css"
 export default {
   name: 'App',
-  components: {
-  }
 }
 </script>
 
