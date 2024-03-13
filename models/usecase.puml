@@ -16,14 +16,20 @@ rectangle Fonctionnalitées {
 "Candidater" as (f10)
 "Se déconnecter" as (f11)
 "Visualiser les candidatures valides" as (f12)
-"Modifier ou supprimer une offre" as (f13)
-"Valider ou refuser demande d'enregistrement d'une organisation" as (f14)
-"Visualiser demande d'enregistrement d'une organisation" as (f22)
+"Visualiser les offres postées par l'organisation" as (f13)
+"Valider ou refuser une demande d'enregistrement d'une organisation" as (f14)
+"Visualiser une demande d'enregistrement d'une organisation" as (f22)
 "Visualiser une demande de rejoindre une organisation en tant que recruteur" as (f15)
 "Valider ou refuser une demande de rejoindre une organisation en tant que recruteur" as (f16)
 "Demander à rejoindre une organisation en tant que recruteur" as (f17)
 "Visualiser ses candidatures " as (f18)
 "Modifier ou supprimer ses candidatures " as (f19)
+"Modifier ou supprimer une offre" as (f20)
+"Se déconnecter" as (f23)
+"Se déconnecter" as (f24)
+"Demander à devenir administrateur" as (f25)
+"Demande de création d'une organisation" as (f26)
+
 
 
 
@@ -35,20 +41,27 @@ rectangle Fonctionnalitées {
 (f15) .> (f16) : extends
 (f18) .> (f19) : extends
 (f22) .> (f14) : extends
-
+(f13) .> (f20) : extends
 
 }
 :Administrateur: --> (f9)
 :Administrateur: --> (f22)
 :Administrateur: --> (f15)
+:Administrateur: --> (f23)
+
 :Recruteur: --> (f2)
 :Recruteur: --> (f12)
 :Recruteur: --> (f13)
+:Recruteur: --> (f24)
+:Recruteur: --> (f25)
+
 :Candidat: --> (f6)
 :Candidat: --> (f3)
 :Candidat: --> (f11)
 :Candidat: --> (f17)
 :Candidat: --> (f18)
+:Candidat: --> (f26)
+
 :Utilisateur non connecté: --> (f7)
 :Utilisateur non connecté: --> (f4)
 
