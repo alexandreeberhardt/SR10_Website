@@ -53,12 +53,12 @@ class Fiche_de_poste{
   salaire_min : float
   salaire_max : float
   description : str
+  responsable_hierarchique : str
+
 }
 
 class Status_de_poste{
-  <primary> id : int
-  status : str
-  responsable_hierarchique : str
+  <primary> status : str
 }
 class Type_metier{
   <primary> type : str
@@ -86,23 +86,24 @@ class Type_Piece_dossier{
   <primary> type : str
 }
 
-Pieces_dossier "*" -- "1" Type_Piece_dossier
+Pieces_dossier "*" -- "1" Type_Piece_dossier : "est typé"
 
-Fiche_de_poste "*" -- "1" Type_metier
+Fiche_de_poste "*" -- "1" Type_metier : "se catégorise comme"
 
 Candidature "*" -- "1" Candidat : "Modifier la candidature"
-Candidature "*" -- "1" Offre
-Candidature "1" -- "*" Pieces_dossier
-Offre "1" -- "1" Etat
+Candidature "*" -- "1" Offre : "candidate"
+Candidature "1" -- "*" Pieces_dossier : "attachés"
+Offre "1" -- "1" Etat : "est" 
 Administrateur -|> Utilisateur
 Recruteur -|> Utilisateur
 Candidat -|> Utilisateur
-Organisation "1" -- "1" Type_Organisation
-Organisation "1" -- "1" Fiche_de_poste
-Fiche_de_poste "1" -- "*" Offre 
-Fiche_de_poste "1" -- "1" Status_de_poste 
-Fiche_de_poste "1" -- "1" Lieu 
+Organisation "1" -- "1" Type_Organisation : "est"
+Organisation "1" -- "1" Fiche_de_poste : "poste"
+Fiche_de_poste "1" -- "*" Offre : "est liée à"
+Fiche_de_poste "1" -- "1" Status_de_poste : "est"
+Fiche_de_poste "1" -- "1" Lieu : "réside"
 Fiche_de_poste "*" -- "1 *" Recruteur : "Créer, modifier ou alonger la date de validité"
+Recruteur "*" -- "1" Organisation : "Fait parti de"
 
 
 @enduml
