@@ -4,9 +4,14 @@ import Login from "@/pages/Login.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/HomeCandidat",
     name: "HomeCandidat",
     component: HomeCandidat,
+  },
+  {
+    path: "/",
+    name: "Index",
+    component: Login,
   },
   {
     path: "/login",

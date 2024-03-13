@@ -4,22 +4,27 @@ export default {
   name: 'LoginForm',
 }
 </script>
+
 <template>
-  <div class="container">
-    <div class="columng">
-      <h1>Connexion</h1>
-      <p>Se connecter pour acceder au site</p>
-      <form id="login">
-      <input type="text" id="email" name="email" placeholder="Email"><br><br>
-      <input type="password" id="mdp" name="mdp" placeholder="mdp" ><br><br>
-      <input type="submit" value="Connexion">
-      </form>
-      <p>-----Autre connexion-----</p>
+  <form>
+    <div class="form-group">
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
     </div>
-    <div class="columnd">
-    aaa
+    <br>
+    <div class="form-group">
+      <input type="password" class="form-control" id="password" placeholder="Mot de passe" >
     </div>
-  </div>
+    <br>
+    <div class="form-group">
+    <input type="checkbox" name="Remember" class="checkbox"> 
+    <label for="Remember">&nbsp;Rester connecté</label>&nbsp;&nbsp;&nbsp;
+    <a href="">Mot de passe oublié</a>
+    </div>
+
+    <br>
+    <button type="submit" class="connexion">Connexion</button>
+  </form>
+     
 </template>
 
 
