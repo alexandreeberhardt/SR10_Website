@@ -25,9 +25,11 @@ Type_utilisateur(#type : str)
 
 Utilisateur(#id : int, email : str, 
     nom : str, prenom : str, tel : str,
-    creation : datetime, isactive : bool, password : str (hash),
-    type -> Type_utilisateur
- )
+    creation : datetime, isactive : bool, password : str (hash)
+)
+
+Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur)
+
 Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
     #Organisation -> Organisation)
 

@@ -11,5 +11,6 @@ DROP TABLE Recruteur_Organisation;
 DROP TABLE Organisation;
 DROP TABLE Lieu;
 DROP TABLE Type_Organisation;
+DROP TABLE Utilisateur_Roles;
 DROP TABLE Utilisateur;
 DROP TABLE Type_utilisateur;
