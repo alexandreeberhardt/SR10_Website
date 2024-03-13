@@ -7,6 +7,8 @@ DROP TABLE Etat_offre;
 DROP TABLE Fiche_poste;
 DROP TABLE Statuts_poste;
 DROP TABLE Type_metier;
+DROP TABLE Recruteur_Organisation;
+DROP TABLE Organisation;
 DROP TABLE Lieu;
 DROP TABLE Type_Organisation;
 DROP TABLE Utilisateur;
