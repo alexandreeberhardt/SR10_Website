@@ -103,7 +103,7 @@ Fiche_de_poste "1" -- "*" Offre : "est liée à"
 Fiche_de_poste "1" -- "1" Status_de_poste : "est"
 Fiche_de_poste "1" -- "1" Lieu : "réside"
 Fiche_de_poste "*" -- "1 *" Recruteur : "Créer, modifier ou alonger la date de validité"
-Recruteur "*" -- "1" Organisation : "Fait parti de"
+Recruteur "1 *" -- "1" Organisation : "Fait parti de"
 
 
 @enduml
