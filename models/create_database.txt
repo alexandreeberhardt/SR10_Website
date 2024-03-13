@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS Type_utilisateur(
 
 
 CREATE TABLE IF NOT EXISTS Utilisateur(
-    id_utilisateur INTEGER PRIMARY KEY,
+    id_utilisateur INTEGER PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(250) UNIQUE NOT NULL,
     nom VARCHAR(50) NOT NULL,
     prenom VARCHAR(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Utilisateur(
 );
 
 CREATE TABLE IF NOT EXISTS Utilisateur_Roles(
-    id_utilisateur INTEGER NOT NULL,
+    id_utilisateur INTEGER NOT NULL AUTO_INCREMENT,
     type_utilisateur VARCHAR(250) NOT NULL,
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
     FOREIGN KEY (type_utilisateur) REFERENCES Type_utilisateur(type_utilisateur),
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Type_Organisation(
 );
 
 CREATE TABLE IF NOT EXISTS Lieu(
-    id_lieu INTEGER PRIMARY KEY,
+    id_lieu INTEGER PRIMARY KEY AUTO_INCREMENT,
     adresse  VARCHAR(250) NOT NULL,
     ville  VARCHAR(250) NOT NULL,
     postcode  VARCHAR(50) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS Statuts_poste(
 );
 
 CREATE TABLE IF NOT EXISTS Fiche_poste(
-    id_fiche_poste INTEGER PRIMARY KEY,
+    id_fiche_poste INTEGER PRIMARY KEY AUTO_INCREMENT,
     intitule VARCHAR(300) NOT NULL,
     rythme_travail FLOAT NOT NULL,
     salaire_min FLOAT NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS Etat_offre(
 );
 
 CREATE TABLE IF NOT EXISTS Offre(
-    id_offre INTEGER PRIMARY KEY,
+    id_offre INTEGER PRIMARY KEY AUTO_INCREMENT,
     expiration DATETIME NOT NULL,
     indications TEXT,
     etat VARCHAR(50) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS Offre_Ficheposte(
 );
 
 CREATE TABLE IF NOT EXISTS Candidature(
-    id_candidature INTEGER PRIMARY KEY,
+    id_candidature INTEGER PRIMARY KEY AUTO_INCREMENT,
     date_candidature DATETIME NOT NULL,
     offre INTEGER NOT NULL, 
     candidat INTEGER NOT NULL, 
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS Type_pieces_dossier(
 );
 
 CREATE TABLE IF NOT EXISTS Pieces_dossier(
-    id_piece INTEGER PRIMARY KEY,
+    id_piece INTEGER PRIMARY KEY AUTO_INCREMENT,
     type_piece VARCHAR(250) NOT NULL, 
     candidature INTEGER NOT NULL, 
     FOREIGN KEY (type_piece) REFERENCES Type_pieces_dossier(type_piece),
