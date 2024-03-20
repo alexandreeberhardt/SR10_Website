@@ -50,5 +50,3 @@ Type_pieces_dossier(#type : str)
 Pieces_dossier(#id : int, type -> Type_pieces_dossier, 
     candidature->Candidature)
 
-
-
