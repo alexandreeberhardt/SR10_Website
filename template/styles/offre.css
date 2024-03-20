@@ -1,3 +1,31 @@
+td{
+    text-align: center;
+}
+
+.Offre_table{
+    background-color: #f3f1ff; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #0005;
+    width: 700px;
+    height: 300px;
+}
+.offre_row{
+    padding-left: 10px;
+
+}
+.offre_th{
+    text-align: center;
+    background-color: #d5cefb;
+}
+.Offre_table tr:nth-child(odd) {
+    background-color: #e2ddfe; /* Couleur de fond pour les lignes impaires */
+}
+
+/* Style pour les lignes paires */
+.Offre_table tr:nth-child(even) {
+    background-color: #F0EDFF; /* Couleur de fond pour les lignes paires */
+}
+
 .topbar{
     display: flex;
     flex-direction: row;
@@ -66,7 +94,7 @@
     display: flex;
     justify-content: space-around;
     flex-direction: row;
-    margin-top: 6%;
+    margin-top: 3%;
 }
 
 .header-left-side{
@@ -105,7 +133,7 @@
 
 .search-input{
     margin-top: 3%;
-    background-color: F0EDFF;
+    background-color: #F0EDFF;
     width: 100wh;
     padding: 3%;
     border-radius: 10px;
