@@ -35,31 +35,29 @@
             </div>
         </div> 
     <div>
-        <h1>Créer une fiche de poste</h1>
-        <h3>Entrez les informations</h3>
+        <h1>Postez une offre</h1>
+        <h3>Partagez votre offre pour trouver des candidats</h3>
+        <br>
         <div class="form-wrapper">
             <form>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="intitule" placeholder="intitulé du poste">
+                    <select id="fiche_poste" placeholder="fiche de poste">
+                    <option value="" disabled selected hidden>Fiche de poste</option>
+                    </select>
+
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="rythme" placeholder="rythme de travail en h/semaine">
+                    <input type="date" class="form-control" id="expiration" placeholder="Date d'expiration de l'offre">
                 </div>
+                
                 <div class="form-group">
-                    <input type="number" class="salaire_min" id="salaire_min" placeholder="salaire minimum en €">
-                    <input type="number" class="salaire_max" id="salaire_max" placeholder="salaire maximum en €">
-                </div>
-                <div class="form-group">
-                    <textarea class="description" id="description" placeholder="Description du poste"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="resp_hier" id="resp_hier" placeholder="responsable hierarchique">
+                    <textarea class="Indications" id="Indications" placeholder="Indications"></textarea>
                 </div>
                 <div class="form-group">
                 <input type="checkbox" name="actif" class="checkbox" checked> 
-                <label for="actif">&nbsp;Fiche active ?</label>&nbsp;&nbsp;&nbsp;
+                <label for="actif">&nbsp;Offre active ?</label>&nbsp;&nbsp;&nbsp;
                 </div>
-                <button type="submit" >Créer la fiche</button>
+                <button type="submit" >Postez votre offre</button>
             </form>
         </div>
         <br>
