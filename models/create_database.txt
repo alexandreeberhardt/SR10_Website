@@ -2,6 +2,9 @@ CREATE TABLE IF NOT EXISTS Type_utilisateur(
     type_utilisateur VARCHAR(250) PRIMARY KEY
 );
 
+CREATE TABLE IF NOT EXISTS State(
+    state VARCHAR(250)
+);
 
 CREATE TABLE IF NOT EXISTS Utilisateur(
     id_utilisateur INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -15,6 +18,8 @@ CREATE TABLE IF NOT EXISTS Utilisateur(
 CREATE TABLE IF NOT EXISTS Utilisateur_Roles(
     id_utilisateur INTEGER NOT NULL AUTO_INCREMENT,
     type_utilisateur VARCHAR(250) NOT NULL,
+    state VARCHAR(250) REFERENCES NOT NULL,
+    FOREIGN KEY (state) REFERENCES State(state),
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
     FOREIGN KEY (type_utilisateur) REFERENCES Type_utilisateur(type_utilisateur),
     PRIMARY KEY (id_utilisateur, type_utilisateur)
@@ -32,6 +37,8 @@ CREATE TABLE IF NOT EXISTS Lieu(
     pays VARCHAR(100) NOT NULL
 );
 
+
+
 CREATE TABLE IF NOT EXISTS Organisation(
     siret INTEGER PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
@@ -40,6 +47,16 @@ CREATE TABLE IF NOT EXISTS Organisation(
     FOREIGN KEY (adresse) REFERENCES Lieu(id_lieu),
     FOREIGN KEY (type) REFERENCES Type_Organisation(name)
 );
+
+CREATE TABLE IF NOT EXISTS Ogranisation_Status(
+    organisation INTEGER NOT NULL,
+    state VARCHAR(250) NOT NULL,
+    FOREIGN KEY (organisation) REFERENCES Organisation(siret),
+    FOREIGN KEY (state) REFERENCES State(state),
+    PRIMARY KEY (organisation, state)
+);
+
+
 
 CREATE TABLE IF NOT EXISTS Recruteur_Organisation(
     recruteur INTEGER NOT NULL,

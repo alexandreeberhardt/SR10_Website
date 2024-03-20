@@ -1,11 +1,15 @@
 Type_Organisation(#name : str)
 
+State(#state : str)
 
 Lieu(#id : int, adresse : str, ville : str, 
 postcode : str, pays : str)
 
 Organisation(#siret : int, name : str, 
 adresse -> Lieu, type -> Type_Organisation)
+
+Etat(#etat)
+Organisation_Etat(organisation-> Organisation, etat->Etat)
 
 Type_metier(#type : str)
 
@@ -28,7 +32,7 @@ Utilisateur(#id : int, email : str,
     creation : datetime, isactive : bool, password : str (hash)
 )
 
-Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur)
+Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, state -> State)
 
 Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
     #Organisation -> Organisation)
