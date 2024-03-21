@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Type_utilisateur(
 );
 
 CREATE TABLE IF NOT EXISTS State(
-    state VARCHAR(250)
+    state_value VARCHAR(250) PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS Utilisateur(
@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS Utilisateur(
 CREATE TABLE IF NOT EXISTS Utilisateur_Roles(
     id_utilisateur INTEGER NOT NULL AUTO_INCREMENT,
     type_utilisateur VARCHAR(250) NOT NULL,
-    state VARCHAR(250) REFERENCES NOT NULL,
-    FOREIGN KEY (state) REFERENCES State(state),
+    state_user VARCHAR(250) NOT NULL,
+    FOREIGN KEY (state_user) REFERENCES State(state_value),
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
     FOREIGN KEY (type_utilisateur) REFERENCES Type_utilisateur(type_utilisateur),
     PRIMARY KEY (id_utilisateur, type_utilisateur)
@@ -44,16 +44,10 @@ CREATE TABLE IF NOT EXISTS Organisation(
     name VARCHAR(200) NOT NULL,
     adresse INTEGER NOT NULL,
     type VARCHAR(500) NOT NULL,
+    state VARCHAR(250) NOT NULL,
+    FOREIGN KEY (state) REFERENCES State(state_value),
     FOREIGN KEY (adresse) REFERENCES Lieu(id_lieu),
     FOREIGN KEY (type) REFERENCES Type_Organisation(name)
-);
-
-CREATE TABLE IF NOT EXISTS Ogranisation_Status(
-    organisation INTEGER NOT NULL,
-    state VARCHAR(250) NOT NULL,
-    FOREIGN KEY (organisation) REFERENCES Organisation(siret),
-    FOREIGN KEY (state) REFERENCES State(state),
-    PRIMARY KEY (organisation, state)
 );
 
 
@@ -118,6 +112,8 @@ CREATE TABLE IF NOT EXISTS Candidature(
     date_candidature DATETIME NOT NULL,
     offre INTEGER NOT NULL, 
     candidat INTEGER NOT NULL, 
+    state VARCHAR(250) NOT NULL,
+    FOREIGN KEY (state) REFERENCES State(state_value),
     FOREIGN KEY (offre) REFERENCES Offre(id_offre),
     FOREIGN KEY (candidat) REFERENCES Utilisateur(id_utilisateur)
 );
