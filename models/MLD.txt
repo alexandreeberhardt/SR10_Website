@@ -1,15 +1,14 @@
 Type_Organisation(#name : str)
 
-State(#state : str)
 
 Lieu(#id : int, adresse : str, ville : str, 
 postcode : str, pays : str)
 
 Organisation(#siret : int, name : str, 
-adresse -> Lieu, type -> Type_Organisation)
+adresse -> Lieu, type -> Type_Organisation, etat -> Etat_demande)
 
 Etat(#etat)
-Organisation_Etat(organisation-> Organisation, etat->Etat)
+Etat_demande(#etat)
 
 Type_metier(#type : str)
 
@@ -22,7 +21,8 @@ Fiche_poste(
     status_poste -> Status_poste, 
     lieu -> Lieu,
     responsable_hierarchique : str,
-    recruteur -> Utilisateur
+    recruteur -> Utilisateur,
+    etat->Etat
 )
 
 Type_utilisateur(#type : str)
@@ -32,7 +32,7 @@ Utilisateur(#id : int, email : str,
     creation : datetime, isactive : bool, password : str (hash)
 )
 
-Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, state -> State)
+Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, etat -> Etat_demande)
 
 Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
     #Organisation -> Organisation)

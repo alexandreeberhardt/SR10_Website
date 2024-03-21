@@ -17,11 +17,15 @@ note right
 end note
 
 class Administrateur{
+  etat : str
 }
 
 class Candidat{
+    etat : str
 }
+
 class Recruteur{
+    etat : str
 }
 
 
@@ -34,6 +38,7 @@ class Organisation{
   <primary> siret : int
   name : str
   adresse : str
+  etat: str
 }
 
 class Etat{
