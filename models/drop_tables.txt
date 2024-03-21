@@ -8,7 +8,6 @@ DROP TABLE Fiche_poste;
 DROP TABLE Statuts_poste;
 DROP TABLE Type_metier;
 DROP TABLE Recruteur_Organisation;
-DROP TABLE Ogranisation_Status;
 DROP TABLE Organisation;
 DROP TABLE Lieu;
 DROP TABLE Type_Organisation;
