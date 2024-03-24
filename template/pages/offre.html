@@ -6,6 +6,24 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="../styles/offre.css" /> 
         <title>Visualisation des offres </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#a1").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a2").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a3").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="topbar">
@@ -51,7 +69,7 @@
                           <th class="offre_th">Métier</th>
                           <th class="offre_th">Pays</th>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a1">
                           <td class="offre_row">Ingénieur</td>
                           <td>35</td>
                           <td>35000</td>
@@ -59,7 +77,7 @@
                           <td>CDI</td>
                           <td>Canada</td>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a2">
                             <td class="offre_row">Ingénieur</td>
                             <td>17.5</td>
                             <td>20000</td>
@@ -67,7 +85,7 @@
                             <td>CDD mi-temps</td>
                             <td>France</td>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a3">
                             <td class="offre_row">Developpeur web</td>
                             <td>35</td>
                             <td>45000</td>

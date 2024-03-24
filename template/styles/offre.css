@@ -172,3 +172,8 @@ td{
     border: 0;
     border-radius: 10px;
 }
+
+
+.row-clickable{
+    cursor: pointer;
+}

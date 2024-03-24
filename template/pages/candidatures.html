@@ -4,8 +4,26 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="../styles/offre.css" /> 
+        <link rel="stylesheet" type="text/css" href="../styles/candidature.css" /> 
         <title>Visualisation des offres </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#a1").click(function(){
+                    window.location.href = "apply_modif.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a2").click(function(){
+                    window.location.href = "apply_modif.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a3").click(function(){
+                    window.location.href = "apply_modif.html";
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="topbar">
@@ -49,17 +67,17 @@
                           <th class="offre_th">Nom de l'entreprise</th>
                           <th class="offre_th">Nombre de candidats</th>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a1">
                           <td class="offre_row">Ingénieur</td>
                           <td>Microsoft</td>
                           <td>35</td>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a2">
                             <td class="offre_row">Ingénieur</td>
                             <td>Apple</td>
                             <td>17</td>
                         </tr>
-                        <tr>
+                        <tr class="row-clickable" id="a3">
                             <td class="offre_row">Developpeur web</td>
                             <td>UTC</td>
                             <td>15</td>
