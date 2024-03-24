@@ -85,7 +85,9 @@ select{
     font-size: 160px;
     font-family: fantasy;
 }
-
+input[type=text].form-control-small{
+    width:200 ;
+}
 input[type=number].salaire_min {
     background-color: #f3f1ff; 
     border: none;
