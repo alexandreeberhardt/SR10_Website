@@ -1,0 +1,91 @@
+@startuml
+
+
+
+left to right direction
+rectangle Fonctionnalitées {
+"Accepter ou refuser une candidature" as (f1)
+"Poster une offre" as (f2)
+"Visualiser les offres" as (f3)
+"se connecter" as (f4)
+"inscription" as (f7)
+"Accepter ou refuser de nouveaux administrateurs" as (f5)
+"Demander à devenir administrateur" as (f6)
+"vérifier la validité du mot de passe" as (f8)
+"Voir les nouvelles demandes d'administration" as (f9)
+"Candidater" as (f10)
+"Se déconnecter" as (f11)
+"Visualiser les candidatures valides" as (f12)
+"Visualiser les offres postées par l'organisation" as (f13)
+"Valider ou refuser une demande d'enregistrement d'une organisation" as (f14)
+"Visualiser une demande d'enregistrement d'une organisation" as (f22)
+"Visualiser une demande de rejoindre une organisation en tant que recruteur" as (f15)
+"Valider ou refuser une demande de rejoindre une organisation en tant que recruteur" as (f16)
+"Demander à rejoindre une organisation en tant que recruteur" as (f17)
+"Visualiser ses candidatures " as (f18)
+"Modifier ou supprimer ses candidatures " as (f19)
+"Modifier ou supprimer une offre" as (f20)
+"Se déconnecter" as (f23)
+"Se déconnecter" as (f24)
+"Demander à devenir administrateur" as (f25)
+"Demande de création d'une organisation" as (f26)
+"Filtrer les résultats" as (f27)
+"Filtrer les résultats" as (f28)
+"Filtrer les résultats" as (f29)
+"Filtrer les résultats" as (f30)
+"Filtrer les résultats" as (f31)
+"Filtrer les résultats" as (f32)
+"Filtrer les résultats" as (f33)
+
+
+
+
+
+
+
+(f4) ..> (f7) : extends
+(f7) .> (f8) : includes
+(f9) .> (f5) : extends
+(f3) .> (f10) :extends
+(f12) .> (f1) : extends
+(f15) .> (f16) : extends
+(f18) .> (f19) : extends
+(f22) .> (f14) : extends
+(f13) .> (f20) : extends
+(f18) ..> (f27) : extends
+(f12) ..> (f28) : extends 
+(f13) ..> (f29) : extends 
+(f3) ..> (f30) : extends 
+(f9) ..> (f31) : extends 
+(f15) ..> (f32) : extends 
+(f22) ..> (f33) : extends 
+
+}
+:Administrateur: --> (f9)
+:Administrateur: --> (f22)
+:Administrateur: --> (f15)
+:Administrateur: --> (f23)
+
+:Recruteur: --> (f2)
+:Recruteur: --> (f12)
+:Recruteur: --> (f13)
+:Recruteur: --> (f24)
+:Recruteur: --> (f25)
+
+:Candidat: --> (f6)
+:Candidat: --> (f3)
+:Candidat: --> (f11)
+:Candidat: --> (f17)
+:Candidat: --> (f18)
+:Candidat: --> (f26)
+
+:Utilisateur non connecté: --> (f7)
+:Utilisateur non connecté: --> (f4)
+
+:Utilisateur non connecté: .> :Candidat:
+:Candidat: .> :Recruteur:
+:Candidat: .> :Administrateur:
+:Recruteur: .> :Administrateur:
+
+
+@enduml
