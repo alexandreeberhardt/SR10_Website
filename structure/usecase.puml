@@ -97,6 +97,8 @@ rectangle Fonctionnalitées {
 :Utilisateur non connecté: --> (f4)
 
 :Utilisateur non connecté: .> :Candidat:
+:Utilisateur non connecté: .> :Recruteur:
+:Utilisateur non connecté: .> :Administrateur:
 :Candidat: .> :Recruteur:
 :Candidat: .> :Administrateur:
 :Recruteur: .> :Administrateur:
