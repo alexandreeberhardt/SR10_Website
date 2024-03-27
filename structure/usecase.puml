@@ -26,7 +26,6 @@ rectangle Fonctionnalitées {
 "Modifier ou supprimer ses candidatures " as (f19)
 "Modifier ou supprimer une offre" as (f20)
 "Se déconnecter" as (f23)
-"Se déconnecter" as (f24)
 "Demander à devenir administrateur" as (f25)
 "Demande de création d'une organisation" as (f26)
 "Filtrer les résultats" as (f27)
@@ -36,6 +35,14 @@ rectangle Fonctionnalitées {
 "Filtrer les résultats" as (f31)
 "Filtrer les résultats" as (f32)
 "Filtrer les résultats" as (f33)
+"Visualiser une demande de rejoindre une de nos organisation en tant que recruteur" as (f34)
+"Valider ou refuser une demande de rejoindre une organisation en tant que recruteur" as (f35)
+"Filtrer les résultats" as (f36)
+"Se déconnecter" as (f24)
+"Voir l'état de ses demandes" as (f37)
+"Voir l'état de ses demandes" as (f38)
+
+
 
 
 
@@ -59,6 +66,9 @@ rectangle Fonctionnalitées {
 (f9) ..> (f31) : extends 
 (f15) ..> (f32) : extends 
 (f22) ..> (f33) : extends 
+(f34) ..> (f35) :extends
+(f35) ..> (f36) :extends
+
 
 }
 :Administrateur: --> (f9)
@@ -69,8 +79,10 @@ rectangle Fonctionnalitées {
 :Recruteur: --> (f2)
 :Recruteur: --> (f12)
 :Recruteur: --> (f13)
+:Recruteur: --> (f34)
 :Recruteur: --> (f24)
-:Recruteur: --> (f25)
+:Recruteur: --> (f37)
+
 
 :Candidat: --> (f6)
 :Candidat: --> (f3)
@@ -78,6 +90,7 @@ rectangle Fonctionnalitées {
 :Candidat: --> (f17)
 :Candidat: --> (f18)
 :Candidat: --> (f26)
+:Candidat: --> (f38)
 
 :Utilisateur non connecté: --> (f7)
 :Utilisateur non connecté: --> (f4)
