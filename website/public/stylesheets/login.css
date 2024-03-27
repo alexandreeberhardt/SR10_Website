@@ -1,0 +1,109 @@
+
+body{
+    text-align: center;
+}
+.container {
+    margin-top: 0px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100vh;
+}
+.columng {
+    grid-column: 1;
+    justify-content: right;
+    height: 100vh;
+    margin-left: -213px;
+
+}
+.columnd {
+    grid-column: 2;
+    text-align : start;
+    background: linear-gradient(125deg, #9181F4,#5038ED );
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-right: -213px;
+}
+
+.form-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.zone{
+    background-color: #a99cff;
+    justify-content: center;
+    text-align : start;
+    padding: 20px;
+    width: 70%;
+    height: 70%;
+    border-radius: 16px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 30;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    max-width: 100%;
+    position: relative;
+}
+.zone img{
+    width: 576px;
+    height: 324px;
+    align-self: center;
+    bottom: 0%;
+    right: -3%;
+    position: absolute;
+}
+.RecrUT{
+    margin: -4%;
+    text-align: center;
+    background: -webkit-linear-gradient(125deg, #9900ff,#2712b0 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 160px;
+    font-family: fantasy;
+
+}
+input[type=email] {
+    background-color: #f3f1ff; 
+    border: none;
+    width: 400px; 
+    height: 50px; 
+    border-radius: 16px;
+    }
+input[type=password] {
+    background-color: #f3f1ff; 
+    border: none;
+    width: 400px; 
+    height: 50px; 
+    border-radius: 16px;
+    }
+input[type=checkbox] {
+    border: none;
+    width: 18px; 
+    height: 18px; 
+    border-radius: 1px;
+    }
+
+/*input[type=checkbox]:checked {
+    border: none;
+    background-color: #ccc;
+    width: 18px; 
+    height: 18px; 
+    border-radius: 1px;
+    }*/
+
+
+.connexion {
+    background: linear-gradient(125deg, #9181F4,#5038ED );
+    border: none;
+    width: 100px; 
+    height: 40px; 
+    color: #f3f1ff;
+    border-radius: 10px;
+    font-weight: bold;
+    }
