@@ -1,5 +1,5 @@
 @startuml
-note "Tous les attributs sont NOT NULL par défaut" as note
+note "Tous les attributs sont NOT NULL par défaut.\n Un candidat ne peut pas candidater deux fois \n à la même offre et il y aura une vérification" as note
 
 
 class Utilisateur{
