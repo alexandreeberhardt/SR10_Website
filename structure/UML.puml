@@ -59,7 +59,7 @@ class Fiche_de_poste{
   salaire_max : float
   description : str
   responsable_hierarchique : str
-
+  is_active : bool
 }
 
 class Status_de_poste{
