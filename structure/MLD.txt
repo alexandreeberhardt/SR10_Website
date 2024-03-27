@@ -1,15 +1,33 @@
+
+Type_utilisateur(#type : str)
+
+Etat_demande(#etat)
+
 Type_Organisation(#name : str)
+
+Type_metier(#type : str)
+
+Status_poste(status : str)
+
+Etat_offre(#etat : str)
+
+Type_pieces_dossier(#type : str)
 
 Lieu(#id : int, adresse : str, ville : str, 
 postcode : str, pays : str)
 
-Etat_demande(#etat)
-
 Organisation(#siret : int, name : str, 
 adresse -> Lieu, type -> Type_Organisation, etat -> Etat_demande)
 
-Type_metier(#type : str)
-Status_poste(status : str)
+Utilisateur(#id : int, email : str, 
+    nom : str, prenom : str, tel : str,
+    creation : datetime, isactive : bool, password : str (hash)
+)
+
+Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, etat -> Etat_demande)
+
+Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
+    #Organisation -> Organisation, etat -> Etat_demande)
 
 Fiche_poste(
     #id : int, intitule : str, rythme_travail : float, 
@@ -22,27 +40,13 @@ Fiche_poste(
     is_active : bool
 )
 
-Type_utilisateur(#type : str)
-
-Utilisateur(#id : int, email : str, 
-    nom : str, prenom : str, tel : str,
-    creation : datetime, isactive : bool, password : str (hash)
-)
-
-Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, etat -> Etat_demande)
-
-Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
-    #Organisation -> Organisation, etat -> Etat_demande)
-
-Etat_offre(#etat : str)
 
 Offre(#id : int, expiration : datetime, 
-    indications : text, etat -> Etat_offre)
+    indications : text, etat -> Etat_offre, fiche -> Fiche_poste)
 
-Candidature(#id : int, date_candidature : datetime last_modified : datetime 
-    offre -> Offre, candidat -> Utilisateur)
-
-Type_pieces_dossier(#type : str)
+Candidature(#id : int, date_candidature : datetime,
+    last_modified : datetime 
+    offre -> Offre, candidat -> Utilisateur, etat -> Etat_demande)
 
 Pieces_dossier(#id : int, type -> Type_pieces_dossier, 
     candidature->Candidature)
