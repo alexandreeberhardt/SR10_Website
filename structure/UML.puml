@@ -41,7 +41,7 @@ class Organisation{
   etat: str
 }
 
-class Etat{
+class Etat_Offre{
   <primary> etat : text
 }
 
@@ -102,7 +102,7 @@ Candidature "*" -- "1" Etat_Candidature : "est dans l'état:"
 Candidature "*" -- "1" Candidat : "Modifier la candidature"
 Candidature "*" -- "1" Offre : "candidate"
 Candidature "1" -- "*" Pieces_dossier : "attachés"
-Offre "1" -- "1" Etat : "est" 
+Offre "1" -- "1" Etat_Offre : "est" 
 Administrateur -|> Utilisateur
 Recruteur -|> Utilisateur
 Candidat -|> Utilisateur
