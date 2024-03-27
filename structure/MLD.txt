@@ -1,31 +1,23 @@
+
+Type_utilisateur(#type : str)
+
+Etat_demande(#etat)
+
 Type_Organisation(#name : str)
 
+Type_metier(#type : str)
+
+Status_poste(status : str)
+
+Etat_offre(#etat : str)
+
+Type_pieces_dossier(#type : str)
 
 Lieu(#id : int, adresse : str, ville : str, 
 postcode : str, pays : str)
 
 Organisation(#siret : int, name : str, 
 adresse -> Lieu, type -> Type_Organisation, etat -> Etat_demande)
-
-Etat(#etat)
-Etat_demande(#etat)
-
-Type_metier(#type : str)
-
-Status_poste(status : str)
-
-Fiche_poste(
-    #id : int, intitule : str, rythme_travail : float, 
-    salaire_min : float, salaire_max : float, description : str,
-     type_metier -> Type_metier,
-    status_poste -> Status_poste, 
-    lieu -> Lieu,
-    responsable_hierarchique : str,
-    recruteur -> Utilisateur,
-    etat->Etat
-)
-
-Type_utilisateur(#type : str)
 
 Utilisateur(#id : int, email : str, 
     nom : str, prenom : str, tel : str,
@@ -35,17 +27,26 @@ Utilisateur(#id : int, email : str,
 Utilisateur_Roles(#utilisateur -> Utilisateur, #type -> Type_utilisateur, etat -> Etat_demande)
 
 Recruteur_Organisation(#id_utilisateur -> Utilisateur, 
-    #Organisation -> Organisation)
+    #Organisation -> Organisation, etat -> Etat_demande)
 
-Etat_offre(#etat : str)
+Fiche_poste(
+    #id : int, intitule : str, rythme_travail : float, 
+    salaire_min : float, salaire_max : float, description : str,
+     type_metier -> Type_metier,
+    status_poste -> Status_poste, 
+    lieu -> Lieu,
+    responsable_hierarchique : str,
+    recruteur -> Utilisateur,
+    is_active : bool
+)
+
 
 Offre(#id : int, expiration : datetime, 
-    indications : text, etat -> Etat_offre)
+    indications : text, etat -> Etat_offre, fiche -> Fiche_poste)
 
-Candidature(#id : int, date_candidature : datetime, 
-    offre -> Offre, candidat -> Utilisateur)
-
-Type_pieces_dossier(#type : str)
+Candidature(#id : int, date_candidature : datetime,
+    last_modified : datetime 
+    offre -> Offre, candidat -> Utilisateur, etat -> Etat_demande)
 
 Pieces_dossier(#id : int, type -> Type_pieces_dossier, 
     candidature->Candidature)
