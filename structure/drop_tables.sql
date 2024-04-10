@@ -1,3 +1,4 @@
+DROP TABLE Offre_Organisation;
 DROP TABLE Pieces_dossier;
 DROP TABLE Candidature;
 DROP TABLE Offre;
