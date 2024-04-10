@@ -128,3 +128,9 @@ CREATE TABLE IF NOT EXISTS Pieces_dossier(
     FOREIGN KEY (candidature) REFERENCES Candidature(id_candidature)
 );
 
+CREATE TABLE IF NOT EXISTS Offre_Organisation(
+    offre INTEGER NOT NULL,
+    org INTEGER NOT NULL, 
+    FOREIGN KEY (offre) REFERENCES Offre(id_offre),
+    FOREIGN KEY (org) REFERENCES Organisation(siret)
+);
