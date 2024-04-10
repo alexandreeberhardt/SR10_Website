@@ -16,8 +16,8 @@ var db = require('./db.js');
         });
     },
 
-    readAllRequests: function (state, callback) {
-        db.query("SELECT UR.type_utilisateur AS 'Type', CONCAT(U.nom,' ', U.prenom) AS 'Demandeur', UR.state_user AS 'Status de la demande' FROM Utilisateur_Roles UR JOIN Utilisateur U ON UR.id_utilisateur = U.id_utilisateur WHERE UR.type_utilisateur = 'Administrateur' AND UR.state_user = ?",state, function
+    readAllRequests: function (state,organisation, callback) {
+        db.query("SELECT UR.type_utilisateur AS 'Type', CONCAT(U.nom,' ', U.prenom) AS 'Demandeur', UR.state_user AS 'Status de la demande', UR.organisation FROM Utilisateur_Roles UR JOIN Utilisateur U ON UR.id_utilisateur = U.id_utilisateur INNER JOIN Organisation ON Organisation.siret = UR.organisation WHERE UR.type_utilisateur = 'Recruteur' AND UR.state_user = ? AND Organisation.name= ?",state, organisation, function
         (err, results) {
             if (err) throw err;
             callback(results);
