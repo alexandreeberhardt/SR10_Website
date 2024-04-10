@@ -120,3 +120,10 @@ INSERT INTO Pieces_dossier (type_piece, candidature) VALUES
 ('Lettre de motivation', 3),
 ('Certificat de travail', 3),
 ('CV', 4);
+
+INSERT INTO Offre_Organisation (offre, org) VALUES 
+(1, 123456789), -- Associe l'offre 1 à l'organisation avec le SIRET 123456789
+(2, 987654321), -- Associe l'offre 2 à l'organisation avec le SIRET 987654321
+(3, 112233445), -- Associe l'offre 3 à l'organisation avec le SIRET 112233445
+(4, 556677889), -- Associe l'offre 4 à l'organisation avec le SIRET 556677889
+(5, 998877665); -- Associe l'offre 5 à l'organisation avec le SIRET 998877665
