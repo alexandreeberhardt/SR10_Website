@@ -16,7 +16,14 @@ var db = require('./db.js');
         });
     },
 
-    
+    readAllRequests: function (state, callback) {
+        db.query("SELECT UR.type_utilisateur AS 'Type', CONCAT(U.nom,' ', U.prenom) AS 'Demandeur', UR.state_user AS 'Status de la demande' FROM Utilisateur_Roles UR JOIN Utilisateur U ON UR.id_utilisateur = U.id_utilisateur WHERE UR.type_utilisateur = 'Administrateur' AND UR.state_user = ?",state, function
+        (err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+
 
 
 }
