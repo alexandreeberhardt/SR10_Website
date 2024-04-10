@@ -24,6 +24,13 @@ var db = require('./db.js');
         });
     },
 
+    getOrgForRecruteur: function (id, callback) {
+        db.query("SELECT * FROM `Organisation` INNER JOIN Recruteur_Organisation ON Organisation.siret = Recruteur_Organisation.organisation_siret WHERE Recruteur_Organisation.recruteur = ?",id, function
+        (err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
 
 
 }

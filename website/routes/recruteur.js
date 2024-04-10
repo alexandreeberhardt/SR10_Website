@@ -10,9 +10,19 @@ router.get('/account_recruteur', function(req, res, next) {
 });
 
 
+
 router.get('/visualisation_offre', function(req, res, next) {
   result=recruteurModel.readCandidatures("En attente",function(result){
   res.render('recruteur/demande_recruteur', { title: 'Visualisation des offres', result:
+  result });
+});
+});
+
+// attention route à modifier selon l'utilisateur donc il faudra importer et rendre
+// disponible le contexte dans le code
+router.get('/quit_org', function(req, res, next) {
+  result=recruteurModel.getOrgForRecruteur(1,function(result){
+  res.render('recruteur/quit_org', { title: 'Quitter une organisation', result:
   result });
 });
 });
