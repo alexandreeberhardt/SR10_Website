@@ -1,15 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var userModel = require('../model/user');
-const { removeAllListeners } = require('../model/db');
+var recruteurModel = require('../model/recruteur');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  result=userModel.readall(function(result){
-  res.render('usersList', { title: 'List des utilisateurs', users:
+router.get('/account_recruteur', function(req, res, next) {
+  res.render('recruteur/account_recruteur', { title: 'Account Recruteur'});
+});
+
+
+router.get('/visualisation_offre', function(req, res, next) {
+  result=recruteurModel.readCandidatures("En attente",function(result){
+  res.render('recruteur/demande_recruteur', { title: 'Visualisation des offres', result:
   result });
 });
 });
+
+
 
 
 module.exports = router;
