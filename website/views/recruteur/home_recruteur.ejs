@@ -1,0 +1,129 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/stylesheets/home_recruteur.css" rel="stylesheet" type="text/css" />
+        <title><%= title %></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#a1").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a2").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#a3").click(function(){
+                    window.location.href = "apply.html";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="left-side">
+
+                <a class="link-wrapper link" href="/recruteur/home_recruteur" >
+                    <div class="button button-home">
+                        <img class="img-topbar"  src="../assets/home.png">
+                        <p>Home</p>
+                    </div>
+                </a>
+            
+            </div>
+            <div class="right-side">
+                <a class="link" href="/recruteur/visualisation_offre">
+                    <div class="button button-candidat">
+                        <img class="img-topbar" src="../assets/candidatures.png">
+                        <p>Recruter</p>
+                    </div>
+                </a>
+                <a class="link" href="candidatures_recruteur.html">
+                    <div class="button button-candidat">
+                        <img class="img-topbar" src="../assets/candidatures.png">
+                        <p>Mes candidatures</p>
+                    </div>
+                </a>
+                <a class="link" href="/recruteur/account_recruteur">
+                    <div class="button account">
+                        <img class="img-topbar" src="../assets/account.png">
+                        <p>Mon compte</p>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div class="main-page">
+            <div class="left-side-main">
+                <div class="header-left-side">
+                    <h1>Voir les offres</h1>
+                    <h3>Cherchez les offres d'emploi pertinentes pour vous !</h3>
+                    <input placeholder="Search..." class="search-input" type="text">
+                    <br>
+                    <table class="Offre_table">
+                        <tr>
+                          <th class="offre_th" class="offre_row" >Poste</th>
+                          <th class="offre_th">Rythme de travail</th>
+                          <th class="offre_th">Salaire_min</th>
+                          <th class="offre_th">Salaire_max</th>
+                          <th class="offre_th">Métier</th>
+                          <th class="offre_th">Pays</th>
+                        </tr>
+                        <tr class="row-clickable" id="a1">
+                          <td class="offre_row">Ingénieur</td>
+                          <td>35</td>
+                          <td>35000</td>
+                          <td>40000</td>
+                          <td>CDI</td>
+                          <td>Canada</td>
+                        </tr>
+                        <tr class="row-clickable" id="a2">
+                            <td class="offre_row">Ingénieur</td>
+                            <td>17.5</td>
+                            <td>20000</td>
+                            <td>30000</td>
+                            <td>CDD mi-temps</td>
+                            <td>France</td>
+                        </tr>
+                        <tr class="row-clickable" id="a3">
+                            <td class="offre_row">Developpeur web</td>
+                            <td>35</td>
+                            <td>45000</td>
+                            <td>55000</td>
+                            <td>CDI</td>
+                            <td>USA</td>
+                        </tr>
+                       
+                      </table>
+                </div>
+
+            </div>
+            <div class="right-side-main">
+                <div class="right-side-filters">
+                    <div class="title-search">
+                        <h2>Filtrez votre recherche</h2>
+                    </div>
+                        <input placeholder="Poste..." class="search-input-leftside " type="text">
+
+                        <input placeholder="Entreprise..." class="search-input-leftside " type="text">
+
+                        <input placeholder="Ville..." class="search-input-leftside " type="text">
+
+                        <input placeholder="Salaire..." class="search-input-leftside " type="number">
+                        <div class="main-form-wrapper-buttons">
+                            <input  class="search-input-leftside " type="button" value="récents">
+                            <input  class="search-input-leftside " type="button" value="anciens">
+                        </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </body>
+</html>

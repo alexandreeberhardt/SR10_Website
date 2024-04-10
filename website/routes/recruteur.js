@@ -14,6 +14,12 @@ router.get('/visualisation_offre', function(req, res, next) {
 });
 });
 
+router.get('/home_recruteur', function(req, res, next) {
+  result=recruteurModel.readCandidatures("En attente",function(result){
+  res.render('recruteur/home_recruteur', { title: 'Accueil recruteur', result:
+  result });
+});
+});
 
 
 
