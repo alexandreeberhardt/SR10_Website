@@ -69,17 +69,17 @@ INSERT INTO Utilisateur (email, nom, prenom, tel, password, is_active) VALUES
 ('user9@example.com', 'Nom9', 'Prenom9', '0123456797', 'password9', TRUE),
 ('user10@example.com', 'Nom10', 'Prenom10', '0123456798', 'password10', TRUE);
 
-INSERT INTO Utilisateur_Roles (id_utilisateur, type_utilisateur, state_user) VALUES
-(1, 'Administrateur', 'En attente'),
-(2, 'Recruteur', 'Approuvée'),
-(3, 'Candidat', 'Rejetée'),
-(4, 'Recruteur', 'En attente'),
-(5, 'Candidat', 'Approuvée'),
-(6, 'Recruteur', 'Rejetée'),
-(7, 'Candidat', 'En attente'),
-(8, 'Recruteur', 'Approuvée'),
-(9, 'Candidat', 'Rejetée'),
-(10, 'Recruteur', 'En attente');
+INSERT INTO Utilisateur_Roles (id_utilisateur, type_utilisateur, state_user, organisation) VALUES
+(1, 'Administrateur', 'En attente', NULL),
+(2, 'Recruteur', 'Approuvée', 123456789),
+(3, 'Administrateur', 'Rejetée', NULL),
+(4, 'Recruteur', 'En attente', NULL),
+(5, 'Administrateur', 'Approuvée', NULL),
+(6, 'Recruteur', 'Rejetée', NULL),
+(7, 'Recruteur', 'Rejetée', NULL),
+(8, 'Recruteur', 'Approuvée', 123456789),
+(9, 'Recruteur', 'Approuvée', 987654321),
+(10, 'Recruteur', 'En attente', NULL);
 
 INSERT INTO Recruteur_Organisation (recruteur, organisation_siret, state) VALUES
 (2, 123456789, 'En attente'),
