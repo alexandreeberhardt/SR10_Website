@@ -59,9 +59,11 @@ CREATE TABLE IF NOT EXISTS Utilisateur_Roles(
     id_utilisateur INTEGER NOT NULL AUTO_INCREMENT,
     type_utilisateur VARCHAR(250) NOT NULL,
     state_user VARCHAR(250) NOT NULL,
+    organisation INTEGER,
     FOREIGN KEY (state_user) REFERENCES State_demande(state_value),
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
     FOREIGN KEY (type_utilisateur) REFERENCES Type_utilisateur(type_utilisateur),
+    FOREIGN KEY (organisation) REFERENCES Organisation(siret),
     PRIMARY KEY (id_utilisateur, type_utilisateur)
 );
 
@@ -134,3 +136,4 @@ CREATE TABLE IF NOT EXISTS Offre_Organisation(
     FOREIGN KEY (offre) REFERENCES Offre(id_offre),
     FOREIGN KEY (org) REFERENCES Organisation(siret)
 );
+
