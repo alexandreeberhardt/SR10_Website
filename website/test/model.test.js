@@ -11,11 +11,17 @@ describe("Model Tests", () => {
     }
     DB.end(callback);
   });
-  test("read user", () => {
+  test("read user", (done) => {
     nom = null;
     function cbRead(resultat) {
       nom = resultat[0].nom;
-      expect(nom).toBe("test");
+      try {
+        expect(nom).toBe("test");
+      done();
+      }
+      catch{
+        done(error);
+      }
     }
     model.read("test@test.fr", cbRead);
   });
