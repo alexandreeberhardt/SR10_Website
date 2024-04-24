@@ -28,6 +28,15 @@ router.get("/creation", function (req, res, next) {
   });
 });
 
+router.get("/home", function (req, res, next) {
+  result = userModel.readallCandidatures(function (result) {
+    res.render("offres/offre", {
+      title: "Home",
+      users: result,
+    });
+  });
+});
+
 router.post("/creation", function (req, res, next) {
   var email = req.body.email;
   var nom = req.body.nom;
