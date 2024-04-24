@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var recruteurModel = require("../model/recruteur");
 var offreModel = require("../model/offer");
+var userModel = require("../model/user");
 const recruteur = require("../model/recruteur");
 
 router.get("/account_recruteur", function (req, res, next) {
@@ -17,8 +18,11 @@ router.get("/visualisation_offre", function (req, res, next) {
   });
 });
 
+
+
 // attention route à modifier selon l'utilisateur donc il faudra importer et rendre
 // disponible le contexte dans le code
+
 router.get("/quit_org", function (req, res, next) {
   result = recruteurModel.getOrgForRecruteur(1, function (result) {
     res.render("recruteur/quit_org", {
@@ -29,7 +33,6 @@ router.get("/quit_org", function (req, res, next) {
 });
 
 router.get("/home_recruteur", function (req, res, next) {
-  all = recruteurModel.readAllRequests("Active", "");
   result = offreModel.readAll("Active", function (result) {
     res.render("recruteur/home_recruteur", {
       title: "Accueil recruteur",
@@ -37,5 +40,15 @@ router.get("/home_recruteur", function (req, res, next) {
     });
   });
 });
+
+
+/* GET candidatures of user listing. */
+router.get("/candidatures", function (req, res, next) {
+  result = userModel.applied(3, function (result) {
+    res.render("recruteur/candidatures", { title: "List des utilisateurs", result: result });
+  });
+});
+
+
 
 module.exports = router;
