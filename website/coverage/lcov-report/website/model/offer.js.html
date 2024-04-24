@@ -91,26 +91,35 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -122,40 +131,43 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var db = require('./db.js');
-    module.exports = {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var db = require("./db.js");
+module.exports = {
+  read: <span class="fstat-no" title="function not covered" >fu</span>nction (id, callback) {
+<span class="cstat-no" title="statement not covered" >    db.query(</span>
+      "SELECT * from Offre  INNER JOIN State_offre INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste WHERE Offre.id_offre= ?",
+      id,
+<span class="fstat-no" title="function not covered" >      fu</span>nction (err, results) {
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >        callback(results);</span>
+      },
+    );
+  },
 &nbsp;
+  readAll: <span class="fstat-no" title="function not covered" >fu</span>nction (state, callback) {
+<span class="cstat-no" title="statement not covered" >    db.query(</span>
+      "SELECT Fiche_poste.intitule, Fiche_poste.rythme_travail, Fiche_poste.salaire_min, Fiche_poste.salaire_max,Statuts_poste.statuts, Organisation.name, Lieu.pays FROM Offre INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste INNER JOIN State_offre ON State_offre.etat = Offre.etat INNER JOIN Statuts_poste ON Fiche_poste.statuts_poste = Statuts_poste.statuts INNER JOIN Offre_Organisation ON Offre_Organisation.offre = Offre.id_offre INNER JOIN Organisation ON Organisation.siret = Offre_Organisation.org INNER JOIN Lieu ON Organisation.adresse = Lieu.id_lieu WHERE State_offre.etat = ?",
+      state,
+<span class="fstat-no" title="function not covered" >      fu</span>nction (err, results) {
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >        callback(results);</span>
+      },
+    );
+  },
 &nbsp;
-    read: <span class="fstat-no" title="function not covered" >fu</span>nction (id, callback) {
-<span class="cstat-no" title="statement not covered" >        db.query("SELECT * from Offre  INNER JOIN State_offre INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste WHERE Offre.id_offre= ?",id, <span class="fstat-no" title="function not covered" >fu</span>nction</span>
-        (err, results) {
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            callback(results);</span>
-        });
-    },
-&nbsp;
-    readAll: <span class="fstat-no" title="function not covered" >fu</span>nction (state, callback) {
-<span class="cstat-no" title="statement not covered" >        db.query("SELECT Fiche_poste.intitule, Fiche_poste.rythme_travail, Fiche_poste.salaire_min, Fiche_poste.salaire_max,Statuts_poste.statuts, Organisation.name, Lieu.pays FROM Offre INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste INNER JOIN State_offre ON State_offre.etat = Offre.etat INNER JOIN Statuts_poste ON Fiche_poste.statuts_poste = Statuts_poste.statuts INNER JOIN Offre_Organisation ON Offre_Organisation.offre = Offre.id_offre INNER JOIN Organisation ON Organisation.siret = Offre_Organisation.org INNER JOIN Lieu ON Organisation.adresse = Lieu.id_lieu WHERE State_offre.etat = ?",state, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            callback(results);</span>
-        });
-    },
-&nbsp;
-    areValid: <span class="fstat-no" title="function not covered" >fu</span>nction (email, password, callback) {
-<span class="cstat-no" title="statement not covered" >        sql = "SELECT password FROM Utilisateur WHERE email = ?";</span>
-<span class="cstat-no" title="statement not covered" >        rows = db.query(sql, email, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            if (rows.length == 1 &amp;&amp; rows[0].pwd === password) {</span>
-<span class="cstat-no" title="statement not covered" >                callback(true)</span>
-            } else {
-<span class="cstat-no" title="statement not covered" >                callback(false);</span>
-            }
-        });
-    },
-&nbsp;
-&nbsp;
-}</pre></td></tr></table></pre>
+  areValid: <span class="fstat-no" title="function not covered" >fu</span>nction (email, password, callback) {
+<span class="cstat-no" title="statement not covered" >    sql = "SELECT password FROM Utilisateur WHERE email = ?";</span>
+<span class="cstat-no" title="statement not covered" >    rows = db.query(sql, email, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >      if (rows.length == 1 &amp;&amp; rows[0].pwd === password) {</span>
+<span class="cstat-no" title="statement not covered" >        callback(true);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        callback(false);</span>
+      }
+    });
+  },
+};
+&nbsp;</pre></td></tr></table></pre>
 
       <div class="push"></div>
       <!-- for sticky footer -->
@@ -169,7 +181,7 @@
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2024-04-24T14:39:20.887Z
+      at 2024-04-24T14:57:03.158Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

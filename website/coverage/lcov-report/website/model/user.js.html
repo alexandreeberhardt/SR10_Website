@@ -93,28 +93,20 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,42 +118,68 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var db = require('./db.js');
-    module.exports = {
-    read: function (email, callback) {
-        db.query("SELECT * from Utilisateur where email= ?",email, <span class="fstat-no" title="function not covered" >fu</span>nction
-        (err, results) {
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            callback(results);</span>
-        });
-    },
-    readall: <span class="fstat-no" title="function not covered" >fu</span>nction (callback) {
-<span class="cstat-no" title="statement not covered" >        db.query("SELECT * from Utilisateur", <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            callback(results);</span>
-        });
-    },
-    areValid: <span class="fstat-no" title="function not covered" >fu</span>nction (email, password, callback) {
-<span class="cstat-no" title="statement not covered" >        sql = "SELECT password FROM Utilisateur WHERE email = ?";</span>
-<span class="cstat-no" title="statement not covered" >        rows = db.query(sql, email, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            if (rows.length == 1 &amp;&amp; rows[0].pwd === password) {</span>
-<span class="cstat-no" title="statement not covered" >                callback(true)</span>
-            } else {
-<span class="cstat-no" title="statement not covered" >                callback(false);</span>
-            }
-        });
-    },
-    create: <span class="fstat-no" title="function not covered" >fu</span>nction (email ,nom ,prenom ,password, tel, callback) {
-<span class="cstat-no" title="statement not covered" >        rows = db.query("INSERT INTO Utilisateur VALUES (NULL,?,?,?,?,?,1)", [email,nom, prenom, tel,password], <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
-<span class="cstat-no" title="statement not covered" >            callback(true);</span>
-        });
-        
-    },
-&nbsp;
-}</pre></td></tr></table></pre>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var db = require("./db.js");
+module.exports = {
+  read: function (email, callback) {
+    db.query(
+      "SELECT * from Utilisateur where email= ?",
+      email,
+<span class="fstat-no" title="function not covered" >      fu</span>nction (err, results) {
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >        callback(results);</span>
+      },
+    );
+  },
+  readall: <span class="fstat-no" title="function not covered" >fu</span>nction (callback) {
+<span class="cstat-no" title="statement not covered" >    db.query("SELECT * from Utilisateur", <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >      callback(results);</span>
+    });
+  },
+  areValid: <span class="fstat-no" title="function not covered" >fu</span>nction (email, password, callback) {
+<span class="cstat-no" title="statement not covered" >    sql = "SELECT password FROM Utilisateur WHERE email = ?";</span>
+<span class="cstat-no" title="statement not covered" >    rows = db.query(sql, email, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >      if (rows.length == 1 &amp;&amp; rows[0].pwd === password) {</span>
+<span class="cstat-no" title="statement not covered" >        callback(true);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        callback(false);</span>
+      }
+    });
+  },
+  create: <span class="fstat-no" title="function not covered" >fu</span>nction (email, nom, prenom, password, tel, callback) {
+<span class="cstat-no" title="statement not covered" >    rows = db.query(</span>
+      "INSERT INTO Utilisateur VALUES (NULL,?,?,?,?,?,1)",
+      [email, nom, prenom, tel, password],
+<span class="fstat-no" title="function not covered" >      fu</span>nction (err, results) {
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >        callback(true);</span>
+      },
+    );
+  },
+};
+&nbsp;</pre></td></tr></table></pre>
 
       <div class="push"></div>
       <!-- for sticky footer -->
@@ -175,7 +193,7 @@
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2024-04-24T14:39:20.887Z
+      at 2024-04-24T14:57:03.158Z
     </div>
     <script src="../../prettify.js"></script>
     <script>
