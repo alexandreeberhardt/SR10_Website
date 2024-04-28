@@ -8,26 +8,52 @@
         <title><%= title %></title>
     </head>
     <body> 
+
         <div>
             <br>
             <br>
             <h1>Créer un compte</h1>
             <h3>Entrez les informations</h3>
+            <% if (locals.error) { %>
+                <p class="text-danger"> <%= error %> </p>
+                <br>
+            <% } %>
             <div class="form-wrapper">
-                <form>
+                <form method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control-small" id="nom" placeholder="Nom">
-                        <input type="text" class="form-control-small" id="prenom" placeholder="Prénom">
+                        <input type="text" class="form-control-small" id="nom" placeholder="Nom" value="<%= locals.prenom %>">
+                        <% if (locals.errors && locals.errors.prenom) { %>
+                            <p class="text-danger"><%= locals.errors.prenom.msg %></p>
+                        <% } %>
+        
+                        <input type="text" class="form-control-small" id="prenom" placeholder="Prénom" value="<%= locals.nom %>">
+                        <% if (locals.errors && locals.errors.nom) { %>
+                            <p class="text-danger"><%= locals.errors.nom.msg %></p>
+                        <% } %>
+        
 
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <input type="email" class="form-control" id="email" placeholder="Email" value="<%= locals.email %>">
+                        <% if (locals.errors && locals.errors.email) { %>
+                            <p class="text-danger"><%= locals.errors.email.msg %></p>
+                        <% } %>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control-small" id="tel" placeholder="Numero de téléphone">                        </div>
+                        <input type="text" class="form-control-small" id="tel" placeholder="Numero de téléphone" value="<%= locals.tel %>"> 
+                        <% if (locals.errors && locals.errors.tel) { %>
+                            <p class="text-danger"><%= locals.errors.tel.msg %></p>
+                        <% } %>                       
+                    </div>
                     <div class="form-group">
-                        <input type="password" class="password" id="password" placeholder="Mot de passe"><br><br>
+                        <input type="password" class="password" id="password" placeholder="Mot de passe" value="<%= locals.password %>"><br><br>
+                        <% if (locals.errors && locals.errors.password) { %>
+                            <p class="text-danger"><%= locals.errors.password.msg %></p>
+                        <% } %>        
                         <input type="password" class="confirmpswd" id="confirmpswd" placeholder="Confirmez le mot de passe">
+                        <% if (locals.errors && locals.errors.confirmpswd) { %>
+                            <p class="text-danger"><%= locals.errors.confirmpswd.msg %></p>
+                        <% } %>   
                     </div>
                     <div class="form-group">
                     </div>

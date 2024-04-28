@@ -36,8 +36,6 @@ const registerValidate = [
     body('email')
         .isEmail().withMessage('L\'email doit être valide')
         .notEmpty().withMessage('L\'email est requis'),
-    body('adresse')
-        .notEmpty().withMessage('L\'adresse est requise'),
     body('tel')
         .notEmpty().withMessage('Le numéro de téléphone est requis')
         .matches(/^\d{10}$/).withMessage('Le numéro de téléphone doit contenir exactement 10 chiffres'),
@@ -60,6 +58,7 @@ router.post('/register',
         return res.render('login/creation', {
             title: 'Inscription',
             error: "Veuillez corriger les erreurs lors de la création du compte:",
+        
             errors: errors.array().reduce((obj, err) => {
                 obj[err.path] = err;
                 return obj;
@@ -67,7 +66,6 @@ router.post('/register',
             prenom: req.body.prenom,
             nom: req.body.nom,
             email: req.body.email,
-            adresse: req.body.adresse,
             tel: req.body.tel,
             password: req.body.password,
             confirmpswd: req.body.confirmpswd
@@ -80,7 +78,7 @@ router.post('/register',
                     req.body.password,
                     req.body.tel,
                     req.body.email,
-                    req.body.adresse, function (err, result) {
+                    function (err, result) {
                         if (!err) {
                             // Envoyer un mail en confirmation 
                             sendMail(
@@ -102,7 +100,6 @@ router.post('/register',
                         prenom: req.body.prenom,
                         nom: req.body.nom,
                         email: req.body.email,
-                        adresse: req.body.adresse,
                         tel: req.body.tel,
                         password: req.body.password,
                         confirmpswd: req.body.confirmpswd
@@ -128,7 +125,7 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-/* Déconexion */
+
 router.get('/logout', (req, res) => {
     session.deleteSession(req.session);
     res.redirect('/');

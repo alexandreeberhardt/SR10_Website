@@ -1,4 +1,6 @@
 var db = require("./db.js");
+const pass = require('../utils/passwd.js');
+
 module.exports = {
   read: function (email, callback) {
     db.query(
@@ -25,16 +27,22 @@ module.exports = {
   },
 
   areValid: function (email, password, callback) {
-    sql = "SELECT password FROM Utilisateur WHERE email = ?";
-    rows = db.query(sql, email, function (err, results) {
-      if (err) throw err;
-      if (rows.length == 1 && rows[0].pwd === password) {
-        callback(true);
-      } else {
-        callback(false);
-      }
+    const sql = "SELECT * FROM Utilisateur WHERE email = ?";
+    db.query(sql, email, function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else if (results.length === 0) {
+            callback(err, false);
+        } else {
+            const hash = results[0].password;
+            pass.comparePassword(password, hash, function (result) {
+                callback(null, result);
+            });
+        }
     });
   },
+
+
   create: function (email, nom, prenom, password, tel, callback) {
     rows = db.query(
       "INSERT INTO Utilisateur VALUES (NULL,?,?,?,?,?,1)",
@@ -45,4 +53,66 @@ module.exports = {
       },
     );
   },
+
+  read: function (email, callback) {
+      const sql = "SELECT * FROM Utilisateur WHERE email = ?";
+      db.query(sql, email, function (err, results) {
+          if (err) {
+              callback(err, null);
+          } else if (results.length === 0) {
+              callback(new TypeError("Error : email not found!"), results);
+          } else callback(null, results);
+      });
+  },
+
+  readById: function (id, callback) {
+      const sql = "SELECT * FROM Utilisateur WHERE id_utilisateur = ?";
+      db.query(sql, id, function (err, results) {
+          if (err) {
+              callback(err, null);
+          } else if (results.length === 0) {
+              callback(new TypeError("Error : ID not found!"), results);
+          } else callback(null, results);
+      });
+  },
+
+  create: function (nom, prenom, pwd, tel, email, adresse, callback) {
+    pass.generateHash(pwd, function (hash) {
+        pwd = hash;
+        const sql = "INSERT INTO Utilisateur (nom, prenom, password, tel, email, actif)VALUES (?, ?, ?, ?, ?, 1);";
+        db.query(sql, [nom, prenom, pwd, tel, email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else callback(null, results);
+        });
+    });
+},
+
+update: function (id, data, callback) {
+    const {nom, prenom, telephone, email} = data;
+    const sql = "UPDATE Utilisateur SET nom = ?, prenom = ?, telephone = ?, email = ? WHERE id_utilisateur = ?";
+    db.query(sql, [nom, prenom, telephone, email, id], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else callback(null, results);
+    });
+},
+
+/* makeAdmin: function (id, callback) {
+    const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";
+    db.query(sql, id, function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            // get the email of the user, to notify him
+            const sql = "SELECT email FROM utilisateur WHERE id = ?";
+            db.query(sql, id, function (err2, results2) {
+                if (err2) callback(err2, null)
+                else callback(null, results2)
+            });
+        }
+    });
+}, */
+
+
 };
