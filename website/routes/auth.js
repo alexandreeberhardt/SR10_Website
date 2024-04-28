@@ -30,7 +30,6 @@ const registerValidate = [
     body('prenom')
         .isAlpha().withMessage('Le prénom ne doit contenir que des lettres')
         .notEmpty().withMessage('Le prénom est requis'),
-
         body('nom')
         .isAlpha().withMessage('Le nom ne doit contenir que des lettres')
         .notEmpty().withMessage('Le nom est requis'),
@@ -42,13 +41,13 @@ const registerValidate = [
     body('tel')
         .notEmpty().withMessage('Le numéro de téléphone est requis')
         .matches(/^\d{10}$/).withMessage('Le numéro de téléphone doit contenir exactement 10 chiffres'),
-    body('pwd')
+    body('password')
         .isLength({min: 12})
         .withMessage('Le mot de passe doit contenir au moins 12 caractères')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/)
         .withMessage('Le mot de passe doit contenir des majuscules, des minuscules, des chiffres et des caractères spéciaux et de taille >= 12'),
     body('confirmpswd')
-        .custom((value, {req}) => value === req.body.pwd)
+        .custom((value, {req}) => value === req.body.password)
         .withMessage('Les mots de passe ne correspondent pas'),
 ];
 
@@ -70,7 +69,7 @@ router.post('/register',
             email: req.body.email,
             adresse: req.body.adresse,
             tel: req.body.tel,
-            pwd: req.body.pwd,
+            password: req.body.password,
             confirmpswd: req.body.confirmpswd
         });
     } else {
@@ -78,12 +77,12 @@ router.post('/register',
             if (verif.length === 0) {
                 userModel.create(req.body.nom,
                     req.body.prenom,
-                    req.body.pwd,
+                    req.body.password,
                     req.body.tel,
                     req.body.email,
                     req.body.adresse, function (err, result) {
                         if (!err) {
-                            // Send registration confirmation email
+                            // Envoyer un mail en confirmation 
                             sendMail(
                                 "Confirmation d'inscription",
                                 "Bonjour " + req.body.prenom + ",\n\n" +
@@ -105,7 +104,7 @@ router.post('/register',
                         email: req.body.email,
                         adresse: req.body.adresse,
                         tel: req.body.tel,
-                        pwd: req.body.pwd,
+                        password: req.body.password,
                         confirmpswd: req.body.confirmpswd
                     });
             }
@@ -115,7 +114,7 @@ router.post('/register',
 });
 
 router.post('/login', function (req, res, next) {
-    userModel.areValid(req.body.email, req.body.pwd, function (err, verif) {
+    userModel.areValid(req.body.email, req.body.password, function (err, verif) {
         if (verif) {
             userModel.read(req.body.email, function (err, user) {
                 session.createSession(
