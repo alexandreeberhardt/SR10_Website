@@ -21,11 +21,17 @@ app.use(session.init());
 
 
 app.all("*", function (req, res, next) {
+
   const nonSecurePaths = ["/login/login/", "/login/register/", "/",
       "/login/login", "/login/register"];
+
   const adminPaths = [
       "/admin/", // mettre toutes nos routes admin
   ]; // list of admin urls
+
+  const recruteurPaths = [
+    "/recruteur/", // mettre toutes nos routes admin
+]; // list of recruteurs urls
 
   if (nonSecurePaths.includes(req.path)) return next();
 
@@ -46,7 +52,20 @@ app.all("*", function (req, res, next) {
               error: {},
           }
       );
-  } else if (session.isConnected(req.session)) return next();
+  }else if (recruteurPaths.includes(req.path)){
+    if (session.isConnected(req.session, "admin") || session.isConnected(req.session, "recruteur") ) return next();
+      else res.status(403).render(
+          "errors/403",
+          {
+              title: "Unauthorized access",
+              message: "Unauthorized access",
+              error: {},
+          }
+      );
+  }
+  // s'il essaie de se connecter à une route candidat et qu'il est connecté alors tout est bon. 
+  else if (session.isConnected(req.session)) return next();
+
 });
 
 
