@@ -6,7 +6,7 @@ module.exports = {
         return sessions({
             secret: process.env.SESSION_SECRET,
             saveUninitialized: true,
-            cookie: {maxAge: 3600 * 1000}, // 60 minutes
+            cookie: {maxAge: 3600 * 1000}, // 1heure
             resave: false,
         });
     },

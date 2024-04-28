@@ -3,7 +3,7 @@ const router = express.Router();
 const userModel = require('../model/user.js');
 const session = require('../utils/session.js');
 const {body, validationResult} = require('express-validator');
-const sendMail = require('../utils/emailTransporter.js');
+const sendMail = require('../utils/mail.js');
 
 router.get('/login', function (req, res, next) {
     const session = req.session;
@@ -21,7 +21,7 @@ router.get('/register', function (req, res, next) {
         return;
     }
     res.render('login/creation', {
-        title: 'Créer un compte'
+        title: 'Create account'
     });
 });
 
