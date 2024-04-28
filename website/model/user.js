@@ -83,7 +83,7 @@ module.exports = {
         db.query(sql, [email, nom, prenom, tel, pwd], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else callback(null, results);
+            } else {callback(null, results)};
         });
     });
 },
