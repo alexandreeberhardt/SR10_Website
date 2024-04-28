@@ -79,8 +79,8 @@ module.exports = {
   create: function (nom, prenom, pwd, tel, email, adresse, callback) {
     pass.generateHash(pwd, function (hash) {
         pwd = hash;
-        const sql = "INSERT INTO Utilisateur (nom, prenom, password, tel, email, actif)VALUES (?, ?, ?, ?, ?, 1);";
-        db.query(sql, [nom, prenom, pwd, tel, email], function (err, results) {
+        const sql = "INSERT INTO `Utilisateur` VALUES (NULL,?, ?, ?, ?, ?, 1);";
+        db.query(sql, [email, nom, prenom, tel, pwd], function (err, results) {
             if (err) {
                 callback(err, null);
             } else callback(null, results);

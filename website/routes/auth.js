@@ -81,16 +81,14 @@ router.post('/register',
                     function (err, result) {
                         if (!err) {
                             // Envoyer un mail en confirmation 
-                            sendMail(
+                            /*sendMail(
                                 "Confirmation d'inscription",
                                 "Bonjour " + req.body.prenom + ",\n\n" +
                                 "La création du compte a été effectuée avec succès.\n\n" +
                                 "Une agréable journée à vous,\n",
-                                req.body.email);
-
+                                req.body.email);*/
                             res.redirect("/login/login");
                         }
-
                     });
             } else {
                 res.render(
@@ -122,11 +120,10 @@ router.post('/login', function (req, res, next) {
                 if (req.session.type == "admin"){
                     res.redirect("/admin/account");
                 }else if (req.session.type == "recruteur"){
-                    res.redirect("/recruteur/account");
+                    res.redirect("/recruteur/account_recruteur");
                 }else{
-                    res.redirect("/candidat/account");
+                    res.redirect("/users/account");
                 }
-
             });
         } else {
             res.render('login/login', {title: 'Connexion', error: 'information de connexion invalide.'});
