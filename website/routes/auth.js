@@ -117,7 +117,16 @@ router.post('/login', function (req, res, next) {
                 session.createSession(
                     req.session, req.body.email, user[0].type, user[0]
                 );
-                res.redirect("/offers/all");
+                // rediriger en fonction du type de l'utilisateur 
+                // vers la bonne page ici
+                if (req.session.type == "admin"){
+                    res.redirect("/admin/account");
+                }else if (req.session.type == "recruteur"){
+                    res.redirect("/recruteur/account");
+                }else{
+                    res.redirect("/candidat/account");
+                }
+
             });
         } else {
             res.render('login/login', {title: 'Connexion', error: 'information de connexion invalide.'});

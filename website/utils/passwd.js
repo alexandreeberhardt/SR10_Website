@@ -1,4 +1,7 @@
 const bcrypt = require("bcrypt")
+
+
+
 module.exports = {
     generateHash: function (plaintextPassword, callback) {
         bcrypt.hash(plaintextPassword, 10, function (err, hash) {
