@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/stylesheets/account_creation.css" rel="stylesheet" type="text/css" />        
+        <title><%= title %></title>
+    </head>
+    <body> 
+
+        <div>
+            <br>
+            <br>
+            <h1>Créer un compte</h1>
+            <h3>Entrez les informations</h3>
+            <% if (locals.error) { %>
+                <p class="text-danger"> <%= error %> </p>
+                <br>
+            <% } %>
+            <div class="form-wrapper">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control-small" name="nom" id="nom" placeholder="Nom" value="<%= locals.prenom %>">
+                        <% if (locals.errors && locals.errors.prenom) { %>
+                            <p class="text-danger"><%= locals.errors.prenom.msg %></p>
+                        <% } %>
+        
+                        <input type="text" class="form-control-small" name="prenom" id="prenom" placeholder="Prénom" value="<%= locals.nom %>">
+                        <% if (locals.errors && locals.errors.nom) { %>
+                            <p class="text-danger"><%= locals.errors.nom.msg %></p>
+                        <% } %>
+        
+
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<%= locals.email %>">
+                        <% if (locals.errors && locals.errors.email) { %>
+                            <p class="text-danger"><%= locals.errors.email.msg %></p>
+                        <% } %>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control-small" name="tel" id="tel" placeholder="Numero de téléphone" value="<%= locals.tel %>"> 
+                        <% if (locals.errors && locals.errors.tel) { %>
+                            <p class="text-danger"><%= locals.errors.tel.msg %></p>
+                        <% } %>                       
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="password" name="password" id="password" placeholder="Mot de passe" value="<%= locals.password %>"><br><br>
+                        <% if (locals.errors && locals.errors.password) { %>
+                            <p class="text-danger"><%= locals.errors.password.msg %></p>
+                        <% } %>        
+                        <input type="password" class="confirmpswd" name="confirmpswd" id="confirmpswd" placeholder="Confirmez le mot de passe">
+                        <% if (locals.errors && locals.errors.confirmpswd) { %>
+                            <p class="text-danger"><%= locals.errors.confirmpswd.msg %></p>
+                        <% } %>   
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <button type="submit" >Créer</button>
+                </form>
+            </div>
+            <br>
+        </div>
+    </body>
+</html>
