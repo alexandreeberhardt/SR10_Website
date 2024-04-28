@@ -7,7 +7,7 @@ const sendMail = require('../utils/emailTransporter.js');
 
 router.get('/login', function (req, res, next) {
     const session = req.session;
-    if (session.userid) {
+    if (session.usermail) {
         res.redirect("/offers/all");
     } else {
         res.render('login/login', {title: 'Connexion'});
@@ -16,7 +16,7 @@ router.get('/login', function (req, res, next) {
 
 router.get('/register', function (req, res, next) {
     const session = req.session;
-    if (session.userid) {
+    if (session.usermail) {
         res.redirect("/offers/all");
         return;
     }

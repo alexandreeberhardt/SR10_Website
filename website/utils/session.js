@@ -12,7 +12,7 @@ module.exports = {
     },
     createSession: function (session, mail, role, user) {
         session.user = user;
-        session.userid = mail;
+        session.usermail = mail;
         session.role = role;
         session.save(function (err) {
             // console.log(err);
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     isConnected: (session, role) => {
-        if (!session.userid) return false;
+        if (!session.usermail) return false;
         return !(role && session.role !== role);
     },
 
