@@ -43,7 +43,7 @@ const registerValidate = [
         .isLength({min: 12})
         .withMessage('Le mot de passe doit contenir au moins 12 caractères')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/)
-        .withMessage('Le mot de passe doit contenir des majuscules, des minuscules, des chiffres et des caractères spéciaux et de taille >= 12'),
+        .withMessage('Le mot de passe doit contenir des majuscules, des minuscules, des chiffres et des caractères spéciaux parmis @$!%*?& et de taille >= 12'),
     body('confirmpswd')
         .custom((value, {req}) => value === req.body.password)
         .withMessage('Les mots de passe ne correspondent pas'),
