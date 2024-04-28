@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/stylesheets/account_creation.css" rel="stylesheet" type="text/css" />        
+        <title><%= title %></title>
+    </head>
+    <body> 
+        <div>
+            <br>
+            <br>
+            <h1>Créer un compte</h1>
+            <h3>Entrez les informations</h3>
+            <div class="form-wrapper">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control-small" id="nom" placeholder="Nom">
+                        <input type="text" class="form-control-small" id="prenom" placeholder="Prénom">
+
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control-small" id="telephone" placeholder="Numero de téléphone">                        </div>
+                    <div class="form-group">
+                        <input type="password" class="password" id="password" placeholder="Mot de passe"><br><br>
+                        <input type="password" class="password" id="password" placeholder="Confirmez le mot de passe">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <button type="submit" >Créer le compte</button>
+                </form>
+            </div>
+            <br>
+        </div>
+    </body>
+</html>
