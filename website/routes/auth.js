@@ -93,12 +93,12 @@ router.post('/register',
                     function (err, result) {
                         if (!err) {
                             // Envoyer un mail en confirmation 
-                            /*sendMail(
+                            sendMail(
                                 "Confirmation d'inscription",
                                 "Bonjour " + req.body.prenom + ",\n\n" +
                                 "La création du compte a été effectuée avec succès.\n\n" +
                                 "Une agréable journée à vous,\n",
-                                req.body.email);*/
+                                req.body.email);
                             res.redirect("/login/login");
                         }
                     });
@@ -137,6 +137,14 @@ router.post('/login', function (req, res, next) {
                 }else{
                     res.redirect("/users/account");
                 }
+
+                sendMail(
+                    "Nouvelle connexion Recr'UT détectée",
+                    "Bonjour " + req.session.user.prenom + ",\n\n" +
+                    "La création du compte a été effectuée avec succès.\n\n" +
+                    "Une agréable journée à vous,\n",
+                    req.session.user.email);
+
             });
         } else {
             res.render('login/login', {title: 'Connexion', error: 'information de connexion invalide.'});

@@ -2,16 +2,7 @@ var db = require("./db.js");
 const pass = require('../utils/passwd.js');
 
 module.exports = {
-  read: function (email, callback) {
-    db.query(
-      "SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.nom,Utilisateur.prenom,Utilisateur.tel,Utilisateur.password,Utilisateur_Roles_Approuves.type_utilisateur AS role FROM Utilisateur LEFT JOIN ( SELECT id_utilisateur, type_utilisateur FROM Utilisateur_Roles WHERE state_user = 'Approuvée' ) AS Utilisateur_Roles_Approuves ON Utilisateur.id_utilisateur = Utilisateur_Roles_Approuves.id_utilisateur WHERE is_active = 1 AND email= ?",
-      email,
-      function (err, results) {
-        if (err) throw err;
-        callback(results);
-      },
-    );
-  },
+
   readall: function (callback) {
     db.query("SELECT * from Utilisateur", function (err, results) {
       if (err) throw err;
@@ -42,17 +33,6 @@ module.exports = {
     });
   },
 
-
-  create: function (email, nom, prenom, password, tel, callback) {
-    rows = db.query(
-      "INSERT INTO Utilisateur VALUES (NULL,?,?,?,?,?,1)",
-      [email, nom, prenom, tel, password],
-      function (err, results) {
-        if (err) throw err;
-        callback(true);
-      },
-    );
-  },
 
   read: function (email, callback) {
       const sql = "SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.nom,Utilisateur.prenom,Utilisateur.tel,Utilisateur.password,Utilisateur_Roles_Approuves.type_utilisateur AS role FROM Utilisateur LEFT JOIN ( SELECT id_utilisateur, type_utilisateur FROM Utilisateur_Roles WHERE state_user = 'Approuvée' ) AS Utilisateur_Roles_Approuves ON Utilisateur.id_utilisateur = Utilisateur_Roles_Approuves.id_utilisateur WHERE is_active = 1 AND email= ?";
