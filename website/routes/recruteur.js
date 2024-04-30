@@ -4,6 +4,7 @@ var recruteurModel = require("../model/recruteur");
 var offreModel = require("../model/offer");
 var userModel = require("../model/user");
 const recruteur = require("../model/recruteur");
+const session = require('../utils/session.js');
 
 router.get("/account_recruteur", function (req, res, next) {
   res.render("recruteur/account_recruteur", { title: "Account Recruteur" });
@@ -44,6 +45,8 @@ router.get("/home_recruteur", function (req, res, next) {
 
 /* GET candidatures of user listing. */
 router.get("/candidatures", function (req, res, next) {
+  id = req.session.user.id_utilisateur;
+  console.log(id)
   result = userModel.applied(3, function (result) {
     res.render("recruteur/candidatures", { title: "List des utilisateurs", result: result });
   });

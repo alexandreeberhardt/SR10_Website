@@ -15,6 +15,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var recruteurRouter = require("./routes/recruteur");
 var loginRouter = require("./routes/auth");
+var offerRouter = require("./routes/offre")
 
 var app = express();
 app.use(session.init());
@@ -33,6 +34,7 @@ app.all("*", function (req, res, next) {
     "/recruteur/", // mettre toutes nos routes admin
 ]; // list of recruteurs urls
 
+
   if (nonSecurePaths.includes(req.path)) return next();
 
   if (!session.isConnected(req.session)) {
@@ -43,7 +45,7 @@ app.all("*", function (req, res, next) {
 
   if (adminPaths.includes(req.path)) {
     // on vérifie le role admin avant. 
-      if (session.isConnected(req.session, "admin")) return next();
+      if (session.isConnected(req.session, "Administrateur")) return next();
       else res.status(403).render(
           "errors/403",
           {
@@ -53,7 +55,7 @@ app.all("*", function (req, res, next) {
           }
       );
   }else if (recruteurPaths.includes(req.path)){
-    if (session.isConnected(req.session, "admin") || session.isConnected(req.session, "recruteur") ) return next();
+    if (session.isConnected(req.session, "Recruteur") || session.isConnected(req.session, "recruteur") ) return next();
       else res.status(403).render(
           "errors/403",
           {
@@ -86,6 +88,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/recruteur", recruteurRouter);
 app.use("/login",loginRouter);
+app.use("/offres",offerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

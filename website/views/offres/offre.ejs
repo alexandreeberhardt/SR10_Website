@@ -4,9 +4,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="../styles/offre.css" /> 
-        <title>Visualisation des offres </title>
+        <link href="/stylesheets/offre.css" rel="stylesheet" type="text/css" />
+        <title><%= title %></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
         <script>
             $(document).ready(function(){
                 $("#a1").click(function(){
@@ -24,12 +25,13 @@
                 });
             });
         </script>
+
     </head>
     <body>
         <div class="topbar">
             <div class="left-side">
 
-                <a class="link-wrapper link" href="offre.html" >
+                <a class="link-wrapper link" href="" >
                     <div class="button button-home">
                         <img class="img-topbar"  src="../assets/home.png">
                         <p>Home</p>
@@ -38,13 +40,13 @@
             
             </div>
             <div class="right-side">
-                <a class="link" href="candidatures.html">
+                <a class="link" href="/users/candidatures">
                     <div class="button button-candidat">
                         <img class="img-topbar" src="../assets/candidatures.png">
                         <p>Mes candidatures</p>
                     </div>
                 </a>
-                <a class="link" href="account_candidat.html">
+                <a class="link" href="/users/account_candidat">
                     <div class="button account">
                         <img class="img-topbar" src="../assets/account.png">
                         <p>Mon compte</p>
@@ -77,23 +79,16 @@
                           <td>CDI</td>
                           <td>Canada</td>
                         </tr>
-                        <tr class="row-clickable" id="a2">
-                            <td class="offre_row">Ingénieur</td>
-                            <td>17.5</td>
-                            <td>20000</td>
-                            <td>30000</td>
-                            <td>CDD mi-temps</td>
-                            <td>France</td>
-                        </tr>
-                        <tr class="row-clickable" id="a3">
-                            <td class="offre_row">Developpeur web</td>
-                            <td>35</td>
-                            <td>45000</td>
-                            <td>55000</td>
-                            <td>CDI</td>
-                            <td>USA</td>
-                        </tr>
-                       
+                        <% result.forEach((res)=> { %>
+                            <tr class="row-clickable" id="a1">
+                                <td class="offre_row">Ingénieur</td>
+                                <td>35</td>
+                                <td>35000</td>
+                                <td>40000</td>
+                                <td>CDI</td>
+                                <td>Canada</td>
+                              </tr>
+                            <% }) %>
                       </table>
                 </div>
 
