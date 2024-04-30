@@ -5,6 +5,11 @@ const session = require('../utils/session.js');
 const {body, validationResult} = require('express-validator');
 const sendMail = require('../utils/mail.js');
 
+
+router.get('/', function (req, res, next) {
+    res.redirect("/login/login")
+});
+
 router.get('/login', function (req, res, next) {
     const session = req.session;
     if (session.usermail) {

@@ -1,5 +1,7 @@
 var db = require("./db.js");
 const pass = require('../utils/passwd.js');
+const session = require('../utils/session.js');
+
 
 module.exports = {
 
@@ -78,17 +80,19 @@ update: function (id, data, callback) {
     });
 },
 
-makeAdmin: function (id, callback) {
-    const sql = "INSERT INTO ";
-    db.query(sql, id, function (err, results) {
+
+// à modifier pour vérifier qu'il n'y ait pas déjà une demande en cours
+makeAdmin: function (id, reason, callback) {
+    const sql = "INSERT INTO Utilisateur_Roles VALUES(?, 'Administrateur','En attente',NULL,?)";
+    db.query(sql, [id,reason], function (err, results) {
         if (err) {
             callback(err, null);
         } else {
             // get the email of the user, to notify him
-            const sql = "SELECT email FROM utilisateur WHERE id = ?";
-            db.query(sql, id, function (err2, results2) {
+            const sql = "SELECT email FROM Utilisateur WHERE id = ?";
+            db.query(sql, id, function (err2, email) {
                 if (err2) callback(err2, null)
-                else callback(null, results2)
+                else callback(null, email)
             });
         }
     });

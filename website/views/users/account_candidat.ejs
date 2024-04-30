@@ -46,8 +46,10 @@
 
 
                 <div class="card-admin">
-                    <textarea class="input-card-admin-text"  placeholder="Argumentaire..."></textarea>
-                    <input class="input-card-admin-submit" type="button" value="Envoyer">
+                    <form method="post" action="/admin/makeadmin">
+                        <textarea class="input-card-admin-text" name="reason" placeholder="Argumentaire..."></textarea>
+                        <input class="input-card-admin-submit" type="submit" value="Envoyer">
+                    </form>
                 </div>
 
             </div>
