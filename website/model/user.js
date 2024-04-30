@@ -58,7 +58,7 @@ module.exports = {
       });
   },
 
-  create: function (nom, prenom, pwd, tel, email, adresse, callback) {
+  create: function (nom, prenom, pwd, tel, email, callback) {
     pass.generateHash(pwd, function (hash) {
         pwd = hash;
         const sql = "INSERT INTO `Utilisateur` VALUES (NULL,?, ?, ?, ?, ?, 1);";
