@@ -78,6 +78,23 @@ update: function (id, data, callback) {
     });
 },
 
+makeAdmin: function (id, callback) {
+    const sql = "INSERT INTO ";
+    db.query(sql, id, function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            // get the email of the user, to notify him
+            const sql = "SELECT email FROM utilisateur WHERE id = ?";
+            db.query(sql, id, function (err2, results2) {
+                if (err2) callback(err2, null)
+                else callback(null, results2)
+            });
+        }
+    });
+}, 
+
+
 /* makeAdmin: function (id, callback) {
     const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";
     db.query(sql, id, function (err, results) {
@@ -93,6 +110,5 @@ update: function (id, data, callback) {
         }
     });
 }, */
-
 
 };

@@ -64,29 +64,23 @@
                     <br>
                     <table class="Offre_table">
                         <tr>
-                          <th class="offre_th" class="offre_row" >Poste</th>
+                          <th class="offre_th" class="offre_row" >Intitule</th>
                           <th class="offre_th">Rythme de travail</th>
-                          <th class="offre_th">Salaire_min</th>
-                          <th class="offre_th">Salaire_max</th>
+                          <th class="offre_th">Salaire min</th>
+                          <th class="offre_th">Salaire max</th>
                           <th class="offre_th">Métier</th>
+                          <th class="offre_th">Organisation</th>
                           <th class="offre_th">Pays</th>
-                        </tr>
-                        <tr class="row-clickable" id="a1">
-                          <td class="offre_row">Ingénieur</td>
-                          <td>35</td>
-                          <td>35000</td>
-                          <td>40000</td>
-                          <td>CDI</td>
-                          <td>Canada</td>
                         </tr>
                         <% result.forEach((res)=> { %>
                             <tr class="row-clickable" id="a1">
-                                <td class="offre_row">Ingénieur</td>
-                                <td>35</td>
-                                <td>35000</td>
-                                <td>40000</td>
-                                <td>CDI</td>
-                                <td>Canada</td>
+                                <td class="offre_row"><%= res.intitule  %></td>
+                                <td><%= res.rythme_travail %></td>
+                                <td><%= res.salaire_min %></td>
+                                <td><%= res.salaire_max %></td>
+                                <td><%= res.statuts %></td>
+                                <td><%= res.name %></td>
+                                <td><%= res.pays %></td>
                               </tr>
                             <% }) %>
                       </table>

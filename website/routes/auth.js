@@ -141,8 +141,9 @@ router.post('/login', function (req, res, next) {
                 sendMail(
                     "Nouvelle connexion Recr'UT détectée",
                     "Bonjour " + req.session.user.prenom + ",\n\n" +
-                    "La création du compte a été effectuée avec succès.\n\n" +
-                    "Une agréable journée à vous,\n",
+                    "Une nouvelle connexion vient d'être dectectée sur votre compte.\n\n" +
+                    "Si vous n'êtes pas à l'origine de cette action veuillez contacter le support. \n\n"+
+                    "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
                     req.session.user.email);
 
             });

@@ -4,7 +4,7 @@ var offreModel = require("../model/offer");
 
 
 router.get("/offer", function (req, res, next) {
-  result = offreModel.readAll("En attente", function (result) {
+  result = offreModel.readAll("Active", function (result) {
     console.log(result);
     res.render("offres/offre", {
       title: "Visualisation des offres",
