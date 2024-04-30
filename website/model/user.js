@@ -4,7 +4,7 @@ const pass = require('../utils/passwd.js');
 module.exports = {
   read: function (email, callback) {
     db.query(
-      "SELECT * from Utilisateur where email= ?",
+      "SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.nom,Utilisateur.prenom,Utilisateur.tel,Utilisateur.password,Utilisateur_Roles_Approuves.type_utilisateur AS role FROM Utilisateur LEFT JOIN ( SELECT id_utilisateur, type_utilisateur FROM Utilisateur_Roles WHERE state_user = 'Approuvée' ) AS Utilisateur_Roles_Approuves ON Utilisateur.id_utilisateur = Utilisateur_Roles_Approuves.id_utilisateur WHERE is_active = 1 AND email= ?",
       email,
       function (err, results) {
         if (err) throw err;
@@ -55,7 +55,7 @@ module.exports = {
   },
 
   read: function (email, callback) {
-      const sql = "SELECT * FROM Utilisateur WHERE email = ?";
+      const sql = "SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.nom,Utilisateur.prenom,Utilisateur.tel,Utilisateur.password,Utilisateur_Roles_Approuves.type_utilisateur AS role FROM Utilisateur LEFT JOIN ( SELECT id_utilisateur, type_utilisateur FROM Utilisateur_Roles WHERE state_user = 'Approuvée' ) AS Utilisateur_Roles_Approuves ON Utilisateur.id_utilisateur = Utilisateur_Roles_Approuves.id_utilisateur WHERE is_active = 1 AND email= ?";
       db.query(sql, email, function (err, results) {
           if (err) {
               callback(err, null);

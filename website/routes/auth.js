@@ -8,7 +8,13 @@ const sendMail = require('../utils/mail.js');
 router.get('/login', function (req, res, next) {
     const session = req.session;
     if (session.usermail) {
-        res.redirect("/offers/all");
+        if (session.role == "Administrateur"){
+            res.redirect("/admin/account");
+        }else if (session.role == "Recruteur"){
+            res.redirect("/recruteur/account_recruteur");
+        }else{
+            res.redirect("/users/account");
+        }
     } else {
         res.render('login/login', {title: 'Connexion'});
     }
@@ -17,7 +23,13 @@ router.get('/login', function (req, res, next) {
 router.get('/register', function (req, res, next) {
     const session = req.session;
     if (session.usermail) {
-        res.redirect("/offers/all");
+        if (session.role == "Administrateur"){
+            res.redirect("/admin/account");
+        }else if (session.role == "Recruteur"){
+            res.redirect("/recruteur/account_recruteur");
+        }else{
+            res.redirect("/users/account");
+        }
         return;
     }
     res.render('login/creation', {
@@ -113,13 +125,14 @@ router.post('/login', function (req, res, next) {
         if (verif) {
             userModel.read(req.body.email, function (err, user) {
                 session.createSession(
-                    req.session, req.body.email, user[0].type, user[0]
+                    req.session, req.body.email, user[0].role, user[0]
                 );
+
                 // rediriger en fonction du type de l'utilisateur 
                 // vers la bonne page ici
-                if (req.session.type == "admin"){
+                if (req.session.role == "Administrateur"){
                     res.redirect("/admin/account");
-                }else if (req.session.type == "recruteur"){
+                }else if (req.session.role == "Recruteur"){
                     res.redirect("/recruteur/account_recruteur");
                 }else{
                     res.redirect("/users/account");
