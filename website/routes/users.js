@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var userModel = require("../model/user");
+const session = require('../utils/session.js');
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -36,7 +37,8 @@ router.get("/account", function (req, res, next) {
 
 /* GET candidatures of user listing. */
 router.get("/candidatures", function (req, res, next) {
-  result = userModel.applied(3, function (result) {
+  id = req.session.user.id_utilisateur;
+  result = userModel.applied(id, function (result) {
     res.render("users/candidatures", { title: "List des utilisateurs", result: result });
   });
 });

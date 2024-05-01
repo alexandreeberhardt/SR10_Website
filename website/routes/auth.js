@@ -5,10 +5,21 @@ const session = require('../utils/session.js');
 const {body, validationResult} = require('express-validator');
 const sendMail = require('../utils/mail.js');
 
+
+router.get('/', function (req, res, next) {
+    res.redirect("/login/login")
+});
+
 router.get('/login', function (req, res, next) {
     const session = req.session;
     if (session.usermail) {
-        res.redirect("/offers/all");
+        if (session.role == "Administrateur"){
+            res.redirect("/admin/account");
+        }else if (session.role == "Recruteur"){
+            res.redirect("/recruteur/account_recruteur");
+        }else{
+            res.redirect("/users/account");
+        }
     } else {
         res.render('login/login', {title: 'Connexion'});
     }
@@ -17,7 +28,13 @@ router.get('/login', function (req, res, next) {
 router.get('/register', function (req, res, next) {
     const session = req.session;
     if (session.usermail) {
-        res.redirect("/offers/all");
+        if (session.role == "Administrateur"){
+            res.redirect("/admin/account");
+        }else if (session.role == "Recruteur"){
+            res.redirect("/recruteur/account_recruteur");
+        }else{
+            res.redirect("/users/account");
+        }
         return;
     }
     res.render('login/creation', {
@@ -81,12 +98,12 @@ router.post('/register',
                     function (err, result) {
                         if (!err) {
                             // Envoyer un mail en confirmation 
-                            /*sendMail(
+                            sendMail(
                                 "Confirmation d'inscription",
                                 "Bonjour " + req.body.prenom + ",\n\n" +
                                 "La création du compte a été effectuée avec succès.\n\n" +
                                 "Une agréable journée à vous,\n",
-                                req.body.email);*/
+                                req.body.email);
                             res.redirect("/login/login");
                         }
                     });
@@ -113,17 +130,27 @@ router.post('/login', function (req, res, next) {
         if (verif) {
             userModel.read(req.body.email, function (err, user) {
                 session.createSession(
-                    req.session, req.body.email, user[0].type, user[0]
+                    req.session, req.body.email, user[0].role, user[0]
                 );
+
                 // rediriger en fonction du type de l'utilisateur 
                 // vers la bonne page ici
-                if (req.session.type == "admin"){
+                if (req.session.role == "Administrateur"){
                     res.redirect("/admin/account");
-                }else if (req.session.type == "recruteur"){
+                }else if (req.session.role == "Recruteur"){
                     res.redirect("/recruteur/account_recruteur");
                 }else{
                     res.redirect("/users/account");
                 }
+
+                sendMail(
+                    "Nouvelle connexion Recr'UT détectée",
+                    "Bonjour " + req.session.user.prenom + ",\n\n" +
+                    "Une nouvelle connexion vient d'être dectectée sur votre compte.\n\n" +
+                    "Si vous n'êtes pas à l'origine de cette action veuillez contacter le support. \n\n"+
+                    "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
+                    req.session.user.email);
+
             });
         } else {
             res.render('login/login', {title: 'Connexion', error: 'information de connexion invalide.'});

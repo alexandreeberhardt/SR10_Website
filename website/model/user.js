@@ -1,17 +1,10 @@
 var db = require("./db.js");
 const pass = require('../utils/passwd.js');
+const session = require('../utils/session.js');
+
 
 module.exports = {
-  read: function (email, callback) {
-    db.query(
-      "SELECT * from Utilisateur where email= ?",
-      email,
-      function (err, results) {
-        if (err) throw err;
-        callback(results);
-      },
-    );
-  },
+
   readall: function (callback) {
     db.query("SELECT * from Utilisateur", function (err, results) {
       if (err) throw err;
@@ -43,19 +36,8 @@ module.exports = {
   },
 
 
-  create: function (email, nom, prenom, password, tel, callback) {
-    rows = db.query(
-      "INSERT INTO Utilisateur VALUES (NULL,?,?,?,?,?,1)",
-      [email, nom, prenom, tel, password],
-      function (err, results) {
-        if (err) throw err;
-        callback(true);
-      },
-    );
-  },
-
   read: function (email, callback) {
-      const sql = "SELECT * FROM Utilisateur WHERE email = ?";
+      const sql = "SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.nom,Utilisateur.prenom,Utilisateur.tel,Utilisateur.password,Utilisateur_Roles_Approuves.type_utilisateur AS role FROM Utilisateur LEFT JOIN ( SELECT id_utilisateur, type_utilisateur FROM Utilisateur_Roles WHERE state_user = 'Approuvée' ) AS Utilisateur_Roles_Approuves ON Utilisateur.id_utilisateur = Utilisateur_Roles_Approuves.id_utilisateur WHERE is_active = 1 AND email= ?";
       db.query(sql, email, function (err, results) {
           if (err) {
               callback(err, null);
@@ -76,7 +58,7 @@ module.exports = {
       });
   },
 
-  create: function (nom, prenom, pwd, tel, email, adresse, callback) {
+  create: function (nom, prenom, pwd, tel, email, callback) {
     pass.generateHash(pwd, function (hash) {
         pwd = hash;
         const sql = "INSERT INTO `Utilisateur` VALUES (NULL,?, ?, ?, ?, ?, 1);";
@@ -98,6 +80,25 @@ update: function (id, data, callback) {
     });
 },
 
+
+// à modifier pour vérifier qu'il n'y ait pas déjà une demande en cours
+makeAdmin: function (id, reason, callback) {
+    const sql = "INSERT INTO Utilisateur_Roles VALUES(?, 'Administrateur','En attente',NULL,?)";
+    db.query(sql, [id,reason], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            // get the email of the user, to notify him
+            const sql = "SELECT email FROM Utilisateur WHERE id = ?";
+            db.query(sql, id, function (err2, email) {
+                if (err2) callback(err2, null)
+                else callback(null, email)
+            });
+        }
+    });
+}, 
+
+
 /* makeAdmin: function (id, callback) {
     const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";
     db.query(sql, id, function (err, results) {
@@ -113,6 +114,5 @@ update: function (id, data, callback) {
         }
     });
 }, */
-
 
 };

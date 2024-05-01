@@ -13,7 +13,12 @@ module.exports = {
     createSession: function (session, mail, role, user) {
         session.user = user;
         session.usermail = mail;
-        session.role = role;
+
+        if(role == null){
+            session.role = "candidat"
+        }else{
+            session.role = role;
+        }
         session.save(function (err) {
             // console.log(err);
         });
