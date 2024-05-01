@@ -10,6 +10,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
+/* Pas utile pour notre application
 router.get("/userslist", function (req, res, next) {
   result = userModel.readall(function (result) {
     res.render("users/userslist", {
@@ -17,7 +18,7 @@ router.get("/userslist", function (req, res, next) {
       users: result,
     });
   });
-});
+}); */
 
 router.get("/creation", function (req, res, next) {
     res.render("users/account_creation", {
@@ -39,7 +40,7 @@ router.get("/account", function (req, res, next) {
 router.get("/candidatures", function (req, res, next) {
   id = req.session.user.id_utilisateur;
   result = userModel.applied(id, function (result) {
-    res.render("users/candidatures", { title: "List des utilisateurs", result: result });
+    res.render("users/candidatures", { title: "Candidatures", result: result });
   });
 });
 

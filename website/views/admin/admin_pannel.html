@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../styles/admin_pannel.css" /> 
+        <title>Visualisation des offres </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function(){
+                $("#org").click(function(){
+                    window.location.href = "demande_recrut.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#recruteur").click(function(){
+                    window.location.href = "demande_recruteur.html";
+                });
+            });
+            $(document).ready(function(){
+                $("#admin").click(function(){
+                    window.location.href = "demande_recrut.html";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="left-side">
+                <a class="link-wrapper link" href="admin_pannel.html" >
+                    <div class="button button-home">
+                        <img class="img-topbar"  src="../assets/home.png">
+                        <p>Home</p>
+                    </div>
+                </a>
+            
+            </div>
+            <div class="right-side">
+                <a class="link" href="">
+                    <div class="button account">
+                        <img class="img-topbar" src="../assets/logout.png">
+                        <p>Se déconnecter</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="main-page">
+            <div class="left-side-main">
+                <div class="header-left-side">
+                    <h1>Pannel de gestion administrateur</h1>
+                    <h3>Gérer les demandes de tout type d'utilisateur !</h3>
+                    <div class="search-input">
+                        <input placeholder="Search..." class="filter-input" type="text">
+                        <input placeholder="Organisation" class="filter-input" type="text">
+                        <input placeholder="Administrateurs" class="filter-input" type="text">
+                    </div>
+                    
+                    <br>
+                    <table class="Offre_table">
+                        <tr>
+                          <th class="offre_th" class="offre_row">Type</th>
+                          <th class="offre_th">Demandeur</th>
+                          <th class="offre_th">Status</th>
+                          <th class="offre_th">date de la demande</th>
+                        </tr>
+                            <tr id="org" >
+                                <td class="offre_row">création organisation</td>
+                                <td>Jean Michel</td>
+                                <td>en attente</td>
+                                <td>12/12/2002</td>
+                            </tr>
+                            <tr id="admin">
+                                <td class="offre_row">administrateur</td>
+                                <td>Kilian Mbappé</td>
+                                <td>en attente</td>
+                                <td>13/04/2005</td>
+                            </tr>
+                            <tr id="recruteur">
+                                <td class="offre_row">recruteur</td>
+                                <td>Charlie Flyhnt</td>
+                                <td>acceptée</td>
+                                <td>14/02/2009</td>
+                            </tr>
+                       
+                      </table>
+                </div>
+
+            </div>
+
+        </div>
+        
+
+    </body>
+</html>

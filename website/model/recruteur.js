@@ -35,7 +35,7 @@ module.exports = {
 
   getOrgForRecruteur: function (id, callback) {
     db.query(
-      "SELECT * FROM `Organisation` INNER JOIN Recruteur_Organisation ON Organisation.siret = Recruteur_Organisation.organisation_siret WHERE Recruteur_Organisation.recruteur = ?",
+      "SELECT * FROM `Organisation` INNER JOIN Recruteur_Organisation ON Organisation.siret = Recruteur_Organisation.organisation_siret WHERE Recruteur_Organisation.recruteur = ?  ",
       id,
       function (err, results) {
         if (err) throw err;
@@ -55,6 +55,20 @@ module.exports = {
     },
   );
 },
+
+
+quitOrg: function(id,siret,callback){
+  db.query(
+    "UPDATE Recruteur_Organisation SET state = 'Deleted' WHERE recruteur = ? AND organisation_siret = ?",[id,siret],function(err,results){
+      if (err) throw err;
+      callback(results);
+    },
+  );
+},
+
+
+
+
 
 
 };
