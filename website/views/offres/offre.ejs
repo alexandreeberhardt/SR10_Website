@@ -55,7 +55,7 @@
                             <th class="offre_th">Pays</th>
                         </tr>
                         <% result.forEach((res)=> { %>
-                            <tr class="row-clickable" onclick="location.href='/offres/1'" style="cursor:pointer;">
+                            <tr class="row-clickable" onclick="location.href='/offres/<%= res.id_offre %>'" style="cursor:pointer;">
                                 <td class="offre_row"><%= res.intitule %></td>
                                 <td><%= res.rythme_travail %></td>
                                 <td><%= res.salaire_min %></td>
