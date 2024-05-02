@@ -1,7 +1,16 @@
 td {
   text-align: center;
 }
+body {
+  text-align: center;
+  align-items: center;
 
+}
+.offre_detail {
+  background-color: #f3f1ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px #0005;
+}
 .Offre_table {
   background-color: #f3f1ff;
   border-radius: 10px;
@@ -165,4 +174,15 @@ td {
 
 .row-clickable {
   cursor: pointer;
+}
+
+.postuler {
+  background: linear-gradient(125deg, #9181f4, #5038ed);
+  text-align: center;
+  border: none;
+  width: 100px;
+  height: 40px;
+  color: #f3f1ff;
+  border-radius: 10px;
+  font-weight: bold;
 }
