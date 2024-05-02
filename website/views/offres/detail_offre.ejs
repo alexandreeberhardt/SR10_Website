@@ -46,13 +46,17 @@
         <tr>Lieu de travail : <%= offre.Adresse_Lieu %>, <%= offre.Ville %>, <%= offre.Code_Postal %>, <%= offre.Pays %></tr><br/>
         <tr>Recruteur : <%= offre.Prenom_Recruteur %> <%= offre.Nom_Recruteur %> <%= offre.Email_Recruteur %><%= offre.Telephone_Recruteur %></tr><br/>
         <tr><%= offre.Indications %></tr><br/>
+        <tr><%= offre.IdOffre %></tr><br/>
+
         <% }) %>
         <a class="link-wrapper link" href="/offres/offer" >
             <button class="postuler">
                 <p>Retour</p>
             </button>
         </a>
-        <button  type="submit" class="postuler">postuler</button>
+        <form method="post">
+        <button  type="submit" class="postuler">postuler</button> 
+        </form>
     </div>
         
         </body>
