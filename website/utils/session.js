@@ -1,3 +1,4 @@
+const session = require("express-session");
 const sessions = require("express-session");
 require('dotenv').config();
 
@@ -13,6 +14,7 @@ module.exports = {
     createSession: function (session, mail, role, user) {
         session.user = user;
         session.usermail = mail;
+        console.log(user);
 
         if(role == null){
             session.role = "candidat"

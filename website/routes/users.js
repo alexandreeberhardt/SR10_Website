@@ -36,10 +36,14 @@ router.get("/account", function (req, res, next) {
 });
 
 
-/* GET candidatures of user listing. */
 router.get("/candidatures", function (req, res, next) {
-  id = req.session.user.id_utilisateur;
-  result = userModel.applied(id, function (result) {
+  const id = req.session.user.id_utilisateur; 
+  userModel.applied(id, function (err, result) {
+    if (err) {
+      console.error("Erreur lors de la récupération des candidatures:", err);
+      res.status(500).send("Erreur interne du serveur");
+      return;
+    }
     res.render("users/candidatures", { title: "Candidatures", result: result });
   });
 });

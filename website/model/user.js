@@ -12,11 +12,16 @@ module.exports = {
     });
   },
 
-  applied: function (id, callback) {
-    db.query("SELECT intitule,Organisation.name FROM `Candidature` INNER JOIN Offre ON Offre.id_offre = Candidature.id_candidature INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste INNER JOIN State_demande ON State_demande.state_value = Candidature.state INNER JOIN Offre_Organisation ON Offre_Organisation.offre = Offre.id_offre INNER JOIN Organisation ON Organisation.siret = Offre_Organisation.org WHERE State_demande.state_value = 'En attente' AND Candidature.candidat = ?",id, function (err, results) {
-      if (err) throw err;
-      callback(results);
-    });
+  applied:function(id_utilisateur,callback){
+    var sql = "SELECT Organisation.name AS Name, Fiche_poste.intitule AS Intitule FROM Organisation JOIN Offre_Organisation ON Organisation.siret = Offre_Organisation.org JOIN Offre ON Offre_Organisation.offre = Offre.id_offre JOIN Fiche_poste ON Offre.fiche_poste = Fiche_poste.id_fiche_poste JOIN Candidature ON Offre.id_offre = Candidature.offre WHERE Candidature.candidat = ?;"
+    db.query(sql, [id_utilisateur], function (err, results) {
+      if (err) {
+        
+          callback(err, null);
+      } else {
+        callback(null, results);
+      }
+  });
   },
 
   areValid: function (email, password, callback) {
