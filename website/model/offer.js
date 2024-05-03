@@ -1,4 +1,5 @@
 var db = require("./db.js");
+const { applied } = require("./user.js");
 module.exports = {
   read: function (id, callback) {
     db.query(
