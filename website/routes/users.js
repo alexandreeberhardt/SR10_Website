@@ -5,6 +5,12 @@ const session = require('../utils/session.js');
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
+
+  if (!session){
+    res.redirect('/403');
+    return;
+  }
+
   result = userModel.readall(function (result) {
     res.render("usersList", { title: "List des utilisateurs", users: result });
   });
@@ -21,6 +27,12 @@ router.get("/userslist", function (req, res, next) {
 }); */
 
 router.get("/creation", function (req, res, next) {
+
+  if (!session){
+    res.redirect('/403');
+    return;
+  }
+
     res.render("users/account_creation", {
       title: "Création d'un compte recr'uT",
       users: result,
@@ -30,6 +42,12 @@ router.get("/creation", function (req, res, next) {
 
 
 router.get("/account", function (req, res, next) {
+
+  if (!session){
+    res.redirect('/403');
+    return;
+  }
+
     res.render("users/account_candidat", {
       title: "Compte personnel Recr'uT",
     });
@@ -37,6 +55,12 @@ router.get("/account", function (req, res, next) {
 
 
 router.get("/candidatures", function (req, res, next) {
+  
+  if (!session){
+    res.redirect('/403');
+    return;
+  }
+
   const id = req.session.user.id_utilisateur; 
   userModel.applied(id, function (err, result) {
     if (err) {

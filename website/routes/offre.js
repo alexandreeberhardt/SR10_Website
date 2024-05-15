@@ -4,6 +4,12 @@ var offreModel = require("../model/offer");
 
 
 router.get("/offer", function (req, res, next) {
+
+    if (!session){
+        res.redirect('/403');
+        return;
+      }
+
   result = offreModel.readAll("Active", function (result) {
     console.log(result);
     res.render("offres/offre", {
@@ -14,6 +20,12 @@ router.get("/offer", function (req, res, next) {
 });
 
 router.get('/:id_offre', function (req, res) {
+
+    if (!session){
+        res.redirect('/403');
+        return;
+      }
+
   const id_offre = req.params.id_offre;
   offreModel.offreDetail(id_offre, function(err, result) {
       if (err) {
@@ -30,6 +42,13 @@ router.get('/:id_offre', function (req, res) {
 
 
 router.post('/:id_offre', function (req, res) {
+
+
+    if (!session){
+        res.redirect('/403');
+        return;
+      }
+
     const id_offre = req.params.id_offre;
     const id_utilisateur = req.session.user.id_utilisateur; 
 

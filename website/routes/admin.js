@@ -7,6 +7,12 @@ const session = require('../utils/session.js');
 
 router.post('/makeadmin', function (req, res, next) {
     const session = req.session;
+
+    if (session.role !== "Administrateur"){
+        res.redirect('/403');
+        return;
+    }
+
     const id = session.user.id_utilisateur
     userModel.makeAdmin(id, req.body.reason, function (err, email) {
         if(err){
@@ -26,5 +32,18 @@ router.post('/makeadmin', function (req, res, next) {
         res.redirect('/users/account');
     });
 });
+
+
+router.get("/account", function (req, res, next) {
+
+    if (session.role !== "Administrateur"){
+        res.redirect('/403');
+        return;
+    }
+
+    res.render("admin/account", { title: "Account Admin" });
+  });
+
+
 
 module.exports = router;

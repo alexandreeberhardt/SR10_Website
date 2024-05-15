@@ -31,6 +31,7 @@ td {
 }
 
 .left-side {
+  visibility: hidden;
   width: 50%;
   display: flex;
   justify-content: flex-start;

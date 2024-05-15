@@ -26,7 +26,7 @@ app.use(session.init());
 
 app.all("*", function (req, res, next) {
 
-  const nonSecurePaths = ["/login/login/", "/login/register/", "/",
+  const nonSecurePaths = ["/login/login/", "/login/register/", "/", "/404",
       "/login/login", "/login/register"];
 
   const adminPaths = [
@@ -34,7 +34,10 @@ app.all("*", function (req, res, next) {
   ]; // list of admin urls
 
   const recruteurPaths = [
-    "/recruteur/", // mettre toutes nos routes admin
+    "/recruteur/", "/recruteur/account_recruteur"
+    ,"/recruteur/visualisation_offre", "/recruteur/home_recruteur"
+    ,"/recruteur/home_recruteur", "/recruteur/quit_org",
+    "/recruteur/" // mettre toutes nos routes admin
 ]; // list of recruteurs urls
 
 
@@ -49,7 +52,8 @@ app.all("*", function (req, res, next) {
   if (adminPaths.includes(req.path)) {
     // on vérifie le role admin avant. 
       if (session.isConnected(req.session, "Administrateur")) return next();
-      else res.status(403).render(
+      else {
+        res.status(403).render(
           "errors/403",
           {
               title: "Unauthorized access",
@@ -57,9 +61,11 @@ app.all("*", function (req, res, next) {
               error: {},
           }
       );
+    }
   }else if (recruteurPaths.includes(req.path)){
     if (session.isConnected(req.session, "Recruteur") || session.isConnected(req.session, "recruteur") ) return next();
-      else res.status(403).render(
+      else {
+      res.status(403).render(
           "errors/403",
           {
               title: "Unauthorized access",
@@ -67,14 +73,12 @@ app.all("*", function (req, res, next) {
               error: {},
           }
       );
+    }
   }
   // s'il essaie de se connecter à une route candidat et qu'il est connecté alors tout est bon. 
   else if (session.isConnected(req.session)) return next();
 
 });
-
-
-
 
 
 // view engine setup
