@@ -13,7 +13,7 @@ module.exports = {
   },
 
   applied:function(id_utilisateur,callback){
-    var sql = "SELECT Organisation.name AS Name, Fiche_poste.intitule AS Intitule FROM Organisation JOIN Offre_Organisation ON Organisation.siret = Offre_Organisation.org JOIN Offre ON Offre_Organisation.offre = Offre.id_offre JOIN Fiche_poste ON Offre.fiche_poste = Fiche_poste.id_fiche_poste JOIN Candidature ON Offre.id_offre = Candidature.offre WHERE Candidature.candidat = ?;"
+    var sql = "SELECT Organisation.name AS Name, Fiche_poste.intitule AS Intitule, Offre.id_offre AS IdOffre FROM Organisation JOIN Offre_Organisation ON Organisation.siret = Offre_Organisation.org JOIN Offre ON Offre_Organisation.offre = Offre.id_offre JOIN Fiche_poste ON Offre.fiche_poste = Fiche_poste.id_fiche_poste JOIN Candidature ON Offre.id_offre = Candidature.offre WHERE Candidature.candidat = ?;"
     db.query(sql, [id_utilisateur], function (err, results) {
       if (err) {
         
@@ -51,7 +51,27 @@ module.exports = {
           } else callback(null, results);
       });
   },
+  already: function (id_offre, id_utilisateur, callback) {
+    var sql = "SELECT * FROM Candidature WHERE offre=? AND candidat=?";
+    db.query(sql, [id_offre, id_utilisateur], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    }); 
+},
+  alreadyDetail:function(id_offre, callback){
+    const sql = `SELECT O.id_offre AS IdOffre, O.indications AS Indications, FP.intitule AS Intitule_Poste, FP.description AS Description_Poste, FP.salaire_min AS Salaire_Minimum, FP.salaire_max AS Salaire_Maximum, FP.rythme_travail AS Rythme_Travail, FP.responsable_hierarchique AS Responsable_Hierarchique, FP.statuts_poste AS Statut_Poste, L.adresse AS Adresse_Lieu, L.ville AS Ville, L.postcode AS Code_Postal, L.pays AS Pays, R.prenom AS Prenom_Recruteur, R.nom AS Nom_Recruteur, R.email AS Email_Recruteur, R.tel AS Telephone_Recruteur, Org.name AS Nom_Organisation FROM Offre O INNER JOIN Offre_Organisation OO ON O.id_offre = OO.offre INNER JOIN Organisation Org ON OO.org = Org.siret INNER JOIN Fiche_poste FP ON O.fiche_poste = FP.id_fiche_poste INNER JOIN Lieu L ON FP.lieu = L.id_lieu INNER JOIN Utilisateur R ON FP.recruteur = R.id_utilisateur WHERE FP.id_fiche_poste= ?;`;
+    db.query(sql, [id_offre], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
 
+  },
   readById: function (id, callback) {
       const sql = "SELECT * FROM Utilisateur WHERE id_utilisateur = ?";
       db.query(sql, id, function (err, results) {
@@ -82,6 +102,17 @@ update: function (id, data, callback) {
         if (err) {
             callback(err, null);
         } else callback(null, results);
+    });
+},
+
+unpostule: function(id_offre, id_utilisateur, callback) {
+    var sql = "DELETE FROM Candidature WHERE offre = ? AND candidat = ?";
+    db.query(sql, [id_offre, id_utilisateur], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
     });
 },
 

@@ -67,7 +67,7 @@
                           <th class="offre_th">Nom de l'entreprise</th>
                         </tr>
                         <% result.forEach((result)=> { %>
-                        <tr class="row-clickable" id="a1">
+                        <tr class="row-clickable" onclick="location.href='/users/candidatures/<%= result.IdOffre %>'" style="cursor:pointer;">
                           <td class="offre_row">    <%= result.Intitule %>                          </td>
                           <td><%= result.Name %></td>
                         </tr>
