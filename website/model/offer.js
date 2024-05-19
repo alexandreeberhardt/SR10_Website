@@ -75,4 +75,3 @@ postule: function (id_offre, id_utilisateur, callback) {
     });
   },
 };
-
