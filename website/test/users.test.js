@@ -1,7 +1,9 @@
 const db = require("../model/db.js");
 const users = require("../model/user.js");
+const passwd = require("../utils/passwd");
 
 jest.mock('../model/db.js');
+jest.mock('../utils/passwd');
 
 describe("Users Module", () => {
   afterEach(() => {
@@ -68,7 +70,7 @@ describe("Users Module", () => {
         callback(null, mockUser);
       });
 
-      pass.comparePassword.mockImplementation((password, hash, callback) => {
+      passwd.comparePassword.mockImplementation((password, hash, callback) => {
         callback(true);
       });
 
@@ -241,7 +243,7 @@ describe("Users Module", () => {
 
   describe("create", () => {
     it("should create a new user", (done) => {
-      pass.generateHash.mockImplementation((pwd, callback) => {
+      passwd.generateHash.mockImplementation((pwd, callback) => {
         callback("hashedPassword");
       });
 

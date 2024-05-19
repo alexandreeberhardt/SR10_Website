@@ -64,14 +64,16 @@ postule: function (id_offre, id_utilisateur, callback) {
 
 
   areValid: function (email, password, callback) {
-    sql = "SELECT password FROM Utilisateur WHERE email = ?";
-    rows = db.query(sql, email, function (err, results) {
-      if (err) throw err;
-      if (rows.length == 1 && rows[0].pwd === password) {
-        callback(true);
-      } else {
-        callback(false);
-      }
+    const sql = "SELECT password FROM Utilisateur WHERE email = ?";
+    db.query(sql, [email], function (err, results) {
+        if (err) return callback(err);
+
+        if (results.length === 1 && results[0].password === password ) {
+            callback(true, null);
+        } else {
+            callback(false, null);
+        }
     });
   },
+
 };
