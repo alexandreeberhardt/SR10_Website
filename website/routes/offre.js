@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var offreModel = require("../model/offer");
+const session = require('../utils/session.js');
 
 
 router.get("/offer", function (req, res, next) {

@@ -160,12 +160,6 @@ router.post('/login', function (req, res, next) {
 
 
 router.get('/logout', (req, res) => {
-
-    if (!session){
-        res.redirect('/403');
-        return;
-      }
-
     session.deleteSession(req.session);
     res.redirect('/');
 });

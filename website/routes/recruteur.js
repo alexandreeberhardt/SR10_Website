@@ -7,9 +7,11 @@ const recruteur = require("../model/recruteur");
 const session = require('../utils/session.js');
 const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 
-router.get("/account_recruteur", function (req, res, next) {
+router.get("/account_recruteur", function (req, res, next) {``
 
-    if (session.role !== "Recruteur"){
+  const session = req.session;
+  if (session.role != "Recruteur"){
+      res.status(403);
       res.redirect('/403');
       return;
   }
@@ -18,8 +20,11 @@ router.get("/account_recruteur", function (req, res, next) {
 });
 
 router.get("/visualisation_offre", function (req, res, next) {
+  const session = req.session;
 
-  if (session.role !== "Recruteur"){
+
+  if (session.role != "Recruteur"){
+    res.status(403);
     res.redirect('/403');
     return;
 }
@@ -33,13 +38,17 @@ router.get("/visualisation_offre", function (req, res, next) {
 });
 
 router.get("/home_recruteur", function (req, res, next) {
+  const session = req.session;
 
-  if (session.role !== "Recruteur"){
+  if (session.role != "Recruteur"){
+    res.status(403);
     res.redirect('/403');
     return;
 }
 
   result = offreModel.readAll("Active", function (result) {
+    const session = req.session;
+
     res.render("recruteur/home_recruteur", {
       title: "Accueil recruteur",
       result: result,
@@ -49,8 +58,11 @@ router.get("/home_recruteur", function (req, res, next) {
 
 /* GET candidatures of user listing. */
 router.get("/candidatures", function (req, res, next) {
+  const session = req.session;
 
-  if (session.role !== "Recruteur"){
+
+  if (session.role != "Recruteur"){
+    res.status(403);
     res.redirect('/403');
     return;
 }
@@ -63,8 +75,11 @@ router.get("/candidatures", function (req, res, next) {
 
 /* GET organisation of user. */
 router.get("/quit_org", function (req, res, next) {
+  const session = req.session;
 
-  if (session.role !== "Recruteur"){
+
+  if (session.role != "Recruteur"){
+    res.status(403);
     res.redirect('/403');
     return;
 }
@@ -78,8 +93,12 @@ router.get("/quit_org", function (req, res, next) {
 
 // à sécuriser dans le futur 
 router.post('/quit_org', function (req, res, next) {
+  const session = req.session;
 
-  if (session.role !== "Recruteur"){
+
+  if (session.role != "Recruteur"){
+    res.status(403);
+
     res.redirect('/403');
     return;
 }
