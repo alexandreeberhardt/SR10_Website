@@ -5,10 +5,10 @@ const session = require('../utils/session.js');
 
 
 router.get("/offer", function (req, res, next) {
+    const session = req.session;
 
     if (!session){
-        res.redirect('/403');
-        return;
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
       }
 
   result = offreModel.readAll("Active", function (result) {
@@ -21,10 +21,10 @@ router.get("/offer", function (req, res, next) {
 });
 
 router.get('/:id_offre', function (req, res) {
+    const session = req.session;
 
     if (!session){
-        res.redirect('/403');
-        return;
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
       }
 
   const id_offre = req.params.id_offre;
@@ -43,11 +43,11 @@ router.get('/:id_offre', function (req, res) {
 
 
 router.post('/:id_offre', function (req, res) {
+    const session = req.session;
 
 
     if (!session){
-        res.redirect('/403');
-        return;
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
       }
 
     const id_offre = req.params.id_offre;

@@ -4,48 +4,12 @@ var userModel = require("../model/user");
 const session = require('../utils/session.js');
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
-
-  if (!session){
-    res.redirect('/403');
-    return;
-  }
-
-  result = userModel.readall(function (result) {
-    res.render("usersList", { title: "List des utilisateurs", users: result });
-  });
-});
-
-/* Pas utile pour notre application
-router.get("/userslist", function (req, res, next) {
-  result = userModel.readall(function (result) {
-    res.render("users/userslist", {
-      title: "List des utilisateurs",
-      users: result,
-    });
-  });
-}); */
-
-router.get("/creation", function (req, res, next) {
-
-  if (!session){
-    res.redirect('/403');
-    return;
-  }
-
-    res.render("users/account_creation", {
-      title: "Création d'un compte recr'uT",
-      users: result,
-    });
-});
-
-
 
 router.get("/account", function (req, res, next) {
+  const session = req.session;
 
   if (!session){
-    res.redirect('/403');
-    return;
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
   }
 
     res.render("users/account_candidat", {
@@ -55,10 +19,10 @@ router.get("/account", function (req, res, next) {
 
 
 router.get("/candidatures", function (req, res, next) {
-  
+  const session = req.session;
+
   if (!session){
-    res.redirect('/403');
-    return;
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
   }
 
   const id = req.session.user.id_utilisateur; 
@@ -71,12 +35,6 @@ router.get("/candidatures", function (req, res, next) {
     res.render("users/candidatures", { title: "Candidatures", result: result });
   });
 });
-
-
-
-
-
-
 
 
 

@@ -10,10 +10,10 @@ const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 router.get("/account_recruteur", function (req, res, next) {``
 
   const session = req.session;
-  if (session.role != "Recruteur"){
-      res.status(403);
-      res.redirect('/403');
-      return;
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
   }
 
   res.render("recruteur/account_recruteur", { title: "Account Recruteur" });
@@ -23,11 +23,11 @@ router.get("/visualisation_offre", function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur"){
-    res.status(403);
-    res.redirect('/403');
-    return;
-}
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
+  }
 
   result = recruteurModel.readCandidatures("En attente", function (result) {
     res.render("recruteur/demande_recruteur", {
@@ -40,11 +40,11 @@ router.get("/visualisation_offre", function (req, res, next) {
 router.get("/home_recruteur", function (req, res, next) {
   const session = req.session;
 
-  if (session.role != "Recruteur"){
-    res.status(403);
-    res.redirect('/403');
-    return;
-}
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
+  }
 
   result = offreModel.readAll("Active", function (result) {
     const session = req.session;
@@ -61,11 +61,11 @@ router.get("/candidatures", function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur"){
-    res.status(403);
-    res.redirect('/403');
-    return;
-}
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
+  }
 
   id = req.session.user.id_utilisateur;
   result = userModel.applied(id, function (result) {
@@ -78,11 +78,11 @@ router.get("/quit_org", function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur"){
-    res.status(403);
-    res.redirect('/403');
-    return;
-}
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
+  }
 
   id = req.session.user.id_utilisateur;
   result = recruteurModel.getOrgForRecruteur(id, function (result) {
@@ -96,12 +96,11 @@ router.post('/quit_org', function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur"){
-    res.status(403);
-
-    res.redirect('/403');
-    return;
-}
+  if (session.role != "Recruteur" || session.role != "Administrateur"){
+    if (!session){
+      return res.status(403).send("Accès interdit.");
+    }
+  }
 
     siret = req.body.Type;
     id = req.session.user.id_utilisateur;

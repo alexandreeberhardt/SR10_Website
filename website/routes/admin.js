@@ -10,11 +10,11 @@ const session = require('../utils/session.js');
 router.post('/makeadmin', function (req, res, next) {
     const session = req.session;
 
-    if (session.role !== "Administrateur"){
-        res.status(403);
-        res.redirect('/403');
-        return;
-    }
+    if (session.role != "Administrateur"){
+        if (!session){
+          return res.status(403).send("Accès interdit.");
+        }
+      }
 
     const id = session.user.id_utilisateur
     userModel.makeAdmin(id, req.body.reason, function (err, email) {
@@ -40,11 +40,11 @@ router.post('/makeadmin', function (req, res, next) {
 router.get("/account", function (req, res, next) {
     const session = req.session;
 
-    if (session.role !== "Administrateur"){
-        res.status(403);
-        res.redirect('/403');
-        return;
-    }
+    if (session.role != "Administrateur"){
+        if (!session){
+          return res.status(403).send("Accès interdit.");
+        }
+      }
 
     let results  = {
             "items1": [],
