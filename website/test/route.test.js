@@ -176,7 +176,7 @@ describe("Test recruteurs routes not logged in ", () => {
 // connecté 
 
 describe("route /recruteur/visualisation_offre GET ", () => {
-  test("all offers logged in", done => {
+  test("It should respond with 200 for GET /recruteur/account_recruteur logged in", done => {
     const agent = request.agent(app); // Create an agent to maintain the session
 
     // Perform a login request to authenticate the user
