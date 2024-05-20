@@ -60,14 +60,13 @@ router.get("/home_recruteur", function (req, res, next) {
 router.get("/candidatures", function (req, res, next) {
   const session = req.session;
 
-
   if (session.role != "Recruteur" || session.role != "Administrateur"){
     if (!session){
       return res.status(403).send("Accès interdit.");
     }
   }
 
-  id = req.session.user.id_utilisateur;
+  id = session.user.id_utilisateur;
   result = userModel.applied(id, function (result) {
     res.render("recruteur/candidatures", { title: "Candidatures", result: result });
   });
@@ -94,7 +93,6 @@ router.get("/quit_org", function (req, res, next) {
 // à sécuriser dans le futur 
 router.post('/quit_org', function (req, res, next) {
   const session = req.session;
-
 
   if (session.role != "Recruteur" || session.role != "Administrateur"){
     if (!session){

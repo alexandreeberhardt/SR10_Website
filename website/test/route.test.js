@@ -56,7 +56,7 @@ describe("Test users routes not logged in ", () => {
 
 // Connecté
 describe("Test users routes logged in ", () => {
-  test("all offers logged in", done => {
+  test("It should respond with 302 for GET /users/account logged in", done => {
     const agent = request.agent(app); // Create an agent to maintain the session
 
     // Perform a login request to authenticate the user
@@ -90,7 +90,7 @@ describe("Test users routes logged in ", () => {
   });
 
 
-  test("all offers logged in", done => {
+  test("It should respond with 302 for GET /users/candidatures logged in", done => {
     const agent = request.agent(app); // Create an agent to maintain the session
 
     // Perform a login request to authenticate the user
@@ -166,7 +166,7 @@ describe("Test recruteurs routes not logged in ", () => {
   test("It should respond with 302 for POST /recruteur/quit_org not logged in", (done) => {
     request(app)
       .post("/recruteur/quit_org")
-      .send({Type: 123456789, id_utilisateur: 2})
+      .send({Type: 123456789})
       .expect(302, done);
   });
 
@@ -258,6 +258,7 @@ describe("route /recruteur/visualisation_offre GET ", () => {
                     .get("/recruteur/candidatures")
                     .then(response => {
                         expect(response.statusCode).toBe(200);
+                        // normal si 500 car pas encore servie je crois pour l'instant
                         agent
                             .get("/login/logout")
                             .then(logoutResponse => {
@@ -323,7 +324,7 @@ describe("route /recruteur/visualisation_offre GET ", () => {
                 // If login is successful, make the request to the protected route
                 agent
                   .post("/recruteur/quit_org")
-                  .send({Type: 123456789, id_utilisateur: 2})
+                  .send({Type: 123456789})
                     .then(response => {
                         expect(response.statusCode).toBe(200);
                         agent
@@ -352,6 +353,9 @@ describe("route /recruteur/visualisation_offre GET ", () => {
 // TEST DES ROUTES DE OFFRES
 // =============================
 
+
+
+// Non connecté
 describe("Test offers routes not logged in ", () => {
   test("It should respond with 302 for GET /offres/offer not logged in", (done) => {
     request(app)
@@ -372,10 +376,113 @@ describe("Test offers routes not logged in ", () => {
       .expect(302, done);
   });
 
-
 });
 
+//connecté 
 
+describe("Test offers routes logged in ", () => {
+  test("It should respond with 200 for GET /offres/offer logged in", done => {
+    const agent = request.agent(app); // Create an agent to maintain the session
+
+    // Perform a login request to authenticate the user
+    agent
+        .post("/login/login")
+        .send({email: process.env.TEST_USER, password: process.env.TEST_USER_PASSWD})
+        .end((loginErr, loginRes) => {
+            if (loginErr) {
+                done(loginErr);
+            } else {
+                // If login is successful, make the request to the protected route
+                agent
+                    .get("/offres/offer")
+                    .then(response => {
+                        expect(response.statusCode).toBe(200);
+                        agent
+                            .get("/login/logout")
+                            .then(logoutResponse => {
+                                expect(logoutResponse.statusCode).toBe(302);
+                                done();
+                            })
+                            .catch(logoutErr => {
+                                done(logoutErr);
+                            });
+                    })
+                    .catch(routeErr => {
+                        done(routeErr);
+                    });
+            }
+        });
+  });
+
+  test("It should respond with 200 for POST /offres/1 logged in", done => {
+    const agent = request.agent(app); // Create an agent to maintain the session
+
+    // Perform a login request to authenticate the user
+    agent
+        .post("/login/login")
+        .send({email: process.env.TEST_USER, password: process.env.TEST_USER_PASSWD})
+        .end((loginErr, loginRes) => {
+            if (loginErr) {
+                done(loginErr);
+            } else {
+                // If login is successful, make the request to the protected route
+                agent
+                  .post("/offres/5")
+                    .then(response => {
+                        expect(response.statusCode).toBe(200);
+                        agent
+                            .get("/login/logout")
+                            .then(logoutResponse => {
+                                expect(logoutResponse.statusCode).toBe(302);
+
+                                // refaire une requete pour enlever la candidature
+                                done();
+                            })
+                            .catch(logoutErr => {
+                                done(logoutErr);
+                            });
+                    })
+                    .catch(routeErr => {
+                        done(routeErr);
+                    });
+            }
+        });
+  });
+
+  test("It should respond with 200 for GET /offres/1 logged in", done => {
+    const agent = request.agent(app); // Create an agent to maintain the session
+
+    // Perform a login request to authenticate the user
+    agent
+        .post("/login/login")
+        .send({email: process.env.TEST_USER, password: process.env.TEST_USER_PASSWD})
+        .end((loginErr, loginRes) => {
+            if (loginErr) {
+                done(loginErr);
+            } else {
+                // If login is successful, make the request to the protected route
+                agent
+                    .get("/offres/1")
+                    .then(response => {
+                        expect(response.statusCode).toBe(200);
+                        agent
+                            .get("/login/logout")
+                            .then(logoutResponse => {
+                                expect(logoutResponse.statusCode).toBe(302);
+                                done();
+                            })
+                            .catch(logoutErr => {
+                                done(logoutErr);
+                            });
+                    })
+                    .catch(routeErr => {
+                        done(routeErr);
+                    });
+            }
+        });
+  });
+
+});
 
 // =============================
 // TEST DES ROUTES DE ADMIN
