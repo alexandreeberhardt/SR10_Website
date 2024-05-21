@@ -23,6 +23,8 @@ var adminRouter = require("./routes/admin");
 var app = express();
 app.use(session.init());
 
+app.use(express.static(path.join(__dirname, "public")));
+
 
 app.all("*", function (req, res, next) {
 
@@ -85,7 +87,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
