@@ -148,6 +148,17 @@ button[type="submit"] {
   border-radius: 10px;
   font-weight: bold;
 }
+
+input[type="button"] {
+  background: linear-gradient(125deg, #9181f4, #5038ed);
+  border: none;
+  width: 150px;
+  height: 40px;
+  color: #f3f1ff;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
 /*input[type=checkbox]:checked {
     border: none;
     background-color: #ccc;

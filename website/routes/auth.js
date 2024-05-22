@@ -18,7 +18,7 @@ router.get('/login', function (req, res, next) {
         }else if (session.role == "Recruteur"){
             res.redirect("/recruteur/account_recruteur");
         }else{
-            res.redirect("/users/account");
+            res.redirect("/offres/offer");
         }
     } else {
         res.render('login/login', {title: 'Connexion'});

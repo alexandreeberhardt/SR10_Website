@@ -8,6 +8,7 @@ td {
   box-shadow: 0 4px 8px #0005;
   width: 700px;
   height: 300px;
+  margin-top: 2%;
 }
 .offre_row {
   padding-left: 10px;
@@ -61,7 +62,7 @@ td {
 }
 
 .right-side {
-  width: 50%;
+  width: 40%;
   display: flex;
   justify-content: flex-end;
   margin-left: 2%;
@@ -101,11 +102,16 @@ td {
 }
 
 .left-side-main {
-  margin-left: 5%;
+  width: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .right-side-main {
   margin-left: 3%;
+  justify-content: center;
+  display: flex;
   width: 40%;
 }
 

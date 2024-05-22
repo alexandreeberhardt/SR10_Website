@@ -14,7 +14,7 @@ router.post('/makeadmin', function (req, res, next) {
         
           return res.status(403).send("Accès interdit.");
         
-      }
+    }
 
     const id = session.user.id_utilisateur
     userModel.makeAdmin(id, req.body.reason, function (err, email) {
@@ -40,39 +40,58 @@ router.post('/makeadmin', function (req, res, next) {
 router.get("/account", function (req, res, next) {
     const session = req.session;
 
-    if (session.role != "Administrateur"){
-        
-          return res.status(403).send("Accès interdit.");
-        
-      }
-
-    let results  = {
-            "items1": [],
-            "items2" : []
-            }
-    
-    adminModel.demandeUsers(function(err,res1){
-        if(err){
-            res.render("error",err) 
-        }else{
-            // on fait appel à la 2e pour récupérer tout ce dont on a besoin
-            console.log(res1)
-            adminModel.demandeOrg(function(err,res2){
-                if(err){
-                    res.render("error",err) 
-                }else{
-                    // On ajoute tout dans le tableau
-                    console.log(res2)
-                }
-            })
-
-        }
-
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
     }
-)
 
-    res.render("admin/account", { title: "Account Admin" });
-  });
+    adminModel.demandeUsers((err, result1) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des utilisateurs :', err);
+            return res.status(500).send('Une erreur est survenue lors de la récupération des utilisateurs.');
+        }
+        adminModel.demandeOrg((result2) => {
+            if(!result2) {
+                console.error('Erreur lors de la récupération des organisations :', err);
+                return res.status(500).send('Une erreur est survenue lors de la récupération des organisations.');    
+            }
+            const results = {
+                "users": result1,
+                "org": result2
+            };
+            console.log(results)
+            res.render("admin/account", { title: "Account Admin", data : results });
+        })
+
+    });
+});
+
+
+router.get('/makeadmin/:id_user', function (req, res) {
+    const id_user = req.params.id_user;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.demandeUsersbyId(id_user, function(err, result) {
+        if (err) {
+            console.error('Error fetching user details', err);
+            return res.status(500).send('Error fetching user details');
+        }   
+        result = JSON.stringify(result)
+        result = JSON.parse(result)
+        const final = result[0]
+        console.log(final)
+
+        res.render('admin/makeadmin', 
+        { 
+            title: "valider une demande d'utilisateur", 
+            nom: final.nom, prenom : final.prenom, id : final.id, 
+            role:final.role, reason : final.reason
+        });
+    });
+});
+
+
 
 
 
