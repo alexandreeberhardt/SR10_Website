@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/quit_org.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>  
+    <div class="topbar">
+        <div style="visibility: hidden;" class="left-side">
+            <a class="link-wrapper link" href="admin_pannel.html" >
+                <div class="button button-home">
+                    <img class="img-topbar"  src="/images/home.png">
+                    <p>Home</p>
+                </div>
+            </a>
+        
+        </div>
+        <h1>Valider une demande pour devenir admin</h1>
+        <div class="right-side">
+            <a class="link" href="/login/logout">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/logout.png">
+                    <p>Se déconnecter</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div>
+        <h3>Voulez-vous valider cette demande ?</h3>
+        <div class="form-wrapper">
+            <form>
+                <div>
+                    <p>Nom :  <%= nom %> </p>
+                    <p>Prenom :  <%= prenom %> </p>
+                    <p>Role :  <%= role %> </p>
+                    <p>Reason :  <%= reason %> </p>
+
+                </div>
+                <div class="form-group validation-button">&
+                    <button type="submit">Valider</button>
+                    <input type="button" onclick="location.href='/';" value="Retour" />
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+</body>

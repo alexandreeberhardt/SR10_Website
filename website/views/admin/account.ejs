@@ -7,23 +7,7 @@
         <link href="/stylesheets/admin_pannel.css" rel="stylesheet" type="text/css" />
         <title><%= title %></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-            $(document).ready(function(){
-                $("#org").click(function(){
-                    window.location.href = "demande_recrut.html";
-                });
-            });
-            $(document).ready(function(){
-                $("#recruteur").click(function(){
-                    window.location.href = "demande_recruteur.html";
-                });
-            });
-            $(document).ready(function(){
-                $("#admin").click(function(){
-                    window.location.href = "demande_recrut.html";
-                });
-            });
-        </script>
+
     </head>
     <body>
         <div class="topbar">
@@ -36,6 +20,7 @@
                 </a>
             
             </div>
+            <h1>Pannel de gestion administrateur</h1>
             <div class="right-side">
                 <a class="link" href="/login/logout">
                     <div class="button account">
@@ -48,40 +33,60 @@
         <div class="main-page">
             <div class="left-side-main">
                 <div class="header-left-side">
-                    <h1>Pannel de gestion administrateur</h1>
                     <h3>Gérer les demandes de tout type d'utilisateur !</h3>
                     <div class="search-input">
                         <input placeholder="Search..." class="filter-input" type="text">
                         <input placeholder="Organisation" class="filter-input" type="text">
-                        <input placeholder="Administrateurs" class="filter-input" type="text">
                     </div>
                     
                     <br>
                     <table class="Offre_table">
                         <tr>
+                            <th class="offre_th" class="offre_row">Siret</th>
+                            <th class="offre_th">Demandeur</th>
+                            <th class="offre_th">Raison</th>
+                            <th class="offre_th">Organisation</th>
+                          </tr>
+  
+                          <% data.org.forEach((res)=> { %>
+                              <tr class="row-clickable" onclick="location.href='/admin/validorg/<%= res.siret %>'" style="cursor:pointer;">
+                                  <td class="offre_row"><%= res.siret %></td>
+                                  <td><%= res.prenom %><%= res.nom %></td>
+                                  <td>org</td>
+                              </tr>
+                          <% }) %>
+                      </table>
+                </div>
+
+            </div>
+            <div class="left-side-main">
+                <div class="header-left-side">
+                    <h3>Gérer les demandes d'organisations !</h3>
+                    <div class="search-input">
+                        <input placeholder="Search..." class="filter-input" type="text">
+                        <input placeholder="Organisation" class="filter-input" type="text">
+                    </div>
+                    
+                    <br>
+
+                    <table class="Offre_table">
+
+
+                        <tr>
                           <th class="offre_th" class="offre_row">Type</th>
                           <th class="offre_th">Demandeur</th>
-                          <th class="offre_th">Status</th>
-                          <th class="offre_th">date de la demande</th>
+                          <th class="offre_th">Raison</th>
+                          <th class="offre_th">Organisation</th>
                         </tr>
-                            <tr id="org" >
-                                <td class="offre_row">création organisation</td>
-                                <td>Jean Michel</td>
-                                <td>en attente</td>
-                                <td>12/12/2002</td>
+
+                        <% data.users.forEach((res)=> { %>
+                            <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>'" style="cursor:pointer;">
+                                <td class="offre_row"><%= res.role %></td>
+                                <td><%= res.prenom %><%= res.nom %></td>
+                                <td><%= res.reason %></td>
+                                <td><%= res.organisation %></td>
                             </tr>
-                            <tr id="admin">
-                                <td class="offre_row">administrateur</td>
-                                <td>Kilian Mbappé</td>
-                                <td>en attente</td>
-                                <td>13/04/2005</td>
-                            </tr>
-                            <tr id="recruteur">
-                                <td class="offre_row">recruteur</td>
-                                <td>Charlie Flyhnt</td>
-                                <td>acceptée</td>
-                                <td>14/02/2009</td>
-                            </tr>
+                        <% }) %>
                        
                       </table>
                 </div>
