@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var userModel = require("../model/user");
 const session = require('../utils/session.js');
+const sendMail = require('../utils/mail.js');
 
 
 router.get("/creation", function (req, res, next) {
@@ -77,6 +78,57 @@ router.post('/candidatures/:id_offre', function (req, res) {
               res.send('Vous venez de dépostuler ! ')  // C'est ici qu'on pourra rajouter un pop-up qui annonce qu'on a posulé  ||| res.render('offres/offer');
           });
       }
+  });
+});
+
+router.post('/makeadmin', function (req, res, next) {
+  const session = req.session;
+  if (!session){
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+
+  const id_utilisateur = req.session.user.id_utilisateur; 
+
+  userModel.makeAdmin(id_utilisateur, req.body.reason, function (err, email) {
+      if(err){
+          // gérer l'erreur; afficher un mesage d'erreur ? 
+          res.redirect('/users/account');
+      }
+      else if (email) {
+                sendMail(
+                  "Demande d'élévation de privilège Recr'UT ",
+                  "Bonjour " + session.user.prenom + ",\n\n" +
+                  "Votre demande pour devenir administrateur a bien été prise en compte.\n\n" +
+                  "Vous recevrez une réponse sous peu\n\n" +
+                  "Si vous n'êtes pas à l'origine de cette action veuillez contacter le support. \n\n"+
+                  "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
+                  session.user.email);
+      } 
+      res.redirect('/users/account');
+  });
+});
+
+router.post('/add_org', function (req, res, next) {
+  const session = req.session;
+  if (!session){
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+
+  const id_utilisateur = req.session.user.id_utilisateur; 
+  userModel.createorg(req.body.siret, req.body.nom, req.body.adresse, req.body.type, id_utilisateur, function (err, email) {
+      if(err){
+          // gérer l'erreur; afficher un mesage d'erreur ? 
+          res.redirect('/users/account');
+      }
+      else if (email) {
+                sendMail(
+                  "Demande de création d'entreprise sur Recr'UT ",
+                  "Bonjour" + session.user.prenom + ",\n\n" +
+                  "Vous avez demandé à ajouter votre entreprise, nous allons la valider dans les plus brefs délais\n"+
+                  "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
+                  session.user.email);
+      } 
+      res.redirect('/users/account');
   });
 });
 
