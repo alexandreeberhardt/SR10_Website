@@ -18,7 +18,7 @@ router.get('/login', function (req, res, next) {
         }else if (session.role == "Recruteur"){
             res.redirect("/recruteur/account_recruteur");
         }else{
-            res.redirect("/users/account");
+            res.redirect("/offres/offer");
         }
     } else {
         res.render('login/login', {title: 'Connexion'});
@@ -140,7 +140,7 @@ router.post('/login', function (req, res, next) {
                 }else if (req.session.role == "Recruteur"){
                     res.redirect("/recruteur/account_recruteur");
                 }else{
-                    res.redirect("/users/account");
+                    res.redirect("/offres/offer");
                 }
 
                 sendMail(
@@ -161,7 +161,7 @@ router.post('/login', function (req, res, next) {
 
 router.get('/logout', (req, res) => {
     session.deleteSession(req.session);
-    res.redirect('/');
+    res.redirect('/offres/offer');
 });
 
 module.exports = router;
