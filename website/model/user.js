@@ -125,15 +125,34 @@ makeAdmin: function (id, reason, callback) {
             callback(err, null);
         } else {
             // get the email of the user, to notify him
-            const sql = "SELECT email FROM Utilisateur WHERE id = ?";
+            const sql = "SELECT email FROM Utilisateur WHERE id_utilisateur = ?";
             db.query(sql, id, function (err2, email) {
-                if (err2) callback(err2, null)
-                else callback(null, email)
+                if (err2) {callback(err2, null)}
+                else {callback(null, email)}
             });
         }
     });
 }, 
 
+createorg: function (siret, nom, adresse, type, id_utilisateur, callback) {
+    const sql = "INSERT INTO Organisation (siret, name, adresse, type, state) VALUES (?, ?, 3, ?, 'En attente')";
+    db.query(sql, [siret, nom, type], function (err, results) {
+        if (err) {
+
+            callback(err, null);
+        } else {
+
+            console.log("tu as réussi à créer une orga");
+            // get the email of the user, to notify him
+
+            const sql = "SELECT email FROM Utilisateur WHERE id_utilisateur = ?";
+            db.query(sql, id_utilisateur, function (err2, email) {
+                if (err2) {callback(err2, null)}
+                else {callback(null, email)}
+            });
+        }
+    });
+}, 
 
 /* makeAdmin: function (id, callback) {
     const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";

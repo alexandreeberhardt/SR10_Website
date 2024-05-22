@@ -46,7 +46,7 @@
 
 
                 <div class="card-admin">
-                    <form method="post" action="/admin/makeadmin">
+                    <form method="post" action="/users/makeadmin">
                         <textarea class="input-card-admin-text" name="reason" placeholder="Argumentaire..."></textarea>
                         <input class="input-card-admin-submit" type="submit" value="Envoyer">
                     </form>
@@ -58,14 +58,18 @@
                     Ajouter une oragnisation
                 </div>
                 <div class="card-admin">
-                    <input class="input-card-admin-name" type="text" placeholder="Entreprise..">
-                    <input class="input-card-admin-name" type="number" placeholder="Siret..">
-                    <input class="input-card-admin-name" type="text" placeholder="Adresse..">
-                    <select class="input-card-admin-name" name="Type" id="type">
-                        <option value="" disabled selected hidden>Type d'oragnisation...</option>
+                    <form method="post" action="/users/add_org">
+                    <input class="input-card-admin-name" type="text" placeholder="Entreprise.." name="nom">
+                    <input class="input-card-admin-name" type="number" placeholder="Siret.." name="siret">
+                    <input class="input-card-admin-name" type="text" placeholder="Adresse.." name=adresse>
+                    <select class="input-card-admin-name" id="type" name="type">
+                        <option value="Technologie">Technologie</option>
+                        <option value="Santé">Santé</option>
+                        <option value="Éducation">Éducation</option>
+                        <option value="Autre">Autre</option>
                     </select>                    
-                    <textarea class="input-card-admin-text"  placeholder="Argumentaire..."></textarea>
-                    <input class="input-card-admin-submit" type="button" value="Envoyer">
+                    <input class="input-card-admin-submit" type="submit" value="Envoyer">
+                </form>
                 </div>
 
             </div>
