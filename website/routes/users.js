@@ -20,6 +20,10 @@ router.get("/account", function (req, res, next) {
 
 
 router.get("/candidatures", function (req, res, next) {
+  const session = req.session;
+    if (!session){
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
   const id = req.session.user.id_utilisateur; 
   userModel.applied(id, function (err, result) {
     if (err) {
@@ -31,6 +35,10 @@ router.get("/candidatures", function (req, res, next) {
   });
 });
 router.get('/candidatures/:id_offre', function (req, res) {
+  const session = req.session;
+    if (!session){
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
   const id_offre = req.params.id_offre;
   userModel.alreadyDetail(id_offre, function(err, result) {
       if (err) {
@@ -48,7 +56,10 @@ router.get('/candidatures/:id_offre', function (req, res) {
 router.post('/candidatures/:id_offre', function (req, res) {
   const id_offre = req.params.id_offre;
   const id_utilisateur = req.session.user.id_utilisateur; 
-
+  const session = req.session;
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
   userModel.already(id_offre, id_utilisateur, function (err, results) {
       if (err) {
           console.error('Error checking existing application', err);
@@ -68,10 +79,5 @@ router.post('/candidatures/:id_offre', function (req, res) {
       }
   });
 });
-
-
-
-
-
 
 module.exports = router;

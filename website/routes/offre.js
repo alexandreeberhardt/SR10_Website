@@ -44,8 +44,6 @@ router.get('/:id_offre', function (req, res) {
 
 router.post('/:id_offre', function (req, res) {
     const session = req.session;
-
-
     if (!session){
         return res.status(403).send("Accès interdit. Veuillez vous connecter.");
       }
