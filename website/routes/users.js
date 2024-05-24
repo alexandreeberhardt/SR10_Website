@@ -80,6 +80,34 @@ router.post('/candidatures/:id_offre', function (req, res) {
       }
   });
 });
+router.post('/askedadmin', function (req, res) {
+  const id_utilisateur = req.session.user.id_utilisateur; 
+  const session = req.session;
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+  userModel.alreadyadmin(id_utilisateur, function (err, results) {
+      if (err) {
+          console.error('Error checking existing application', err);
+          return res.status(500).send('Error processing your application');
+      }
+      if (results.length === 0) {
+          return res.status(409).render('users/cantunaskadmin');
+      } else {
+        userModel.unaskadmin(id_utilisateur, function (err, result) {
+              if (err) {
+                  console.error('Error unapplying for the offer', err);
+                  return res.status(500).send('Error unapplying for the offer');
+              }
+              else {
+              console.log("Vous venez de perdre vos droits admin mdr ! ")
+              res.render('users/unaskedadmin');}
+            });
+      }
+  });
+});
+
+
 
 router.post('/makeadmin', function (req, res, next) {
   const session = req.session;
@@ -88,7 +116,11 @@ router.post('/makeadmin', function (req, res, next) {
   }
 
   const id_utilisateur = req.session.user.id_utilisateur; 
-
+  userModel.alreadyadmin(id_utilisateur,function (err, result) {
+    if (result.length>0){
+      res.render('users/askedadmin');
+    }
+    else {
   userModel.makeAdmin(id_utilisateur, req.body.reason, function (err, email) {
       if(err){
           // gérer l'erreur; afficher un mesage d'erreur ? 
@@ -104,8 +136,10 @@ router.post('/makeadmin', function (req, res, next) {
                   "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
                   session.user.email);
       } 
-      res.redirect('/users/account');
+      res.render('users/askadmin');
   });
+}
+});
 });
 
 router.post('/add_org', function (req, res, next) {
