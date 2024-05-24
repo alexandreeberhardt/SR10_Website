@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/offre.css" rel="stylesheet" type="text/css" />
+    <title>Visualisation des offres</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="left-side">
+            <a class="link-wrapper link" href="/" >
+                <div class="button button-home">
+                    <img class="img-topbar" src="/images/home.png" alt="Home">
+                    <p>Home</p>
+                </div>
+            </a>
+        </div>
+        <div class="right-side">
+            <a class="link" href="/users/candidatures">
+                <div class="button button-candidat">
+                    <img class="img-topbar" src="/images/candidatures.png" alt="Mes candidatures">
+                    <p>Mes candidatures</p>
+                </div>
+            </a>
+            <a class="link" href="/users/account">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/account.png" alt="Mon compte">
+                    <p>Mon compte</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="notification">
+        <p>Vous venez de retirer votre candidature d'une offre.</p><p> Pour voir toutes les offres auxquelles vous avez postulé, cliquez sur
+            <a class="postuler" href="/users/candidatures">Mes candidatures</a>.</p><p>
+            Si vous voulez candidater à d'autres offres, vous pouvez les consulter ici :
+            <a class="postuler" href="/offres/offer">Voir les offres</a>.
+        </p>
+    </div>
+</body>
+</html>

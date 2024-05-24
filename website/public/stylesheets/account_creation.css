@@ -1,9 +1,11 @@
-.topbar {
+.topbar{
   display: flex;
   flex-direction: row;
 }
 
-.left-side {
+
+
+.left-side{
   width: 50%;
   display: flex;
   justify-content: flex-start;
@@ -11,28 +13,28 @@
   margin-right: 1%;
 }
 
-.topbar {
+.topbar{
   margin-top: 1%;
 }
 
-.link-wrapper {
+.link-wrapper{
   width: 10%;
 }
 
-.button-home {
+.button-home{
   text-align: center;
   height: 50%;
   width: 120wh;
 }
 
-.link {
+.link{
   text-decoration: none;
   color: white;
   font-weight: bold;
   margin: 3%;
 }
 
-.right-side {
+.right-side{
   width: 50%;
   display: flex;
   justify-content: flex-end;
@@ -41,7 +43,7 @@
   margin-left: 2%;
 }
 
-.button {
+.button{
   font-size: small;
   text-wrap: nowrap;
   display: flex;
@@ -50,12 +52,143 @@
   align-content: center;
   text-align: center;
   width: 120%;
-  background: linear-gradient(125deg, #9181f4, #5038ed);
+  background: linear-gradient(125deg, #9181F4,#5038ED );
   border-radius: 10px;
+
 }
 
-.img-topbar {
+
+
+
+body{
+  text-align: center;
+}
+.container {
+  margin-top: 0px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 100vh;
+}
+.columng {
+  grid-column: 1;
+  justify-content: right;
+  height: 100vh;
+  margin-left: -213px;
+
+}
+.columnd {
+  grid-column: 2;
+  text-align : start;
+  background: linear-gradient(125deg, #9181F4,#5038ED );
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-right: -213px;
+}
+
+.form-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.zone{
+  background-color: #a99cff;
+  justify-content: center;
+  text-align : start;
+  padding: 20px;
+  width: 70%;
+  height: 70%;
+  border-radius: 16px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 30;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  max-width: 100%;
+  position: relative;
+}
+.zone img{
+  width: 576px;
+  height: 324px;
+  align-self: center;
+  bottom: 0%;
+  right: -3%;
+  position: absolute;
+}
+.RecrUT{
+  margin: -4%;
+  text-align: center;
+  background: -webkit-linear-gradient(125deg, #9900ff,#2712b0 );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 160px;
+  font-family: fantasy;
+
+}
+input[type=email] {
+  background-color: #f3f1ff; 
+  border: none;
+  width: 400px; 
+  height: 50px; 
+  border-radius: 16px;
+  }
+input[type=text] {
+  background-color: #f3f1ff; 
+  border: none;
+  width: 200px; 
+  height: 50px; 
+  border-radius: 16px;
+  }
+input[type=password] {
+  background-color: #f3f1ff; 
+  border: none;
+  width: 400px; 
+  height: 50px; 
+  border-radius: 16px;
+  }
+input[type=checkbox] {
+  border: none;
+  width: 18px; 
+  height: 18px; 
+  border-radius: 1px;
+  }
+button[type=submit]{
+  background: linear-gradient(125deg, #9181F4,#5038ED );
+    border: none;
+    width: 150px; 
+    height: 40px; 
+    color: #f3f1ff;
+    border-radius: 10px;
+    font-weight: bold;
+}
+/*input[type=checkbox]:checked {
+  border: none;
+  background-color: #ccc;
+  width: 18px; 
+  height: 18px; 
+  border-radius: 1px;
+  }*/
+
+
+.connexion {
+  background: linear-gradient(125deg, #9181F4,#5038ED );
+  border: none;
+  width: 100px; 
+  height: 40px; 
+  color: #f3f1ff;
+  border-radius: 10px;
+  font-weight: bold;
+  }
+
+.img-topbar{
   width: 30px;
   height: 30px;
   padding: 3%;
 }
+
+
+

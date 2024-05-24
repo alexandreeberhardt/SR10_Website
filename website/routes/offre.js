@@ -34,7 +34,7 @@ router.get('/:id_offre', function (req, res) {
           return res.status(500).send('Error fetching offer details');
       }
       if (result.length > 0) {
-          res.render('offres/detail_offre', { offre: result, user: req.session.user });
+          res.render('offres/detail_offre', {offre: result, user: req.session.user });
       } else {
           res.status(404).send('Offer not found');
       }
@@ -57,7 +57,7 @@ router.post('/:id_offre', function (req, res) {
             return res.status(500).send('Error processing your application');
         }
         if (results.length > 0) {
-            return res.status(409).send('Vous avez déjà postulé à cette offre'); // Il faudra faire une page plus belle 
+            res.status(409).render('offres/dejapostule', { title: "Postule",  offre: result, user: req.session.user });
         } else {
             offreModel.postule(id_offre, id_utilisateur, function (err, result) {
                 if (err) {
@@ -65,7 +65,7 @@ router.post('/:id_offre', function (req, res) {
                     return res.status(500).send('Error applying for the offer');
                 }
                 console.log("Vous venez de postuler ! id_offre :",id_offre, "id_utilisateur : ",id_utilisateur)
-                res.send('Vous venez de postuler ! ')  // C'est ici qu'on pourra rajouter un pop-up qui annonce qu'on a posulé  ||| res.render('offres/offer');
+                res.render('offres/postule', { title: "Postule",  offre: result, user: req.session.user });
             });
         }
     });
