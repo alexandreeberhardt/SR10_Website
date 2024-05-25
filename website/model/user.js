@@ -85,6 +85,23 @@ alreadyadmin: function (id_utilisateur, callback) {
     });
 
   },
+
+
+
+  verifsiret:function(siret, callback){
+    const sql = "SELECT * from Organisation WHERE siret = ?";
+    db.query(sql, [siret], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+
+  },
+
+
+
   readById: function (id, callback) {
       const sql = "SELECT * FROM Utilisateur WHERE id_utilisateur = ?";
       db.query(sql, id, function (err, results) {
@@ -129,6 +146,17 @@ unpostule: function(id_offre, id_utilisateur, callback) {
     });
 },
 
+supporga: function(siret, callback) {
+    var sql = "DELETE FROM Organisation WHERE siret = ?";
+    db.query(sql, [siret], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+},
+
 unaskadmin: function(id_utilisateur, callback) {
     var sql = "DELETE FROM Utilisateur_Roles WHERE id_utilisateur = ? AND type_utilisateur = 'Administrateur'";
     db.query(sql, [id_utilisateur], function (err, results) {
@@ -157,25 +185,45 @@ makeAdmin: function (id, reason, callback) {
     });
 }, 
 
-createorg: function (siret, nom, adresse, type, id_utilisateur, callback) {
-    const sql = "INSERT INTO Organisation (siret, name, adresse, type, state) VALUES (?, ?, 3, ?, 'En attente')";
-    db.query(sql, [siret, nom, type], function (err, results) {
+addaddress: function (adresse, ville, postcode, pays, callback) {
+    const sql = "INSERT INTO Lieu (adresse, ville, postcode, pays) VALUES (?, ?, ?, ?)";
+    db.query(sql, [adresse, ville, postcode, pays], function (err, results) {
         if (err) {
-
             callback(err, null);
+        } else {
+            console.log("tu as réussi à créer un lieu");
+            const sql = "SELECT * from Lieu WHERE adresse = ? AND ville = ? AND postcode = ? AND pays = ? LIMIT 1";
+            db.query(sql, [adresse, ville, postcode, pays], function (err, lieu) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null,lieu);
+                }
+        });
+    }});
+},
+
+createorg: function (siret, nom, lieu, type, id_utilisateur, callback) {
+    const sql = "INSERT INTO Organisation (siret, name, adresse, type, state) VALUES (?, ?, ?, ?, 'En attente')";
+    db.query(sql, [siret, nom, lieu[0].id_lieu, type], function (err, results, orga) {
+        if (err) {
+            // gerer l'erreur si le siret est de taille superieure à 11
+            console.log(siret, nom, lieu, type);
+            callback(err, null, null);
         } else {
 
             console.log("tu as réussi à créer une orga");
             // get the email of the user, to notify him
-
             const sql = "SELECT email FROM Utilisateur WHERE id_utilisateur = ?";
-            db.query(sql, id_utilisateur, function (err2, email) {
-                if (err2) {callback(err2, null)}
-                else {callback(null, email)}
-            });
-        }
-    });
+            db.query(sql, id_utilisateur, function (err2, email, siret) {
+                if (err2) {callback(err2, null, null)}
+                else {
+                    callback(null, email, siret)    
+            };
+        });
+    }});
 }, 
+
 
 /* makeAdmin: function (id, callback) {
     const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";

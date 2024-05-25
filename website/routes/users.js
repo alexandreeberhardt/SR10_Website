@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require("../model/user");
 const session = require('../utils/session.js');
 const sendMail = require('../utils/mail.js');
+const user = require("../model/user");
 
 
 router.get("/creation", function (req, res, next) {
@@ -35,6 +36,7 @@ router.get("/candidatures", function (req, res, next) {
     res.render("users/candidatures", { title: "Candidatures", result: result });
   });
 });
+
 router.get('/candidatures/:id_offre', function (req, res) {
   const session = req.session;
     if (!session){
@@ -107,6 +109,53 @@ router.post('/askedadmin', function (req, res) {
   });
 });
 
+router.post('/orga_cree/:siret', function (req, res) {
+  const id_utilisateur = req.session.user.id_utilisateur; 
+  const session = req.session;
+  const siret = req.params.siret;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+  userModel.verifsiret(siret, function (err, results) {
+      if (err) {
+          console.error('Error checking existing application', err);
+          return res.status(500).send('Error processing your application');
+      }
+      if (results.length === 0) {
+          return res.status(409).send("Org non trouvée");
+      } else {
+        userModel.supporga(siret, function (err, result) {
+              if (err) {
+                  console.error('Error unapplying for the offer', err);
+                  return res.status(500).send('Error unapplying for the offer');
+              }
+              else {
+              console.log("Vous venez de supprimer votre organisation ! ")
+              res.render('users/supporga');}
+            });
+      }
+  });
+});
+
+router.get('/orga_cree/:siret', function (req, res) {
+  const session = req.session;
+    if (!session){
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
+  const siret = req.params.siret;
+  userModel.verifsiret(siret, function(err, result) {
+      if (err) {
+          console.error('Error fetching offer details', err);
+          return res.status(500).send('Error fetching offer details');
+      }
+      if (result.length > 0) {
+          res.render('users/orga_cree', {siret: siret});
+      } else {
+          res.status(404).send('orga not found');
+      }
+  });
+});
 
 
 router.post('/makeadmin', function (req, res, next) {
@@ -142,6 +191,8 @@ router.post('/makeadmin', function (req, res, next) {
 });
 });
 
+
+
 router.post('/add_org', function (req, res, next) {
   const session = req.session;
   if (!session){
@@ -149,7 +200,15 @@ router.post('/add_org', function (req, res, next) {
   }
 
   const id_utilisateur = req.session.user.id_utilisateur; 
-  userModel.createorg(req.body.siret, req.body.nom, req.body.adresse, req.body.type, id_utilisateur, function (err, email) {
+  userModel.addaddress(req.body.adresse, req.body.ville, req.body.postcode, req.body.pays, function (err, lieu){
+    if(err){
+      // gérer l'erreur; afficher un mesage d'erreur ? 
+      console.log("C'est l'adresse qui bug");
+      res.redirect('/users/account');
+  }
+  else if (lieu){
+
+  userModel.createorg(req.body.siret, req.body.nom, lieu, req.body.type, id_utilisateur, function (err, email, siret) {
       if(err){
           // gérer l'erreur; afficher un mesage d'erreur ? 
           res.redirect('/users/account');
@@ -162,8 +221,16 @@ router.post('/add_org', function (req, res, next) {
                   "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
                   session.user.email);
       } 
-      res.redirect('/users/account');
+      res.redirect(302, `/users/orga_cree/${req.body.siret}`);
+
+      //res.render('/users/orga_cree',{siret:req.body.siret});   // siret = req.body.siret
   });
+}
+});
+});
+
+router.get("/add_org", function (req, res, next) {
+  res.render('/users/orga_cree',{siret:req.body.siret});
 });
 
 module.exports = router;
