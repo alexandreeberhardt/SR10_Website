@@ -10,10 +10,9 @@ const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 router.get("/account_recruteur", function (req, res, next) {``
 
   const session = req.session;
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
-    
+  console.log(session.role)
+  if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
-    
   }
 
   res.render("recruteur/account_recruteur", { title: "Account Recruteur" });
@@ -23,7 +22,7 @@ router.get("/visualisation_offre", function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
+  if (session.role != "Recruteur"){
     if (!session){
       return res.status(403).send("Accès interdit.");
     }
@@ -40,7 +39,7 @@ router.get("/visualisation_offre", function (req, res, next) {
 router.get("/home_recruteur", function (req, res, next) {
   const session = req.session;
 
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
+  if (session.role != "Recruteur"){
     
       return res.status(403).send("Accès interdit.");
     
@@ -60,7 +59,7 @@ router.get("/home_recruteur", function (req, res, next) {
 router.get("/candidatures", function (req, res, next) {
   const session = req.session;
 
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
+  if (session.role != "Recruteur"){
     
       return res.status(403).send("Accès interdit.");
     
@@ -77,7 +76,7 @@ router.get("/quit_org", function (req, res, next) {
   const session = req.session;
 
 
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
+  if (session.role != "Recruteur"){
     
       return res.status(403).send("Accès interdit.");
     
@@ -93,13 +92,10 @@ router.get("/quit_org", function (req, res, next) {
 // à sécuriser dans le futur 
 router.post('/quit_org', function (req, res, next) {
   const session = req.session;
-
-  if (session.role != "Recruteur" || session.role != "Administrateur"){
-    
+  if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
     
   }
-
     siret = req.body.Type;
     id = req.session.user.id_utilisateur;
     result = recruteurModel.quitOrg(id, siret, function (result) {
