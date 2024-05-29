@@ -81,10 +81,12 @@
                     Devenir Recruteur
                 </div>
                 <div class="card-admin">
-                    <input class="input-card-admin-name" type="text" placeholder="Entreprise..">
-                    <textarea class="input-card-admin-text"  placeholder="Argumentaire..."></textarea>
-                    <input class="input-card-admin-submit" type="button" value="Envoyer">
+                <form method="post" action="/users/makerecruteur">
+                    <input class="input-card-admin-name" type="text" placeholder="Entreprise.." name="siret">
+                    <textarea class="input-card-admin-text"  placeholder="Argumentaire..." name="reson"></textarea>
+                    <input class="input-card-admin-submit" type="submit" value="Envoyer">
                 </div>
+            </div>
 
             </div>
         </div>

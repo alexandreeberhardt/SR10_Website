@@ -11,9 +11,7 @@ router.post('/makeadmin', function (req, res, next) {
     const session = req.session;
 
     if (session.role != "Administrateur"){
-        
           return res.status(403).send("Accès interdit.");
-        
     }
 
     const id = session.user.id_utilisateur

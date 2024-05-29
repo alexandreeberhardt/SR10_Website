@@ -73,7 +73,16 @@ alreadyadmin: function (id_utilisateur, callback) {
     }); 
 },
 
-
+alreadyrecruteur: function (id_utilisateur, callback) {
+    var sql = "SELECT * FROM Utilisateur_Roles WHERE id_utilisateur = ? AND type_utilisateur = 'Recruteur'";
+    db.query(sql, [id_utilisateur], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    }); 
+},
   alreadyDetail:function(id_offre, callback){
     const sql = `SELECT O.id_offre AS IdOffre, O.indications AS Indications, FP.intitule AS Intitule_Poste, FP.description AS Description_Poste, FP.salaire_min AS Salaire_Minimum, FP.salaire_max AS Salaire_Maximum, FP.rythme_travail AS Rythme_Travail, FP.responsable_hierarchique AS Responsable_Hierarchique, FP.statuts_poste AS Statut_Poste, L.adresse AS Adresse_Lieu, L.ville AS Ville, L.postcode AS Code_Postal, L.pays AS Pays, R.prenom AS Prenom_Recruteur, R.nom AS Nom_Recruteur, R.email AS Email_Recruteur, R.tel AS Telephone_Recruteur, Org.name AS Nom_Organisation FROM Offre O INNER JOIN Offre_Organisation OO ON O.id_offre = OO.offre INNER JOIN Organisation Org ON OO.org = Org.siret INNER JOIN Fiche_poste FP ON O.fiche_poste = FP.id_fiche_poste INNER JOIN Lieu L ON FP.lieu = L.id_lieu INNER JOIN Utilisateur R ON FP.recruteur = R.id_utilisateur WHERE FP.id_fiche_poste= ?;`;
     db.query(sql, [id_offre], function (err, results) {
@@ -157,8 +166,32 @@ supporga: function(siret, callback) {
     });
 },
 
+
+findorga: function(siret, callback) {
+    var sql = "select * FROM Organisation WHERE siret = ?";
+    db.query(sql, [siret], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+},
+
+
 unaskadmin: function(id_utilisateur, callback) {
     var sql = "DELETE FROM Utilisateur_Roles WHERE id_utilisateur = ? AND type_utilisateur = 'Administrateur'";
+    db.query(sql, [id_utilisateur], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+},
+
+unaskrecruteur: function(id_utilisateur, callback) {
+    var sql = "DELETE FROM Utilisateur_Roles WHERE id_utilisateur = ? AND type_utilisateur = 'Recruteur'";
     db.query(sql, [id_utilisateur], function (err, results) {
         if (err) {
             callback(err, null);
@@ -185,6 +218,21 @@ makeAdmin: function (id, reason, callback) {
     });
 }, 
 
+makeRecruteur: function (id, siret, reason, callback) {
+    const sql = "INSERT INTO Utilisateur_Roles VALUES(?, 'Recruteur','En attente',?,?)";
+    db.query(sql, [id,siret,reason], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            // get the email of the user, to notify him
+            const sql = "SELECT email FROM Utilisateur WHERE id_utilisateur = ?";
+            db.query(sql, id, function (err2, email) {
+                if (err2) {callback(err2, null)}
+                else {callback(null, email)}
+            });
+        }
+    });
+}, 
 addaddress: function (adresse, ville, postcode, pays, callback) {
     const sql = "INSERT INTO Lieu (adresse, ville, postcode, pays) VALUES (?, ?, ?, ?)";
     db.query(sql, [adresse, ville, postcode, pays], function (err, results) {
