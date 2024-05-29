@@ -181,6 +181,19 @@ input[type="button"] {
   flex-direction: row;
 }
 
+.buttons{
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.buttons > *{
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
 .left-side {
   width: 50%;
   display: flex;
@@ -290,6 +303,10 @@ input[type="button"] {
   padding: 2%;
   border-radius: 10px;
   border: 0;
+}
+
+.wrapper-all{
+  margin-top: -10%;
 }
 
 .img-topbar {

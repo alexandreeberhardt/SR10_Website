@@ -30,21 +30,33 @@
     </div>
     <div>
         <h3>Voulez-vous valider cette demande ?</h3>
+        <div class="wrapper-all">
+
         <div class="form-wrapper">
-            <form>
+            <div class="form-group validation-button">
                 <div>
                     <p>Nom :  <%= nom %> </p>
                     <p>Prenom :  <%= prenom %> </p>
                     <p>Role :  <%= role %> </p>
                     <p>Reason :  <%= reason %> </p>
+                </div>
+                <div class="buttons">
+                    
 
-                </div>
-                <div class="form-group validation-button">&
-                    <button type="submit">Valider</button>
-                    <input type="button" onclick="location.href='/';" value="Retour" />
-                </div>
+            <form method='post' action="/admin/acceptadmin">
+                <input type="hidden" id="id" name="id" value="<%=id%>">
+                <button type="submit">Valider</button>
             </form>
+            <form method='post' action="/admin/denyadmin">
+                <input type="hidden" id="id" name="id" value="<%=id%>">
+                <button type="submit">Refuser</button>
+            </form>
+            <input type="button" onclick="location.href='/';" value="Retour" />
+            </div>
+            </div>
         </div>
+    </div>
+
         <br>
     </div>
 </body>

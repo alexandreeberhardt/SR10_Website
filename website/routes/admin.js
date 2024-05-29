@@ -92,38 +92,85 @@ router.get('/makeadmin/:id_user', function (req, res) {
 router.get('/acceptorg/:siret', function (req, res) {
     const id_user = req.params.siret;
     const session = req.session;
+
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
+
     adminModel.demandeOrgbyId(id_user, function(err, result) {
         if (err) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');
         }   
         result = JSON.stringify(result)
-        result = JSON.parse(result)
-        const final = result[0]
-        console.log(final)
+        data = JSON.parse(result)[0]
 
         res.render('admin/acceptorg', 
         { 
             title: "valider une demande d'organisation", 
-            result: final
+            result: data
         });
     });
 });
 
-router.post('/makeadmin/:id_user', function (req, res) {
-    const id_user = req.params.id_user;
+router.post('/acceptadmin', function (req, res) {
+    const id = req.body.id;
     const session = req.session;
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
-    
-    // send data to database
-
+    adminModel.acceptRole(id, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
 });
 
+router.post('/denyadmin', function (req, res) {
+    const id = req.body.id;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.denyRole(id, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
+});
 
+router.post('/acceptorg', function (req, res) {
+    const siret = req.body.siret;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.acceptOrg(siret, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
+});
+
+router.post('/denyorg', function (req, res) {
+    const siret = req.body.siret;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.denyOrg(siret, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
+});
 
 module.exports = router;
