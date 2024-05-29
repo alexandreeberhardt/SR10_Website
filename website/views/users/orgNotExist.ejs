@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/askadmin.css" rel="stylesheet" type="text/css" />
+    <title>Déjà recruteur</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="left-side">
+            <a class="link-wrapper link" href="/" >
+                <div class="button button-home">
+                    <img class="img-topbar" src="/images/home.png" alt="Home">
+                    <p>Home</p>
+                </div>
+            </a>
+        </div>
+        <div class="right-side">
+            <a class="link" href="/users/candidatures">
+                <div class="button button-candidat">
+                    <img class="img-topbar" src="/images/candidatures.png" alt="Mes candidatures">
+                    <p>Mes candidatures</p>
+                </div>
+            </a>
+            <a class="link" href="/users/account">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/account.png" alt="Mon compte">
+                    <p>Mon compte</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="notification">
+        <p>Vous avez essayé de devenir recruteur d'une organisation qui n'existe pas ou n'est pas encore validée.</p>
+        <p>Le siret que vous avez envoyé est <%= siret %></p>
+        <p>Si vous souhaitez refaire une demande ou ajouter l'organisation, cliquez ici : </p>
+        <a href="/users/account">
+            <button class="postuler"> Mon compte</button>
+        </a>
+    </div>
+</body>
+</html>

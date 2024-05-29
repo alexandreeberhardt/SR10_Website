@@ -109,6 +109,33 @@ router.post('/askedadmin', function (req, res) {
   });
 });
 
+router.post('/askedrecruteur', function (req, res) {
+  const id_utilisateur = req.session.user.id_utilisateur; 
+  const session = req.session;
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+  userModel.alreadyrecruteur(id_utilisateur, function (err, results) {
+      if (err) {
+          console.error('Error checking existing application', err);
+          return res.status(500).send('Error processing your application');
+      }
+      if (results.length === 0) {
+          return res.status(409).render('users/cantunaskrecruteur');
+      } else {
+        userModel.unaskrecruteur(id_utilisateur, function (err, result) {
+              if (err) {
+                  console.error('Error unapplying for the offer', err);
+                  return res.status(500).send('Error unapplying for the offer');
+              }
+              else {
+              console.log("Vous venez de perdre vos droits recruteur mdr ! ")
+              res.render('users/unaskedrecruteur');}
+            });
+      }
+  });
+});
+
 router.post('/orga_cree/:siret', function (req, res) {
   const id_utilisateur = req.session.user.id_utilisateur; 
   const session = req.session;
@@ -191,7 +218,46 @@ router.post('/makeadmin', function (req, res, next) {
 });
 });
 
+router.post('/makerecruteur', function (req, res, next) {
+  const session = req.session;
+  if (!session){
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
 
+  const id_utilisateur = req.session.user.id_utilisateur; 
+  userModel.alreadyrecruteur(id_utilisateur,function (err, result) {
+    if (result.length>0){
+      res.render('users/askedrecruteur');
+    }
+    else {
+      userModel.verifsiret(req.body.siret, function(err, result){
+       if (result.length===0){
+        res.render('users/orgNotExist',{siret: req.body.siret});
+        }
+        else {
+
+  userModel.makeRecruteur(id_utilisateur,req.body.siret, req.body.reason, function (err, email) {
+      if(err){
+          // gérer l'erreur; afficher un mesage d'erreur ? 
+          res.redirect('/users/account');
+      }
+      else if (email) {
+                sendMail(
+                  "Demande d'élévation de privilège Recr'UT ",
+                  "Bonjour " + session.user.prenom + ",\n\n" +
+                  "Votre demande pour devenir recruteur a bien été prise en compte.\n\n" +
+                  "Vous recevrez une réponse sous peu\n\n" +
+                  "Si vous n'êtes pas à l'origine de cette action veuillez contacter le support. \n\n"+
+                  "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
+                  session.user.email);
+      } 
+      res.render('users/askrecruteur');
+  });
+}
+});
+}
+})
+});
 
 router.post('/add_org', function (req, res, next) {
   const session = req.session;
