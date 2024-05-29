@@ -91,7 +91,40 @@ router.get('/makeadmin/:id_user', function (req, res) {
     });
 });
 
+router.get('/acceptorg/:siret', function (req, res) {
+    const id_user = req.params.siret;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.demandeOrgbyId(id_user, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }   
+        result = JSON.stringify(result)
+        result = JSON.parse(result)
+        const final = result[0]
+        console.log(final)
 
+        res.render('admin/acceptorg', 
+        { 
+            title: "valider une demande d'organisation", 
+            result: final
+        });
+    });
+});
+
+router.post('/makeadmin/:id_user', function (req, res) {
+    const id_user = req.params.id_user;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    
+    // send data to database
+
+});
 
 
 
