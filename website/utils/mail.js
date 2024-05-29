@@ -9,6 +9,7 @@ const transporter = nodemailer.createTransport({
         pass: process.env.MAIL_PASSWORD
     }
 });
+
 const sendMail = (subject, body, to) => {
     const mailOptions = {
         from: process.env.MAIL_ADR,

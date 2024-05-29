@@ -22,21 +22,21 @@ module.exports = {
     });
   },
 
-  acceptRole: function (id,callback) {
+  acceptRole: function (id,role,callback) {
     const query = `
-      UPDATE Utilisateur_Roles SET state_user = 'Approuvée' WHERE id_utilisateur = ?
+      UPDATE Utilisateur_Roles SET state_user = 'Approuvée' WHERE id_utilisateur = ? AND type_utilisateur = ?
     `;
-    db.query(query,id, function(err, results) {
+    db.query(query,[id,role], function(err, results) {
       if (err) throw err;
       callback(err,results);
     });
   },
 
-  denyRole: function (id,callback) {
+  denyRole: function (id,role,callback) {
     const query = `
-      UPDATE Utilisateur_Roles SET state_user = 'Rejetée' WHERE id_utilisateur = ?
+      UPDATE Utilisateur_Roles SET state_user = 'Rejetée' WHERE id_utilisateur = ? AND type_utilisateur = ?
     `;
-    db.query(query,id, function(err, results) {
+    db.query(query,[id,role], function(err, results) {
       if (err) throw err;
       callback(err,results);
     });
@@ -62,7 +62,7 @@ module.exports = {
     });
   },
   
-  demandeUsersbyId: function (id,callback) {
+  demandeUsersbyId: function (id,role,callback) {
     const query = `
       SELECT 
         Utilisateur.id_utilisateur AS id,
@@ -73,9 +73,9 @@ module.exports = {
         prenom
       FROM Utilisateur_Roles
       INNER JOIN Utilisateur ON Utilisateur_Roles.id_utilisateur = Utilisateur.id_utilisateur
-      WHERE state_user = 'En attente' AND is_active = 1 AND Utilisateur.id_utilisateur = ?
+      WHERE state_user = 'En attente' AND is_active = 1 AND Utilisateur.id_utilisateur = ? AND Utilisateur_Roles.type_utilisateur = ? 
     `;
-    db.query(query,id, function(err, results) {
+    db.query(query,[id,role], function(err, results) {
       if (err) throw err;
       callback(err,results);
     });

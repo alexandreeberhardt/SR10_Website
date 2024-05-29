@@ -83,7 +83,7 @@
                         </tr>
 
                         <% data.users.forEach((res)=> { %>
-                            <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>'" style="cursor:pointer;">
+                            <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>/<%= res.role%>'" style="cursor:pointer;">
                                 <td class="offre_row"><%= res.role %></td>
                                 <td><%= res.prenom %><%= res.nom %></td>
                                 <td><%= res.reason %></td>

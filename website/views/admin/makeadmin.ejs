@@ -45,10 +45,12 @@
 
             <form method='post' action="/admin/acceptadmin">
                 <input type="hidden" id="id" name="id" value="<%=id%>">
+                <input type="hidden" id="role" name="role" value="<%=role%>">
                 <button type="submit">Valider</button>
             </form>
             <form method='post' action="/admin/denyadmin">
                 <input type="hidden" id="id" name="id" value="<%=id%>">
+                <input type="hidden" id="role" name="role" value="<%=role%>">
                 <button type="submit">Refuser</button>
             </form>
             <input type="button" onclick="location.href='/';" value="Retour" />

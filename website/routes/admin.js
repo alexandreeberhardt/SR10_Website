@@ -64,13 +64,14 @@ router.get("/account", function (req, res, next) {
 });
 
 
-router.get('/makeadmin/:id_user', function (req, res) {
+router.get('/makeadmin/:id_user/:role', function (req, res) {
     const id_user = req.params.id_user;
+    const role = req.params.role;
     const session = req.session;
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
-    adminModel.demandeUsersbyId(id_user, function(err, result) {
+    adminModel.demandeUsersbyId(id_user, role, function(err, result) {
         if (err) {
             console.error('Error fetching user details', err);
             return res.status(500).send('Error fetching user details');
@@ -115,11 +116,12 @@ router.get('/acceptorg/:siret', function (req, res) {
 
 router.post('/acceptadmin', function (req, res) {
     const id = req.body.id;
+    const role = req.body.role;
     const session = req.session;
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
-    adminModel.acceptRole(id, function(err, result) {
+    adminModel.acceptRole(id,role, function(err, result) {
         if (err) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');
@@ -130,11 +132,12 @@ router.post('/acceptadmin', function (req, res) {
 
 router.post('/denyadmin', function (req, res) {
     const id = req.body.id;
+    const role = req.body.role;
     const session = req.session;
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
-    adminModel.denyRole(id, function(err, result) {
+    adminModel.denyRole(id,role, function(err, result) {
         if (err) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');
