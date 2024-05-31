@@ -2,6 +2,101 @@ var express = require("express");
 var router = express.Router();
 var offreModel = require("../model/offer");
 const session = require('../utils/session.js');
+const fs = require('fs');
+var multer = require('multer');
+const path = require("path");
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {cb(null, "./uploads"); },
+    filename: function (req, file, cb) {
+        const username = `${req.session.user.nom}-${req.session.user.prenom}`;
+        const offerId = req.params.id_offre;
+        const originalName = file.originalname;
+        const extension = originalName.split('.').pop();
+        const date = new Date();
+        const formattedDate = `${date.getFullYear().toString().substr(-2)}:${(date.getMonth() + 1).toString().padStart(2, '0')}:${date.getDate().toString().padStart(2, '0')}:${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+        const fileName = `${username}-${offerId}-${formattedDate}.${extension}`;
+        const final = fileName.replace(':','-');
+        cb(null, final);
+    }
+
+});
+function fileFilter(req, file, cb) {
+    if (file.mimetype === 'application/pdf') {cb(null, true); } 
+    else {cb(new Error('Seuls les fichiers PDF sont autorisés.')); }
+}
+const upload = multer({ 
+    dest : './uploads/',
+    storage: storage,
+    fileFilter: fileFilter
+});
+
+
+  
+  router.get('/getfile', function(req, res, next) {
+    try {
+      res.download('./uploads/'+req.query.fichier_cible);
+    } catch (error) {
+      res.send('Erreur lors du chargement du fichier '+req.query.fichier_cible+' : '+error);
+    }
+});
+
+router.post('/:id_offre', upload.fields([{ name: 'cv', maxCount: 1 }, { name: 'lettre', maxCount: 1 }, { name: 'uid', maxCount: 1 }]),  (req, res) => {    
+    
+    const session = req.session;
+    if (!session){
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
+    
+    const id_offre = req.params.id_offre;
+    const id_utilisateur = req.session.user.id_utilisateur; 
+
+    offreModel.already(id_offre, id_utilisateur, function (err, results) {
+        if (err) {
+            console.error('Error checking existing application', err);
+            return res.status(500).send('Error processing your application');
+        }
+        if (results.length > 0) {
+            res.status(409).render('offres/dejapostule', { title: "Postule",  offre: result, user: req.session.user });
+        } else {
+            offreModel.postule(id_offre, id_utilisateur, function (err, result) {
+                if (err) {
+                    console.error('Error applying for the offer', err);
+                    return res.status(500).send('Error applying for the offer');
+                }
+
+                offreModel.getCandId(id_utilisateur,id_offre, function(err,result){
+                    if (err){
+                        return res.status(500).send('Error applying for the offer');
+                    }
+                    let id_candidature = result[0];
+
+                    let path1 = NaN, path2= NaN,path3=NaN;
+                    if (req.files.cv !== undefined){
+                        let path1 = req.files.cv.path;
+                    }
+                    if (req.files.lettre !== undefined){
+                        let path2 = req.files.lettre.path;
+                    }
+                    if (req.files.cv !== undefined){
+                        let path3 = req.files.cv.uid;
+                    }
+
+                    console.log(path1,path2,path3)
+                    
+
+
+                    console.log("Vous venez de postuler ! id_offre :",id_offre, "id_utilisateur : ",id_utilisateur)
+                    res.render('offres/postule', { title: "Postule",  offre: result, user: req.session.user });    
+                });
+            });
+        }
+    });
+});
+
+
+
+
 
 
 router.get("/offer", function (req, res, next) {
