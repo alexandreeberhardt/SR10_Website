@@ -7,12 +7,11 @@
         <link href="/stylesheets/admin_pannel.css" rel="stylesheet" type="text/css" />
         <title><%= title %></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     </head>
     <body>
         <div class="topbar">
             <div class="left-side">
-                <a class="link-wrapper link" href="admin_pannel.html" >
+                <a class="link-wrapper link" href="/" >
                     <div class="button button-home">
                         <img class="img-topbar"  src="/images/home.png">
                         <p>Home</p>
@@ -21,6 +20,14 @@
             
             </div>
             <h1>Pannel de gestion administrateur</h1>
+            <div class="right-side">
+                <a class="link" href="/admin/users">
+                    <div class="button account">
+                        <img class="img-topbar" src="/images/account.png">
+                        <p>Users</p>
+                    </div>
+                </a>
+            </div>
             <div class="right-side">
                 <a class="link" href="/login/logout">
                     <div class="button account">
