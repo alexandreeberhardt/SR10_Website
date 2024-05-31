@@ -23,7 +23,7 @@ router.get("/visualisation_offre", function (req, res, next) {
 
 
   if (session.role != "Recruteur"){
-    if (!session){
+    if (!session){$
       return res.status(403).send("Accès interdit.");
     }
   }
@@ -108,5 +108,51 @@ router.post('/quit_org', function (req, res, next) {
     });
 });
 
+
+router.get("/recruter", function (req, res, next) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+  id = session.user.id_utilisateur;
+result = recruteurModel.readAllOffres(id, function (result) {
+  console.log(result);
+  res.render("recruteur/recruter", {
+    title: "Visualisation des offres",
+    result: result,
+    role: session.role
+  });
+});
+});
+
+
+
+router.get('/recruter/:id_offre', function (req, res) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+const id_offre = req.params.id_offre;
+
+recruteurModel.getAllCandidats(id_offre, function(err, result) {
+    if (err) {
+        console.error('Error fetching offer details', err);
+        return res.status(500).send('Error fetching offer details');
+    }
+    if (result.length > 0) {
+        res.render('recruteur/all_candidats', {role: session.role, id_offre:id_offre, candidats: result});
+    } else {
+        res.status(404).send('Offer not found');
+    }
+});
+});
 
 module.exports = router;

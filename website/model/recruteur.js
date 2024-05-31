@@ -20,7 +20,26 @@ module.exports = {
       },
     );
   },
-
+  readAllOffres: function (id_recruteur, callback) {
+    db.query(
+      "SELECT fp.id_fiche_poste, fp.intitule, fp.rythme_travail, fp.salaire_min, fp.salaire_max, fp.statuts_poste, o.id_offre FROM Offre o JOIN Fiche_poste fp ON o.fiche_poste = fp.id_fiche_poste WHERE fp.recruteur = ?",
+      id_recruteur,
+      function (err, results) {
+        if (err) throw err;
+        callback(results);
+      },
+    );
+  },
+  getAllCandidats: function (id_offre, callback) {
+    db.query(
+      "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.tel, u.is_active, c.offre, c.state FROM Candidature c JOIN Utilisateur u ON c.candidat = u.id_utilisateur WHERE c.offre = ? AND u.is_active = 1;",
+      [id_offre],
+      function (err, results) {
+        if (err) callback(err, null);
+        callback(null, results);
+      },
+    );
+  },
   readAllRequests: function (state, organisation, callback) {
     db.query(
       "SELECT UR.type_utilisateur AS 'Type', CONCAT(U.nom,' ', U.prenom) AS 'Demandeur', UR.state_user AS 'Status de la demande', UR.organisation FROM Utilisateur_Roles UR JOIN Utilisateur U ON UR.id_utilisateur = U.id_utilisateur INNER JOIN Organisation ON Organisation.siret = UR.organisation WHERE UR.type_utilisateur = 'Recruteur' AND UR.state_user = ? AND Organisation.name= ?",

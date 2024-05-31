@@ -38,18 +38,28 @@
             
             </div>
             <div class="right-side">
+                
                 <a class="link" href="candidatures">
                     <div class="button button-candidat">
                         <img class="img-topbar" src="/images/candidatures.png">
                         <p>Mes candidatures</p>
                     </div>
                 </a>
-                <a class="link" href="account">
-                    <div class="button account">
-                        <img class="img-topbar" src="/images/account.png">
-                        <p>Mon compte</p>
-                    </div>
-                </a>
+                <% if (role === 'Recruteur') { %>
+                    <a class="link" href="/recruteur/account_recruteur">
+                        <div class="button button-candidat">
+                            <img class="img-topbar" src="/images/recruteur.png">
+                            <p>Mon compte</p>
+                        </div>  
+                    </a>    
+                    <% } else { %>
+                        <a class="link" href="/users/account">
+                            <div class="button account">
+                                <img class="img-topbar" src="/images/account.png">
+                                <p>Mon compte</p>
+                            </div>
+                        </a>
+                <% } %>
                 
             </div>
         </div>

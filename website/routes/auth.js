@@ -138,7 +138,7 @@ router.post('/login', function (req, res, next) {
                 if (req.session.role == "Administrateur"){
                     res.redirect("/admin/account");
                 }else if (req.session.role == "Recruteur"){
-                    res.redirect("/recruteur/account_recruteur");
+                    res.redirect("/offres/offer");
                 }else{
                     res.redirect("/offres/offer");
                 }

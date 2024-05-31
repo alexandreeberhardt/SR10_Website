@@ -16,6 +16,7 @@ router.get("/offer", function (req, res, next) {
     res.render("offres/offre", {
       title: "Visualisation des offres",
       result: result,
+      role: session.role
     });
   });
 });
@@ -34,9 +35,10 @@ router.get('/:id_offre', function (req, res) {
           return res.status(500).send('Error fetching offer details');
       }
       if (result.length > 0) {
-          res.render('offres/detail_offre', {offre: result, user: req.session.user });
+          res.render('offres/detail_offre', {offre: result, role: session.role});
       } else {
           res.status(404).send('Offer not found');
+          console.log("Il n'y a pas de candidats");
       }
   });
 });

@@ -33,7 +33,7 @@ router.get("/candidatures", function (req, res, next) {
       res.status(500).send("Erreur interne du serveur");
       return;
     }
-    res.render("users/candidatures", { title: "Candidatures", result: result });
+    res.render("users/candidatures", { role: session.role, title: "Candidatures", result: result });
   });
 });
 
@@ -49,7 +49,7 @@ router.get('/candidatures/:id_offre', function (req, res) {
           return res.status(500).send('Error fetching offer details');
       }
       if (result.length > 0) {
-          res.render('users/detail_candidatures', { offre: result, user: req.session.user });
+          res.render('users/detail_candidatures', {offre: result, user: req.session.user });
       } else {
           res.status(404).send('Offer not found');
       }
