@@ -62,6 +62,7 @@ postule: function (id_offre, id_utilisateur, callback) {
 
 
   enterFile : function (filename, type, candidature, callback) {
+    console.log(filename,type,candidature)
     var sql = "INSERT INTO Pieces_dossier (id_piece, type_piece,candidature,path) VALUES (NUll, ?,?,?) ";
     db.query(sql, [type, candidature, filename], function (err, results) {
         if (err) {
@@ -74,7 +75,6 @@ postule: function (id_offre, id_utilisateur, callback) {
 
 
   getCandId : function (user_id,offre_id, callback) {
-    console.log('mabite')
     const sql = "SELECT id_candidature FROM Candidature WHERE offre=? AND candidat=?";
     db.query(sql, [offre_id,user_id], function (err, results) {
         if (err) {
