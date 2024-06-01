@@ -85,8 +85,27 @@ quitOrg: function(id,siret,callback){
   );
 },
 
+creerFichePoste: function (intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, responsable_hierarchique, callback) {
+  const sql = "INSERT INTO Fiche_poste (intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, lieu, recruteur, is_active, responsable_hierarchique) VALUES (?, ?, ?, ?, ?, ?, 1, 90, 1, ?)"  ;
+  db.query(sql, [intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, responsable_hierarchique], function (err, results) {
+      if (err) {
+          callback(err, null);
+      } else {
+          callback(null, results);
+      }
+  });
+},
 
-
+creerOffre: function ( fiche_poste, expiration, indications, callback) {
+  const sql = "INSERT INTO Offre (expiration, indications, fiche_poste, etat) VALUES (?, ?, ?, 1)"  ;
+  db.query(sql, [expiration, indications, fiche_poste], function (err, results) {
+      if (err) {
+          callback(err, null);
+      } else {
+          callback(null, results);
+      }
+  });
+}
 
 
 

@@ -155,4 +155,96 @@ recruteurModel.getAllCandidats(id_offre, function(err, result) {
 });
 });
 
+router.get("/poster_offre", function (req, res, next) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+  id = session.user.id_utilisateur;
+  res.render("recruteur/poster_offre", {
+    title: "Poster une offre",
+    result: result,
+    role: session.role
+  });
+});
+
+router.post('/creer_fiche_de_poste', function (req, res) {
+  const session = req.session;
+    
+    if (!session) {
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+  
+    if (session.role != "Recruteur") {
+      return res.status(403).send("Accès interdit.");
+    }
+  
+    const id_offre = req.body.id_offre;
+    const id_utilisateur = req.session.user.id_utilisateur;
+    
+    const {
+      intitule,
+      rythme_travail,
+      salaire_min,
+      salaire_max,
+      description,
+      statuts_poste,
+      responsable_hierarchique
+    } = req.body;
+  
+    if (!intitule || !rythme_travail || !salaire_min || !salaire_max || !description || !statuts_poste || !responsable_hierarchique) {
+      return res.status(400).send("Tous les champs sont requis.");
+    }
+  
+    recruteurModel.creerFichePoste(intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, responsable_hierarchique, function (err, results) {
+      if (err) {
+        console.error('Erreur lors de la création de la fiche de poste', err);
+        return res.status(500).send('Erreur lors du traitement de votre demande.');
+      }
+  
+      res.status(200).send('Fiche de poste créée avec succès.');
+    });
+  });
+  
+
+  router.post('/creer_Offre', function (req, res) {
+    const session = req.session;
+      
+      if (!session) {
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
+    
+      if (session.role != "Recruteur") {
+        return res.status(403).send("Accès interdit.");
+      }
+    
+      const id_utilisateur = req.session.user.id_utilisateur;
+      
+      const {
+        expiration, indications, fiche_poste
+      } = req.body;
+    
+      if (!expiration || !indications || !fiche_poste) {
+        return res.status(400).send("Tous les champs sont requis.");
+      }
+    
+      recruteurModel.creerOffre( expiration, indications, fiche_poste, function (err, results) {
+        if (err) {
+          console.error('Erreur lors de la création de l\'offre', err);
+          return res.status(500).send('Erreur lors du traitement de votre demande.');
+        }
+    
+        res.status(200).send('Fiche de poste créée avec succès.');
+      });
+    });
+
+
+
+
+
+
 module.exports = router;

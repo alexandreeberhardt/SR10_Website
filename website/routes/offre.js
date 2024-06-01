@@ -37,7 +37,7 @@ router.get('/:id_offre', function (req, res) {
       if (result.length > 0) {
           res.render('offres/detail_offre', {offre: result, role: session.role});
       } else {
-          res.status(404).send('Offer not found');
+          res.status(404).send('Offer not found');                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
           console.log("Il n'y a pas de candidats");
       }
   });
