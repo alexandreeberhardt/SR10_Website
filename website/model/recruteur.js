@@ -96,8 +96,12 @@ creerFichePoste: function (intitule, rythme_travail, salaire_min, salaire_max, d
   });
 },
 
-creerOffre: function ( fiche_poste, expiration, indications, callback) {
-  const sql = "INSERT INTO Offre (expiration, indications, fiche_poste, etat) VALUES (?, ?, ?, 1)"  ;
+
+
+
+
+creerOffre: function ( expiration, indications, fiche_poste, callback) {
+  const sql = "INSERT INTO Offre (expiration, indications, fiche_poste, etat) VALUES (?, ?, ?, 'Active')"  ;
   db.query(sql, [expiration, indications, fiche_poste], function (err, results) {
       if (err) {
           callback(err, null);
@@ -105,6 +109,49 @@ creerOffre: function ( fiche_poste, expiration, indications, callback) {
           callback(null, results);
       }
   });
+},
+
+getSiret : function(id_utilisateur, callback){
+  const sql = "SELECT organisation FROM Utilisateur_Roles WHERE id_utilisateur = ? AND type_utilisateur = 'Recruteur'";
+  db.query(sql, [id_utilisateur], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+getIdOffre: function(callback){
+  const sql = "SELECT id_offre FROM Offre ORDER BY id_offre DESC LIMIT 1;";
+  db.query(sql, function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+
+},
+offreOrga: function(siret, id_offre, callback){
+  const sql = "INSERT INTO Offre_Organisation (offre, org) VALUES (?, ?)"  ;
+  db.query(sql, [id_offre, siret], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
+getIntitule: function(id_recruteur,callback){
+  const sql = "SELECT id_fiche_poste, intitule FROM Fiche_poste WHERE recruteur = ? AND is_active = 1";
+  db.query(sql, [id_recruteur], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
 }
 
 

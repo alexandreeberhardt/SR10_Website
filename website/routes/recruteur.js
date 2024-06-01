@@ -165,12 +165,26 @@ router.get("/poster_offre", function (req, res, next) {
       return res.status(403).send("Accès interdit.");
   }
   id = session.user.id_utilisateur;
-  res.render("recruteur/poster_offre", {
-    title: "Poster une offre",
-    result: result,
-    role: session.role
-  });
-});
+  recruteurModel.getIntitule(id,function(err,results){
+    if (err) {
+      console.error('Erreur lors du get intitule', err);
+      return res.status(500).send('Erreur lors du traitement de votre demande.');
+    }
+    else {
+      console.log(results);
+      res.render("recruteur/poster_offre", {
+        title: "Poster une offre",
+        role: session.role,
+        fiche_poste:results
+      });
+    } 
+    });
+    
+
+  }
+
+  
+);
 
 router.post('/creer_fiche_de_poste', function (req, res) {
   const session = req.session;
@@ -237,8 +251,47 @@ router.post('/creer_fiche_de_poste', function (req, res) {
           console.error('Erreur lors de la création de l\'offre', err);
           return res.status(500).send('Erreur lors du traitement de votre demande.');
         }
+        else {
+          recruteurModel.getIdOffre(function(err,idOffre){
+            if (err) {
+              console.error("Erreur lors de la récupération de  l'id de l'offre", err);
+              return res.status(500).send('Erreur lors du traitement de votre demande.');
+            }
+            else {
+              recruteurModel.getSiret(id_utilisateur,function(err,siret){
+                if (err) {
+                  console.error('Erreur lors de la récupération du siret', err);
+                  return res.status(500).send('Erreur lors du traitement de votre demande.');
+                }
+                else {
+                  console.log(siret[0].organisation, idOffre[0].id_offre);
+                  recruteurModel.offreOrga(siret[0].organisation, idOffre[0].id_offre, function(err,results){
+                    if (err) {
+                      console.error('Erreur lors du post Offre Orga', err);
+                      return res.status(500).send('Erreur lors du traitement de votre demande.');
+                    }
+                    else {
+                      res.status(200).send('Offre créée avec succès + c\'est good.');
+
+
+                    }
+
+
+                  })
+                  
+
+                }
+
+
+              })
+
+            }
+          }
+        
+        )
+
+        }
     
-        res.status(200).send('Fiche de poste créée avec succès.');
       });
     });
 

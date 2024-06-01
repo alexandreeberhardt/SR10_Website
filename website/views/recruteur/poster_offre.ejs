@@ -71,10 +71,12 @@
                     <form method="post" action="/recruteur/creer_Offre">
                         <select class="input-card-admin-name" id="type" placeholder="Fiche Poste" name="fiche_poste">
                             <option value="Technologie" disabled selected>Fiche de poste</option>
-                            <option value="1">1 Dev Web</option>
+                                <% fiche_poste.forEach((res) => { %>
+                                    <option value="<%= res.id_fiche_poste %>"><%= res.intitule %></option>
+                                <% }) %>                          
                         </select>
                         <textarea class="input-card-admin-text" name="indications" placeholder="Indications..."></textarea>
-                        <input class="input-card-admin-name" type="date" placeholder="Expiration" name="expiration">
+                        <input class="input-card-admin-name" type="datetime-local" placeholder="Expiration" name="expiration">
                         <input class="input-card-admin-submit" type="submit" value="Envoyer">
                     </form>
                 </div>
