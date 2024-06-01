@@ -7,7 +7,51 @@
         <link href="/stylesheets/offre.css" rel="stylesheet" type="text/css" />
         <title><%= title %></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+           $(document).ready(function() {
+                function filterRows() {
+                    let searchValue = $('.search-input').val().toLowerCase();
+                    let posteFilter = $('.search-input-leftside:eq(0)').val().toLowerCase();
+                    let entrepriseFilter = $('.search-input-leftside:eq(1)').val().toLowerCase();
+                    let paysFilter = $('.search-input-leftside:eq(2)').val().toLowerCase();
+                    let salaireFilter = $('.search-input-leftside:eq(3)').val();
 
+                    $("#offreTable tr").each(function(index) {
+                        if(index!== 0) { 
+                            let $row = $(this);
+                            let showRow = true;
+
+                            let intitule = $row.find("td:eq(0)").text().toLowerCase();
+                            let organisation = $row.find("td:eq(5)").text().toLowerCase();
+                            let pays = $row.find("td:eq(6)").text().toLowerCase();
+                            let salaireMin = parseInt($row.find("td:eq(2)").text());
+
+                            let specificFiltersMatch =
+                                (!posteFilter || intitule.indexOf(posteFilter)!== -1) &&
+                                (!entrepriseFilter || organisation.indexOf(entrepriseFilter)!== -1) &&
+                                (!paysFilter || pays.indexOf(paysFilter)!== -1) &&
+                                (!salaireFilter || salaireMin >= salaireFilter);
+
+                            if (!(posteFilter || entrepriseFilter || paysFilter || salaireFilter) || specificFiltersMatch) {
+                                let cellsText = $row.text().toLowerCase();
+                                showRow = cellsText.indexOf(searchValue)!== -1;
+                            } else {
+                                showRow = false; 
+                            }
+
+                            $row.toggle(showRow);
+                        }
+                    });
+                }
+
+                $(".search-input,.search-input-leftside").on('keyup change', function() {
+                    filterRows();
+                });
+
+                filterRows();
+            });
+            </script>
+            
     </head>
     <body>
         <div class="topbar">
@@ -44,7 +88,7 @@
                     <h3>Cherchez les offres d'emploi pertinentes pour vous !</h3>
                     <input placeholder="Search..." class="search-input" type="text">
                     <br>
-                    <table class="Offre_table">
+                    <table id="offreTable" class="Offre_table">
                         <tr>
                             <th class="offre_th">Intitule</th>
                             <th class="offre_th">Rythme de travail</th>
@@ -79,13 +123,10 @@
 
                         <input placeholder="Entreprise..." class="search-input-leftside " type="text">
 
-                        <input placeholder="Ville..." class="search-input-leftside " type="text">
+                        <input placeholder="Pays..." class="search-input-leftside " type="text">
 
                         <input placeholder="Salaire..." class="search-input-leftside " type="number">
-                        <div class="main-form-wrapper-buttons">
-                            <input  class="search-input-leftside " type="button" value="récents">
-                            <input  class="search-input-leftside " type="button" value="anciens">
-                        </div>
+
                 </div>
             </div>
         </div>
