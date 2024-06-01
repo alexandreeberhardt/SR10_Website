@@ -219,11 +219,11 @@ router.post('/creer_fiche_de_poste', function (req, res) {
         console.error('Erreur lors de la création de la fiche de poste', err);
         return res.status(500).send('Erreur lors du traitement de votre demande.');
       }
-  
-      res.status(200).send('Fiche de poste créée avec succès.');
+      res.render('recruteur/fiche_cree', {offre: result, user: req.session.user, role: session.role });
+      console.log('Fiche de poste créée avec succès.');
     });
   });
-  
+   
 
   router.post('/creer_Offre', function (req, res) {
     const session = req.session;
@@ -271,8 +271,8 @@ router.post('/creer_fiche_de_poste', function (req, res) {
                       return res.status(500).send('Erreur lors du traitement de votre demande.');
                     }
                     else {
-                      res.status(200).send('Offre créée avec succès + c\'est good.');
-
+                      res.render('recruteur/offre_cree', {offre: result, user: req.session.user, role: session.role });
+                      console.log("offre crée avec succès !");
 
                     }
 
