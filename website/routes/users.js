@@ -90,7 +90,10 @@ router.get('/candidatures/:id_offre', function (req, res) {
   });
 });
 
+
+
 router.post('/candidatures/:id_offre', function (req, res) {
+
 
   // route pour unpostuler à une offre 
 

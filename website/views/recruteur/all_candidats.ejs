@@ -8,6 +8,16 @@
     <link href="/stylesheets/offre.css" rel="stylesheet" type="text/css">
     <title>Liste des candidats</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.search-input').keyup(function(){
+                var value = $(this).val().toLowerCase();
+                $('.Offre_table tbody tr').filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="topbar">
@@ -76,21 +86,6 @@
             </div>
         </div>
         
-        <div class="right-side-main">
-            <div class="right-side-filters">
-                <div class="title-search">
-                    <h2>Filtrez votre recherche</h2>
-                </div>
-                <input placeholder="Poste..." class="search-input-leftside" type="text">
-                <input placeholder="Entreprise..." class="search-input-leftside" type="text">
-                <input placeholder="Ville..." class="search-input-leftside" type="text">
-                <input placeholder="Salaire..." class="search-input-leftside" type="number">
-                <div class="main-form-wrapper-buttons">
-                    <input class="search-input-leftside" type="button" value="récents">
-                    <input class="search-input-leftside" type="button" value="anciens">
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 </html>

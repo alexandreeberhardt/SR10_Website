@@ -6,6 +6,8 @@ var userModel = require("../model/user");
 const recruteur = require("../model/recruteur");
 const session = require('../utils/session.js');
 const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
+const fs = require('fs');
+
 
 router.get("/account_recruteur", function (req, res, next) {``
   let info = req.session.user;
@@ -34,6 +36,21 @@ router.get("/visualisation_offre", function (req, res, next) {
       title: "Visualisation des offres",
       result: result,
     });
+  });
+});
+
+router.get("/download/:filename", function (req, res) {
+  console.log("coucou")
+  const filename = req.params.filename;
+  const filePath = `./upload/${filename}`; 
+  console.log(filePath)
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+      if (err) {
+          console.log(`Le fichier ${filePath} n'existe pas ou il n'y a pas de droit de lecture.`);
+          return res.status(404).send("Le fichier demandé n'existe pas.");
+      } else {
+          res.download(filePath);
+      }
   });
 });
 

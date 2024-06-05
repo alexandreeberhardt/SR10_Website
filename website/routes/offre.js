@@ -21,8 +21,8 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const username = `${req.session.user.nom}-${req.session.user.prenom}`;
         const offerId = req.params.id_offre;
-        const originalName = file.originalname.replace(/ /g, '-');
-        const extension = originalName.split('.').pop();
+        const originalName = file.originalname.replace(/ /g, '-').replace(".pdf","");
+        const extension = 'pdf';
         const date = new Date();
         const formattedDate = `${date.getFullYear().toString().substr(-2)}:${(date.getMonth() + 1).toString().padStart(2, '0')}:${date.getDate().toString().padStart(2, '0')}:${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
         const fileName = `${originalName}-${username}-${offerId}-${formattedDate}.${extension}`;
@@ -41,13 +41,6 @@ const upload = multer({
 });
 
   
-  router.get('/getfile', function(req, res, next) {
-    try {
-      res.download('./uploads/'+req.query.fichier_cible);
-    } catch (error) {
-      res.send('Erreur lors du chargement du fichier '+req.query.fichier_cible+' : '+error);
-    }
-});
 
 router.post('/:id_offre', upload.fields([{ name: 'cv', maxCount: 1 }, { name: 'lettre', maxCount: 1 }, { name: 'uid', maxCount: 1 }]),  (req, res) => {    
     
