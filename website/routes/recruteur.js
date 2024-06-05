@@ -168,7 +168,8 @@ recruteurModel.getAllCandidats(id_offre, function(err, result) {
     if (result.length > 0) {
         res.render('recruteur/all_candidats', {role: session.role, id_offre:id_offre, candidats: result});
     } else {
-        res.status(404).send('Offer not found');
+
+        res.status(304).send('Aucun utilisateur n\'a postulé ou votre offre n\'existe pas');
     }
 });
 });
