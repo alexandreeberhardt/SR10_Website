@@ -176,15 +176,13 @@ router.get("/poster_offre", function (req, res, next) {
       res.render("recruteur/poster_offre", {
         title: "Poster une offre",
         role: session.role,
-        fiche_poste:results
+        fiche_poste: results
       });
     } 
     });
     
 
   }
-
-  
 );
 
 router.post('/creer_fiche_de_poste', function (req, res) {
@@ -208,21 +206,36 @@ router.post('/creer_fiche_de_poste', function (req, res) {
       salaire_max,
       description,
       statuts_poste,
+      adresse,
+      ville,
+      postcode,
+      pays,
       responsable_hierarchique
     } = req.body;
   
-    if (!intitule || !rythme_travail || !salaire_min || !salaire_max || !description || !statuts_poste || !responsable_hierarchique) {
+    if (!intitule || !rythme_travail || !salaire_min || !salaire_max || !description || !statuts_poste || !responsable_hierarchique || !adresse || !ville || !postcode || !pays) {
       return res.status(400).send("Tous les champs sont requis.");
     }
-  
-    recruteurModel.creerFichePoste(intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, responsable_hierarchique, function (err, results) {
+    userModel.addaddress(adresse, ville,postcode,pays,function(err, lieu){
       if (err) {
-        console.error('Erreur lors de la création de la fiche de poste', err);
+        console.error('Erreur lors de la création du lieu de la fiche de poste', err);
         return res.status(500).send('Erreur lors du traitement de votre demande.');
       }
-      res.render('recruteur/fiche_cree', {offre: result, user: req.session.user, role: session.role });
-      console.log('Fiche de poste créée avec succès.');
-    });
+      else if (lieu){
+        recruteurModel.creerFichePoste(intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, id_utilisateur, responsable_hierarchique, function (err, results) {
+          if (err) {
+            console.error('Erreur lors de la création de la fiche de poste', err);
+            return res.status(500).send('Erreur lors du traitement de votre demande.');
+          }
+          res.render('recruteur/fiche_cree', {offre: result, user: req.session.user, role: session.role });
+          console.log('Fiche de poste créée avec succès.');
+        });
+      }
+
+
+    })
+  
+    
   });
    
 

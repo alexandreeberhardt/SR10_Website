@@ -37,10 +37,15 @@
     <div class="notification">
         <p>Vous êtes déjà administrateur ou votre demande est en cours.</p>
         <p>Pour retourner à votre compte cliquez ici </p>
-
-        <a href="/users/account">
-            <button class="postuler"> Mon compte</button>
-        </a>
+        <% if (role === 'Recruteur') { %>
+            <a href="/recruteur/account_recruteur">
+                <button class="postuler"> Mon compte</button>
+            </a>   
+        <% } else { %>
+            <a href="/users/account">
+                <button class="postuler"> Mon compte</button>
+            </a>
+        <% } %>
         <p>Si vous souhaitez retirer votre demande, pour pouvoir en refaire une ou non, cliquez ici : </p>
         <form method="post" action="/users/askedadmin">
             <button  type="submit" class="postuler">Retirer ma demande</button> 
