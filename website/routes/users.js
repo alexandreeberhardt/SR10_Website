@@ -266,7 +266,7 @@ router.post('/makeadmin', function (req, res, next) {
   const id_utilisateur = req.session.user.id_utilisateur; 
   userModel.alreadyadmin(id_utilisateur,function (err, result) {
     if (result.length>0){
-      res.render('users/askedadmin');
+      res.render('users/askedadmin',{role: session.role});
     }
     else {
   userModel.makeAdmin(id_utilisateur, req.body.reason, function (err, email) {
@@ -284,7 +284,7 @@ router.post('/makeadmin', function (req, res, next) {
                   "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
                   session.user.email);
       } 
-      res.render('users/askadmin');
+      res.render('users/askadmin',{role: session.role});
   });
 }
 });
@@ -323,6 +323,7 @@ router.post('/makerecruteur', function (req, res, next) {
                   "Une agréable journée à vous,\n\nL'équipe Recr'UT.",
                   session.user.email);
       } 
+      console.log(id_utilisateur,req.body.siret, req.body.reason);
       res.render('users/askrecruteur');
   });
 }

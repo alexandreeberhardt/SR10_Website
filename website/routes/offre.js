@@ -17,7 +17,7 @@ function deleteFile(filePath) {
 
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {cb(null, "./uploads"); },
+    destination: function(req, file, cb) {cb(null, "uploads"); },
     filename: function (req, file, cb) {
         const username = `${req.session.user.nom}-${req.session.user.prenom}`;
         const offerId = req.params.id_offre;
@@ -167,7 +167,7 @@ router.get('/:id_offre', function (req, res) {
           res.render('offres/detail_offre', {offre: result, role: session.role});
       } else {
           res.status(404).send('Offer not found');                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-          console.log("Il n'y a pas de candidats");
+          console.log("Il n'y a pas d'offre");
       }
   });
 });
