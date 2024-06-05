@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/stylesheets/account_candidat.css" rel="stylesheet" type="text/css" />
+        <title><%= title %></title>
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="left-side">
+                <a class="link-wrapper link" href="/offres/offer" >
+                    <div class="button button-home">
+                        <img class="img-topbar"  src="/images/home.png">
+                        <p>Home</p>
+                    </div>
+                </a>
+            
+            </div>
+            <div class="right-side">
+                
+                <a class="link" href="/users/candidatures">
+                    <div class="button button-candidat">
+                        <img class="img-topbar" src="/images/candidatures.png">
+                        <p>Mes candidatures</p>
+                    </div>
+                </a>
+                <% if (role === 'Recruteur') { %>
+                    <a class="link" href="/recruteur/account_recruteur">
+                        <div class="button button-candidat">
+                            <img class="img-topbar" src="/images/recruteur.png">
+                            <p>Mon compte</p>
+                        </div>  
+                    </a>    
+                    <% } else { %>
+                        <a class="link" href="/users/account">
+                            <div class="button account">
+                                <img class="img-topbar" src="/images/account.png">
+                                <p>Mon compte</p>
+                            </div>
+                        </a>
+                <% } %>
+                
+            </div>
+        </div>
+        <div class="title-mid-page">
+            <h1>Compte recruteur</h1>
+            <h3>Devenez administrateur ou creez votre organisation ! </h3>
+        </div>
+        <div class="main-page">
+            <div class="right-side-main">
+                <div class="button-top-column">Créer une fiche de poste</div>
+                <div class="card-admin">
+                    <form method="post" action="/recruteur/creer_fiche_de_poste">
+                        <input class="input-card-admin-name" type="text" placeholder="Intitulé" name="intitule">
+                        <input class="input-card-admin-name" type="text" placeholder="Rythme de Travail" name="rythme_travail">
+                        <input class="input-card-admin-name" type="number" placeholder="Salaire Min" name="salaire_min">
+                        <input class="input-card-admin-name" type="number" placeholder="Salaire Max" name="salaire_max">
+                        <textarea class="input-card-admin-text" name="description" placeholder="Description..."></textarea>
+                        <input class="input-card-admin-name" type="text" placeholder="Statuts Poste" name="statuts_poste">
+                        <input class="input-card-admin-name" type="text" placeholder="Lieu" name="lieu">
+                        <input class="input-card-admin-name" type="text" placeholder="Responsable Hiérarchique" name="responsable_hierarchique">
+                        <input class="input-card-admin-submit" type="submit" value="Envoyer">
+                    </form>
+                </div>
+            </div>
+            <div class="right-side-main">
+                <div class="button-top-column">Créer une offre d'emploi</div>
+                <div class="card-admin">
+                    <form method="post" action="/recruteur/creer_Offre">
+                        <select class="input-card-admin-name" id="type" placeholder="Fiche Poste" name="fiche_poste">
+                            <option value="Technologie" disabled selected>Fiche de poste</option>
+                                <% fiche_poste.forEach((res) => { %>
+                                    <option value="<%= res.id_fiche_poste %>"><%= res.intitule %></option>
+                                <% }) %>                          
+                        </select>
+                        <textarea class="input-card-admin-text" name="indications" placeholder="Indications..."></textarea>
+                        <input class="input-card-admin-name" type="datetime-local" placeholder="Expiration" name="expiration">
+                        <input class="input-card-admin-submit" type="submit" value="Envoyer">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

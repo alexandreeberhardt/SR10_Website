@@ -19,6 +19,14 @@
         
         </div>
         <div class="right-side">
+            <% if (role === 'Recruteur') { %>
+                <a class="link" href="/recruteur/account_recruteur">
+                    <div class="button button-candidat">
+                        <img class="img-topbar" src="/images/recruteur.png">
+                        <p>Recruteur</p>
+                    </div>  
+                </a>
+            <% } %>
             <a class="link" href="/users/candidatures">
                 <div class="button button-candidat">
                     <img class="img-topbar" src="/images/candidatures.png">

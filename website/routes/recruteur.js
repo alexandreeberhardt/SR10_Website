@@ -23,7 +23,7 @@ router.get("/visualisation_offre", function (req, res, next) {
 
 
   if (session.role != "Recruteur"){
-    if (!session){
+    if (!session){$
       return res.status(403).send("Accès interdit.");
     }
   }
@@ -107,6 +107,197 @@ router.post('/quit_org', function (req, res, next) {
       }
     });
 });
+
+
+router.get("/recruter", function (req, res, next) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+  id = session.user.id_utilisateur;
+result = recruteurModel.readAllOffres(id, function (result) {
+  console.log(result);
+  res.render("recruteur/recruter", {
+    title: "Visualisation des offres",
+    result: result,
+    role: session.role
+  });
+});
+});
+
+
+
+router.get('/recruter/:id_offre', function (req, res) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+const id_offre = req.params.id_offre;
+
+recruteurModel.getAllCandidats(id_offre, function(err, result) {
+    if (err) {
+        console.error('Error fetching offer details', err);
+        return res.status(500).send('Error fetching offer details');
+    }
+    if (result.length > 0) {
+        res.render('recruteur/all_candidats', {role: session.role, id_offre:id_offre, candidats: result});
+    } else {
+        res.status(404).send('Offer not found');
+    }
+});
+});
+
+router.get("/poster_offre", function (req, res, next) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+  id = session.user.id_utilisateur;
+  recruteurModel.getIntitule(id,function(err,results){
+    if (err) {
+      console.error('Erreur lors du get intitule', err);
+      return res.status(500).send('Erreur lors du traitement de votre demande.');
+    }
+    else {
+      console.log(results);
+      res.render("recruteur/poster_offre", {
+        title: "Poster une offre",
+        role: session.role,
+        fiche_poste:results
+      });
+    } 
+    });
+    
+
+  }
+
+  
+);
+
+router.post('/creer_fiche_de_poste', function (req, res) {
+  const session = req.session;
+    
+    if (!session) {
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+  
+    if (session.role != "Recruteur") {
+      return res.status(403).send("Accès interdit.");
+    }
+  
+    const id_offre = req.body.id_offre;
+    const id_utilisateur = req.session.user.id_utilisateur;
+    
+    const {
+      intitule,
+      rythme_travail,
+      salaire_min,
+      salaire_max,
+      description,
+      statuts_poste,
+      responsable_hierarchique
+    } = req.body;
+  
+    if (!intitule || !rythme_travail || !salaire_min || !salaire_max || !description || !statuts_poste || !responsable_hierarchique) {
+      return res.status(400).send("Tous les champs sont requis.");
+    }
+  
+    recruteurModel.creerFichePoste(intitule, rythme_travail, salaire_min, salaire_max, description, statuts_poste, responsable_hierarchique, function (err, results) {
+      if (err) {
+        console.error('Erreur lors de la création de la fiche de poste', err);
+        return res.status(500).send('Erreur lors du traitement de votre demande.');
+      }
+      res.render('recruteur/fiche_cree', {offre: result, user: req.session.user, role: session.role });
+      console.log('Fiche de poste créée avec succès.');
+    });
+  });
+   
+
+  router.post('/creer_Offre', function (req, res) {
+    const session = req.session;
+      
+      if (!session) {
+        return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+      }
+    
+      if (session.role != "Recruteur") {
+        return res.status(403).send("Accès interdit.");
+      }
+    
+      const id_utilisateur = req.session.user.id_utilisateur;
+      
+      const {
+        expiration, indications, fiche_poste
+      } = req.body;
+    
+      if (!expiration || !indications || !fiche_poste) {
+        return res.status(400).send("Tous les champs sont requis.");
+      }
+    
+      recruteurModel.creerOffre( expiration, indications, fiche_poste, function (err, results) {
+        if (err) {
+          console.error('Erreur lors de la création de l\'offre', err);
+          return res.status(500).send('Erreur lors du traitement de votre demande.');
+        }
+        else {
+          recruteurModel.getIdOffre(function(err,idOffre){
+            if (err) {
+              console.error("Erreur lors de la récupération de  l'id de l'offre", err);
+              return res.status(500).send('Erreur lors du traitement de votre demande.');
+            }
+            else {
+              recruteurModel.getSiret(id_utilisateur,function(err,siret){
+                if (err) {
+                  console.error('Erreur lors de la récupération du siret', err);
+                  return res.status(500).send('Erreur lors du traitement de votre demande.');
+                }
+                else {
+                  console.log(siret[0].organisation, idOffre[0].id_offre);
+                  recruteurModel.offreOrga(siret[0].organisation, idOffre[0].id_offre, function(err,results){
+                    if (err) {
+                      console.error('Erreur lors du post Offre Orga', err);
+                      return res.status(500).send('Erreur lors du traitement de votre demande.');
+                    }
+                    else {
+                      res.render('recruteur/offre_cree', {offre: result, user: req.session.user, role: session.role });
+                      console.log("offre crée avec succès !");
+
+                    }
+
+
+                  })
+                  
+
+                }
+
+
+              })
+
+            }
+          }
+        
+        )
+
+        }
+    
+      });
+    });
+
+
+
+
 
 
 module.exports = router;
