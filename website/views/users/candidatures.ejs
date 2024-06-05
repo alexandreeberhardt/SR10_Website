@@ -1,110 +1,94 @@
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="/stylesheets/candidature.css" rel="stylesheet" type="text/css" />        
-        <title><%= title %></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $("#a1").click(function(){
-                    window.location.href = "apply_modif.html";
-                });
-            });
-            $(document).ready(function(){
-                $("#a2").click(function(){
-                    window.location.href = "apply_modif.html";
-                });
-            });
-            $(document).ready(function(){
-                $("#a3").click(function(){
-                    window.location.href = "apply_modif.html";
-                });
-            });
-        </script>
-    </head>
-    <body>
-        <div class="topbar">
-            <div class="left-side">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/candidature.css" rel="stylesheet" type="text/css" />        
+    <title><%= title %></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                <a class="link-wrapper link" href="/offres/offer" >
-                    <div class="button button-home">
-                        <img class="img-topbar"  src="/images/home.png">
-                        <p>Home</p>
-                    </div>
-                </a>
-            
-            </div>
-            <div class="right-side">
-                
-                <a class="link" href="candidatures">
+    <script>
+        $(document).ready(function(){
+            $('.search-input').keyup(function(){
+                var value = $(this).val().toLowerCase();
+                $('.Offre_table tr').filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="left-side">
+            <a class="link-wrapper link" href="/offres/offer" >
+                <div class="button button-home">
+                    <img class="img-topbar"  src="/images/home.png">
+                    <p>Home</p>
+                </div>
+            </a>
+        </div>
+        <div class="right-side">
+            <a class="link" href="candidatures">
+                <div class="button button-candidat">
+                    <img class="img-topbar" src="/images/candidatures.png">
+                    <p>Mes candidatures</p>
+                </div>
+            </a>
+            <% if (role === 'Recruteur') { %>
+                <a class="link" href="/recruteur/account_recruteur">
                     <div class="button button-candidat">
-                        <img class="img-topbar" src="/images/candidatures.png">
-                        <p>Mes candidatures</p>
+                        <img class="img-topbar" src="/images/recruteur.png">
+                        <p>Mon compte</p>
+                    </div>  
+                </a>    
+            <% } else { %>
+                <a class="link" href="/users/account">
+                    <div class="button account">
+                        <img class="img-topbar" src="/images/account.png">
+                        <p>Mon compte</p>
                     </div>
                 </a>
-                <% if (role === 'Recruteur') { %>
-                    <a class="link" href="/recruteur/account_recruteur">
-                        <div class="button button-candidat">
-                            <img class="img-topbar" src="/images/recruteur.png">
-                            <p>Mon compte</p>
-                        </div>  
-                    </a>    
-                    <% } else { %>
-                        <a class="link" href="/users/account">
-                            <div class="button account">
-                                <img class="img-topbar" src="/images/account.png">
-                                <p>Mon compte</p>
-                            </div>
-                        </a>
-                <% } %>
-                
-            </div>
+            <% } %> 
         </div>
-        <div class="main-page">
-
-            <div class="left-side-main">
-                <div class="header-left-side">
-                    <h1>Voir les candidatures</h1>
-                    <h3>Cherchez les offres d'emploi auxquelles vous avez répondu !</h3>
-                    <input placeholder="Search..." class="search-input" type="text">
-                    <br>
-                    <table class="Offre_table">
-                        <tr>
-                          <th class="offre_th" class="offre_row" >Poste</th>
-                          <th class="offre_th">Nom de l'entreprise</th>
-                        </tr>
-                        <% result.forEach((result)=> { %>
+    </div>
+    <div class="main-page">
+        <div class="left-side-main">
+            <div class="header-left-side">
+                <h1>Voir les candidatures</h1>
+                <h3>Cherchez les offres d'emploi auxquelles vous avez répondu !</h3>
+                <input placeholder="Search..." class="search-input" type="text">
+                <br>
+                <table class="Offre_table">
+                    <tr>
+                        <th class="offre_th" class="offre_row">Poste</th>
+                        <th class="offre_th">Nom de l'entreprise</th>
+                    </tr>
+                    <% result.forEach((result)=> { %>
                         <tr class="row-clickable" onclick="location.href='/users/candidatures/<%= result.IdOffre %>'" style="cursor:pointer;">
-                          <td class="offre_row">    <%= result.Intitule %>                          </td>
-                          <td><%= result.Name %></td>
+                            <td class="offre_row"><%= result.Intitule %></td>
+                            <td><%= result.Name %></td>
                         </tr>
-                        <% }) %>
-                      </table>
-                </div>
+                    <% }) %>
+                </table>
             </div>
-            <div class="right-side-main">
-                <div class="right-side-filters">
-                    <div class="title-search">
-                        <h2>Filtrez votre recherche</h2>
-                    </div>
-                        <input placeholder="Poste..." class="search-input-leftside " type="text">
-
-                        <input placeholder="Entreprise..." class="search-input-leftside " type="text">
-
-                        <input placeholder="Ville..." class="search-input-leftside " type="text">
-
-                        <input placeholder="Salaire..." class="search-input-leftside " type="number">
-                        <div class="main-form-wrapper-buttons">
-                            <input  class="search-input-leftside " type="button" value="récents">
-                            <input  class="search-input-leftside " type="button" value="anciens">
-                        </div>
+        </div>
+        <div class="right-side-main">
+            <div class="right-side-filters">
+                <div class="title-search">
+                    <h2>Filtrez votre recherche</h2>
+                </div>
+                <input placeholder="Poste..." class="search-input-leftside " type="text">
+                <input placeholder="Entreprise..." class="search-input-leftside " type="text">
+                <input placeholder="Ville..." class="search-input-leftside " type="text">
+                <input placeholder="Salaire..." class="search-input-leftside " type="number">
+                <div class="main-form-wrapper-buttons">
+                    <input  class="search-input-leftside " type="button" value="récents">
+                    <input  class="search-input-leftside " type="button" value="anciens">
                 </div>
             </div>
         </div>
-        
-
-    </body>
+    </div>
+</body>
 </html>

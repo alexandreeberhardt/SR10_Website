@@ -1,5 +1,6 @@
 var db = require("./db.js");
 module.exports = {
+
   readCandidatures: function (status, callback) {
     db.query(
       "SELECT Candidature.date_candidature, Utilisateur.nom, Utilisateur.prenom, Fiche_poste.intitule FROM Candidature INNER JOIN Utilisateur ON Candidature.candidat = Utilisateur.id_utilisateur INNER JOIN State_demande ON State_demande.state_value = Candidature.state INNER JOIN Offre ON Offre.id_offre = Candidature.offre INNER JOIN Fiche_poste ON Offre.fiche_poste = Fiche_poste.id_fiche_poste WHERE State_demande.state_value = ?",
@@ -10,6 +11,7 @@ module.exports = {
       },
     );
   },
+
   readNewRecruteur: function (id, callback) {
     db.query(
       "SELECT * from Offre  INNER JOIN State_offre INNER JOIN Fiche_poste ON Fiche_poste.id_fiche_poste = Offre.fiche_poste WHERE Offre.id_offre= ?",
@@ -22,7 +24,7 @@ module.exports = {
   },
   readAllOffres: function (id_recruteur, callback) {
     db.query(
-      "SELECT fp.id_fiche_poste, fp.intitule, fp.rythme_travail, fp.salaire_min, fp.salaire_max, fp.statuts_poste, o.id_offre FROM Offre o JOIN Fiche_poste fp ON o.fiche_poste = fp.id_fiche_poste WHERE fp.recruteur = ?",
+      "SELECT fp.id_fiche_poste, fp.intitule, fp.rythme_travail, fp.salaire_min, fp.salaire_max, fp.statuts_poste, o.id_offre FROM Offre o INNER JOIN Fiche_poste fp ON o.fiche_poste = fp.id_fiche_poste INNER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = fp.recruteur WHERE Utilisateur_Roles.organisation IN ( SELECT organisation FROM Utilisateur_Roles WHERE Utilisateur_Roles.id_utilisateur = ? )",
       id_recruteur,
       function (err, results) {
         if (err) throw err;

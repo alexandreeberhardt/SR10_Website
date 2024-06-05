@@ -45,8 +45,12 @@ router.get("/creation", function (req, res, next) {
 
 
 router.get("/account", function (req, res, next) {
-    res.render("users/account_candidat", {
+  let info = req.session.user;
+  info.role = req.session.role;
+
+  res.render("users/account_candidat", {
       title: "Compte personnel Recr'uT",
+      info : info,
     });
 });
 

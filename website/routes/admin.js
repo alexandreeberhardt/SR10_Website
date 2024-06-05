@@ -37,7 +37,8 @@ router.post('/makeadmin', function (req, res, next) {
 
 router.get("/account", function (req, res, next) {
     const session = req.session;
-
+    let info = req.session.user;
+    info.role = req.session.role;
     if (session.role !== "Administrateur") {
         return res.status(403).send("Accès interdit.");
     }
@@ -56,7 +57,7 @@ router.get("/account", function (req, res, next) {
                 "users": result1,
                 "org": result2
             };
-            res.render("admin/account", { title: "Account Admin", data : results });
+            res.render("admin/account", { title: "Account Admin", data : results, info : info});
         })
 
     });
