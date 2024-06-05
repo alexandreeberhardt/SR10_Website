@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/quit_org.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>  
+    <div class="topbar">
+        <div class="left-side">
+            <a class="link-wrapper link" href="/" >
+                <div class="button button-home">
+                    <img class="img-topbar"  src="/images/home.png">
+                    <p>Home</p>
+                </div>
+            </a>
+        </div>
+        <h1>Gérer un user </h1>
+        <div class="right-side">
+            <a class="link" href="/login/logout">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/logout.png">
+                    <p>Se déconnecter</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div>
+        <h3>Gestion utilisateur</h3>
+        <div class="wrapper-all">
+
+        <div class="form-wrapper">
+            <div class="form-group validation-button">
+                <div>
+                    <p>Id du compte : <%= result.id_utilisateur %> </p>
+                    <p>Nom :  <%= result.nom %> </p>
+                    <p>Prenom :  <%= result.prenom %> </p>
+                    <p>Etat du compte :  <%= result.is_active %> </p>
+                    <p>Etat du role :  <%= result.state_user %> </p>
+                    <% if(result.state_user == 'En attente'){ %> 
+                        <p>Demande en attente : <%=  result.type_utilisateur%></p>
+                    <% } %>
+                    <% if(result.state_user == 'Rejetée'){ %> 
+                        <p>Demande rejetée : <%=  result.type_utilisateur%></p>
+                    <% }else if(result.type_utilisateur) { %> 
+                        <p>Role : <%=  result.type_utilisateur%></p>
+                    <% }else{ %>
+                        <p>Role : Candidat</p>
+                    <% } %>
+
+                </div>
+                <div class="buttons">
+                    
+            <% if(result.is_active == 1){ %>
+                <form method='post' action="/admin/ban">
+                    <input type="hidden" id="id" name="id" value="<%=result.id_utilisateur%>">
+                    <button type="submit">Ban user</button>
+                </form>
+            <% }else{ %>
+                <form method='post' action="/admin/unban">
+                    <input type="hidden" id="id" name="id" value="<%=result.id_utilisateur%>">
+                    <button type="submit">Unban user</button>
+                </form>
+            <% } %>
+            <input type="button" onclick="location.href='/';" value="Retour" />
+            </div>
+            </div>
+        </div>
+    </div>
+
+        <br>
+    </div>
+</body>

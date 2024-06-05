@@ -1,10 +1,40 @@
 var express = require("express");
 var router = express.Router();
 var userModel = require("../model/user");
+var offreModel = require("../model/offer");
 const session = require('../utils/session.js');
 const sendMail = require('../utils/mail.js');
 const user = require("../model/user");
+const fs = require('fs');
 
+function deleteFile(filePath) {
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+    if (err) {
+      console.log(`Le fichier ${filePath} n'existe pas ou il n'y a pas de droit de lecture.`);
+    } else {
+      // Si le fichier existe et que l'utilisateur a les droits de lecture, on tente de le supprimer
+      fs.unlink(filePath, (unlinkErr) => {
+        if (unlinkErr) {
+          console.error(`Erreur lors de la suppression du fichier ${filePath}: `, unlinkErr);
+        } else {
+          console.log(`Le fichier ${filePath} a été supprimé avec succès.`);
+        }
+      });
+    }
+  });
+}
+
+function deleteFilePromise(filepath) {
+  return new Promise((resolve, reject) => {
+      try {
+          // Supposons que deleteFile est votre fonction existante qui supprime réellement le fichier
+          deleteFile(filepath);
+          resolve();
+      } catch (error) {
+          reject(error);
+      }
+  });
+}
 
 router.get("/creation", function (req, res, next) {
     res.render("users/account_creation", {
@@ -57,6 +87,9 @@ router.get('/candidatures/:id_offre', function (req, res) {
 });
 
 router.post('/candidatures/:id_offre', function (req, res) {
+
+  // route pour unpostuler à une offre 
+
   const id_offre = req.params.id_offre;
   const id_utilisateur = req.session.user.id_utilisateur; 
   const session = req.session;
@@ -71,17 +104,56 @@ router.post('/candidatures/:id_offre', function (req, res) {
       if (results.length === 0) {
           return res.status(409).render('users/cantunpostule', { title: "Cantunpostule",  offre: result, user: req.session.user });
       } else {
-        userModel.unpostule(id_offre, id_utilisateur, function (err, result) {
-              if (err) {
-                  console.error('Error unapplying for the offer', err);
-                  return res.status(500).send('Error unapplying for the offer');
-              }
-              console.log("Vous venez de dépostuler ! id_offre :",id_offre, "id_utilisateur : ",id_utilisateur)
-              res.render('users/unpostule', { title: "Unpostule",  offre: result, user: req.session.user });
-            });
+        // ici avant de unpostuler on doit supprimer les Pièces jointes 
+        
+        userModel.getAllFromCand(id_offre, id_utilisateur, function(err, files_info) {
+          if (err) {
+              console.error('Error unapplying for the offer', err);
+              return res.status(500).send('Error unapplying for the offer');
+          }
+      
+          let promises = files_info.map(element => {
+              const filepath = element.path;
+              const file_id = element.id_piece;
+      
+              return deleteFilePromise(filepath).then(() => {
+                  // Après avoir supprimé le fichier du serveur, supprimer de la DB
+                  return new Promise((resolve, reject) => {
+                      userModel.deleteFile(file_id, function(err) {
+                          if (err) {
+                              reject(new Error("error deleting file in database"));
+                          } else {
+                              resolve();
+                          }
+                      });
+                  });
+              });
+          });
+      
+          // Attendre que toutes les suppressions soient terminées
+          Promise.all(promises)
+             .then(() => {
+                  // Toutes les suppressions sont terminées, on peut continuer
+                  userModel.unpostule(id_offre, id_utilisateur, function(err, result) {
+                      if (err) {
+                          console.error('Error unapplying for the offer', err);
+                          return res.status(500).send('Error unapplying for the offer');
+                      }
+                      console.log("Vous venez de dépostuler! id_offre :", id_offre, "id_utilisateur : ", id_utilisateur);
+                      res.render('users/unpostule', { title: "Unpostule", offre: result, user: req.session.user });
+                  });
+              })
+             .catch(error => {
+                  console.error('An error occurred during deletion:', error);
+                  res.status(500).send('An error occurred during deletion');
+              });
+      });
+      
       }
   });
 });
+
+
 router.post('/askedadmin', function (req, res) {
   const id_utilisateur = req.session.user.id_utilisateur; 
   const session = req.session;

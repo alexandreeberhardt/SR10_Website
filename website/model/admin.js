@@ -122,5 +122,37 @@ module.exports = {
       callback(results);
     });
   },
+
+  getAllUsers: function (callback) {
+    const query = `
+    SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.prenom,Utilisateur.nom,Utilisateur.is_active,Utilisateur_Roles.type_utilisateur,Utilisateur_Roles.state_user,Utilisateur_Roles.organisation FROM Utilisateur LEFT OUTER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = Utilisateur.id_utilisateur;    `;
+    db.query(query, function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  getAllFromUser: function (id,callback) {
+    const query = `
+      SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.prenom,Utilisateur.nom,Utilisateur.is_active,Utilisateur_Roles.type_utilisateur,Utilisateur_Roles.state_user,Utilisateur_Roles.organisation FROM Utilisateur LEFT OUTER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = Utilisateur.id_utilisateur WHERE Utilisateur.id_utilisateur = ?
+    `;
+    db.query(query,id, function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  updateUser: function (val, id, callback) {
+    console.log(val,id)
+    const query = `
+        UPDATE Utilisateur SET is_active = ? WHERE id_utilisateur = ?
+    `;
+    db.query(query,[val,id], function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+
 };
 

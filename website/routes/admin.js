@@ -56,7 +56,6 @@ router.get("/account", function (req, res, next) {
                 "users": result1,
                 "org": result2
             };
-            console.log(results)
             res.render("admin/account", { title: "Account Admin", data : results });
         })
 
@@ -79,13 +78,74 @@ router.get('/makeadmin/:id_user/:role', function (req, res) {
         result = JSON.stringify(result)
         result = JSON.parse(result)
         const final = result[0]
-        console.log(final)
 
         res.render('admin/makeadmin', 
         { 
             title: "valider une demande d'utilisateur", 
             nom: final.nom, prenom : final.prenom, id : final.id, 
             role:final.role, reason : final.reason
+        });
+    });
+});
+
+
+router.get('/users', function (req, res) {
+
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.getAllUsers(function(err, result) {
+        if (err) {
+            console.error('Error fetching user details', err);
+            return res.status(500).send('Error fetching user details');
+        }
+
+    function isIn(array, mail){
+        for(let i=0;i<array.length;i++){
+            if (array[i].email === mail){
+                return true;
+            }
+        }
+        return false
+    }
+
+    function getFromArray(array,mail){
+        for(let i=0;i<array.length;i++){
+            if (array[i].email === mail){
+                return array[i];
+            }
+        }
+        return;
+    }
+
+/*
+data = []
+    for(let i=0;i<result.length;i++){
+        let element = result[i]
+        let mail = element.email;
+        let role = element.state_user;
+
+        
+        if(role === 'Approuvée'){
+            if(!isIn(data,mail)){
+                data.push(element)
+            }else{
+                let compared = getFromArray(data,mail)
+                if(compared.state_user === 'Recruteur' && element.state_user === 'Administrateur'){
+                    data.compared.state_user = element.state_user;
+                }
+            }
+        }else if(!isIn(data,mail)){
+            // Si c'est pas dedans on doit vérifier 
+        }
+        console.log(element.state_user)
+        }*/
+
+        res.render('admin/users', 
+        { 
+            title: "Gérer les utilisateurs", 
+            data : result
         });
     });
 });
@@ -109,6 +169,28 @@ router.get('/acceptorg/:siret', function (req, res) {
         res.render('admin/acceptorg', 
         { 
             title: "valider une demande d'organisation", 
+            result: data
+        });
+    });
+});
+
+router.get('/gestuser/:id', function (req, res) {
+    const id_user = req.params.id;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.getAllFromUser(id_user, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }   
+        result = JSON.stringify(result)
+        data = JSON.parse(result)[0]
+
+        res.render('admin/gestusr', 
+        { 
+            title: "Gestionnaire d'un utilisateur", 
             result: data
         });
     });
@@ -168,6 +250,38 @@ router.post('/denyorg', function (req, res) {
         return res.status(403).send("Accès interdit.");
     }
     adminModel.denyOrg(siret, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
+});
+
+router.post('/ban', function (req, res) {
+    const id = req.body.id;
+    const session = req.session;
+    console.log(id)
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.updateUser(0, id, function(err, result) {
+        if (err) {
+            console.error('Error fetching org details', err);
+            return res.status(500).send('Error fetching org details');
+        }
+        res.redirect('/')
+    });
+});
+
+router.post('/unban', function (req, res) {
+    const id = req.body.id;
+    const session = req.session;
+    console.log(id)
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.updateUser(1, id, function(err, result) {
         if (err) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');

@@ -24,6 +24,7 @@ module.exports = {
         session.save(function (err) {
             // console.log(err);
         });
+        
         return session;
     },
 

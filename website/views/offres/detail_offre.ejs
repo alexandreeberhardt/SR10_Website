@@ -49,14 +49,25 @@
         <tr><%= offre.IdOffre %></tr><br/>
 
         <% }) %>
-        <a class="link-wrapper link" href="/offres/offer" >
+        <form method="post" enctype="multipart/form-data">
+            <br>
+            <p><b>CV</b> <input type="file" id="cv" name="cv" accept="application/pdf"/></p>
+            
+            <br>
+            <p><b>Lettre de motivation</b> <input type="file" id="lettre" name="lettre" accept="application/pdf"/></p>
+            
+            <br>
+            <p><b>Pièce d'identité</b> <input type="file" id="uid" name="uid" accept="application/pdf"/></p>
+            
+            <br>
+            <button type="submit" class="postuler">postuler</button>
+        </form>        
+        
+        <a class="link-wrapper link" href="/" >
             <button class="postuler">
                 <p>Retour</p>
             </button>
         </a>
-        <form method="post">
-        <button  type="submit" class="postuler">postuler</button> 
-        </form>
     </div>
         
         </body>

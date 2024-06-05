@@ -61,6 +61,40 @@ postule: function (id_offre, id_utilisateur, callback) {
 },
 
 
+  enterFile : function (filename, type, candidature, callback) {
+    console.log(filename,type,candidature)
+    var sql = "INSERT INTO Pieces_dossier (id_piece, type_piece,candidature,path) VALUES (NUll, ?,?,?) ";
+    db.query(sql, [type, candidature, filename], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+  },
+
+
+  getCandId : function (user_id,offre_id, callback) {
+    const sql = "SELECT id_candidature FROM Candidature WHERE offre=? AND candidat=?";
+    db.query(sql, [offre_id,user_id], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+  },
+
+  getFile : function (candidature, callback) {
+    const sql = "SELECT * FROM `Pieces_dossier` WHERE candidature = ?";
+    db.query(sql, candidature, function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+  },
 
 
   areValid: function (email, password, callback) {

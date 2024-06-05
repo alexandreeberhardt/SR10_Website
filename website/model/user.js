@@ -273,6 +273,30 @@ createorg: function (siret, nom, lieu, type, id_utilisateur, callback) {
 }, 
 
 
+getAllFromCand: function(id_offer,id_user, callback) {
+    const sql = "SELECT * FROM Pieces_dossier LEFT OUTER JOIN Candidature ON Candidature.id_candidature=Pieces_dossier.candidature WHERE offre = ? AND candidat= ? ";
+    db.query(sql, [id_offer,id_user], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+},
+
+
+deleteFile: function(id_file, callback) {
+    const sql = "DELETE FROM Pieces_dossier WHERE id_piece = ? ";
+    db.query(sql, [id_file], function (err, results) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+},
+
+
 /* makeAdmin: function (id, callback) {
     const sql = "UPDATE utilisateur SET type = 'admin' WHERE id = ?";
     db.query(sql, id, function (err, results) {
