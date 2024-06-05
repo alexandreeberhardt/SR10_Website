@@ -1,110 +1,133 @@
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="/stylesheets/admin_pannel.css" rel="stylesheet" type="text/css" />
-        <title><%= title %></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <div class="topbar">
-            <div class="left-side">
-                <a class="link-wrapper link" href="/" >
-                    <div class="button button-home">
-                        <img class="img-topbar"  src="/images/home.png">
-                        <p>Home</p>
-                    </div>
-                </a>
-            
-            </div>
-            <h1>Pannel de gestion administrateur</h1>
-            <div class="right-side">
-                <a class="link" href="/admin/users">
-                    <div class="button account">
-                        <img class="img-topbar" src="/images/account.png">
-                        <p>Users</p>
-                    </div>
-                </a>
-            </div>
-            <div class="right-side">
-                <a class="link" href="/login/logout">
-                    <div class="button account">
-                        <img class="img-topbar" src="/images/logout.png">
-                        <p>Se déconnecter</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="main-page">
-            <div class="left-side-main">
-                <div class="header-left-side">
-                    <h3>Gérer les demandes de tout type d'utilisateur !</h3>
-                    <div class="search-input">
-                        <input placeholder="Search..." class="filter-input" type="text">
-                        <input placeholder="Organisation" class="filter-input" type="text">
-                    </div>
-                    
-                    <br>
-                    <table class="Offre_table">
-                        <tr>
-                            <th class="offre_th">Organisation</th>
-                            <th class="offre_th" class="offre_row">Siret</th>
-                            <th class="offre_th">Type</th>
-                            <th class="offre_th">Ville</th>
-                            <th class="offre_th">Pays</th>
-                          </tr>
-  
-                          <% data.org.forEach((res)=> { %>
-                              <tr class="row-clickable" onclick="location.href='/admin/acceptorg/<%= res.siret %>'" style="cursor:pointer;">
-                                <td class="offre_row"><%= res.orgname %></td>
-                                <td class="offre_row"><%= res.siret %></td>
-                                <td class="offre_row"><%= res.type %></td>
-                                <td class="offre_row"><%= res.ville %></td>
-                                <td class="offre_row"><%= res.pays %></td>
-                              </tr>
-                          <% }) %>
-                      </table>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/stylesheets/admin_pannel.css" rel="stylesheet" type="text/css" />
+    <title><%= title %></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#searchOrg').keyup(function(){
+                var value = $(this).val().toLowerCase();
+                $('.Offre_table.org tr').filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $('#searchUser').keyup(function(){
+                var value = $(this).val().toLowerCase();
+                $('.Offre_table.user tr').filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="left-side">
+            <a class="link-wrapper link" href="/" >
+                <div class="button button-home">
+                    <img class="img-topbar"  src="/images/home.png">
+                    <p>Home</p>
                 </div>
-
-            </div>
-            <div class="left-side-main">
-                <div class="header-left-side">
-                    <h3>Gérer les demandes d'organisations !</h3>
-                    <div class="search-input">
-                        <input placeholder="Search..." class="filter-input" type="text">
-                        <input placeholder="Organisation" class="filter-input" type="text">
-                    </div>
-                    
-                    <br>
-
-                    <table class="Offre_table">
-
-
-                        <tr>
-                          <th class="offre_th" class="offre_row">Type</th>
-                          <th class="offre_th">Demandeur</th>
-                          <th class="offre_th">Raison</th>
-                          <th class="offre_th">Organisation</th>
-                        </tr>
-
-                        <% data.users.forEach((res)=> { %>
-                            <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>/<%= res.role%>'" style="cursor:pointer;">
-                                <td class="offre_row"><%= res.role %></td>
-                                <td><%= res.prenom %><%= res.nom %></td>
-                                <td><%= res.reason %></td>
-                                <td><%= res.organisation %></td>
-                            </tr>
-                        <% }) %>
-                       
-                      </table>
-                </div>
-
-            </div>
-
-        </div>
+            </a>
         
+        </div>
 
-    </body>
+        <h1>Pannel de gestion administrateur</h1>
+        <div class="right-side">
+            <div class="info">
+                <p><b>Utilisateur :</b> <%= info.prenom %> <%= info.nom %></p>
+                <p><b>Role :</b> <%= info.role %></p>
+                <p><b>Email : </b><%= info.email %></p>
+                <p><b>Tel :</b> <%= info.tel %></p>
+            </div>
+            <a class="link" href="/admin/users">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/account.png">
+                    <p>Users</p>
+                </div>
+            </a>
+        
+        </div>
+        <div class="right-side">
+            <a class="link" href="/login/logout">
+                <div class="button account">
+                    <img class="img-topbar" src="/images/logout.png">
+                    <p>Se déconnecter</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-page">
+        <div class="left-side-main">
+            <div class="header-left-side">
+                <h3>Gérer les demandes de tout type d'utilisateur !</h3>
+                <div class="search-input">
+                    <input placeholder="Search..." id="searchOrg" class="filter-input" type="text">
+                </div>
+                
+                <br>
+                <table class="Offre_table org">
+                    <tr>
+                        <th class="offre_th">Organisation</th>
+                        <th class="offre_th" class="offre_row">Siret</th>
+                        <th class="offre_th">Type</th>
+                        <th class="offre_th">Ville</th>
+                        <th class="offre_th">Pays</th>
+                    </tr>
+
+                    <% data.org.forEach((res)=> { %>
+                        <tr class="row-clickable" onclick="location.href='/admin/acceptorg/<%= res.siret %>'" style="cursor:pointer;">
+                            <td class="offre_row"><%= res.orgname %></td>
+                            <td class="offre_row"><%= res.siret %></td>
+                            <td class="offre_row"><%= res.type %></td>
+                            <td class="offre_row"><%= res.ville %></td>
+                            <td class="offre_row"><%= res.pays %></td>
+                        </tr>
+                    <% }) %>
+                </table>
+            </div>
+        </div>
+
+        <div class="left-side-main">
+            <div class="header-left-side">
+                <h3>Gérer les demandes d'organisations !</h3>
+                <div class="search-input">
+                    <input placeholder="Search..." id="searchUser" class="filter-input" type="text">
+                </div>
+                
+                <br>
+
+                <table class="Offre_table user">
+
+
+                    <tr>
+                      <th class="offre_th" class="offre_row">Type</th>
+                      <th class="offre_th">Demandeur</th>
+                      <th class="offre_th">Raison</th>
+                      <th class="offre_th">Organisation</th>
+                    </tr>
+
+                    <% data.users.forEach((res)=> { %>
+                        <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>/<%= res.role%>'" style="cursor:pointer;">
+                            <td class="offre_row"><%= res.role %></td>
+                            <td><%= res.prenom %><%= res.nom %></td>
+                            <td><%= res.reason %></td>
+                            <td><%= res.organisation %></td>
+                        </tr>
+                    <% }) %>
+                   
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
 </html>

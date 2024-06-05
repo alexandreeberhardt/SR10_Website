@@ -8,14 +8,15 @@ const session = require('../utils/session.js');
 const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 
 router.get("/account_recruteur", function (req, res, next) {``
-
+  let info = req.session.user;
+  info.role = req.session.role;
   const session = req.session;
   console.log(session.role)
   if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
   }
 
-  res.render("recruteur/account_recruteur", { title: "Account Recruteur" });
+  res.render("recruteur/account_recruteur", { title: "Account Recruteur",info:info });
 });
 
 router.get("/visualisation_offre", function (req, res, next) {

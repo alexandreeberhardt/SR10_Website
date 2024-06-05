@@ -5,8 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const session = require('./utils/session');
 
-
-
+var cors=require('cors');
 
 
 require("dotenv").config();
@@ -17,19 +16,20 @@ var recruteurRouter = require("./routes/recruteur");
 var loginRouter = require("./routes/auth");
 var offerRouter = require("./routes/offre");
 var adminRouter = require("./routes/admin");
-
-
+var apiRouter = require('./routes/api');
 
 var app = express();
 app.use(session.init());
-
+app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 
 app.all("*", function (req, res, next) {
 
-  const nonSecurePaths = ["/login/login/", "/login/register/", "/", "/404",
-      "/login/login", "/login/register"];
+  const nonSecurePaths = [
+    "/login/login/", "/login/register/", "/", "/404",
+      "/login/login", "/login/register", "/api/users"
+    ];
 
   const adminPaths = [
       "/admin/", // mettre toutes nos routes admin
@@ -98,6 +98,8 @@ app.use("/recruteur", recruteurRouter);
 app.use("/login",loginRouter);
 app.use("/offres",offerRouter);
 app.use("/admin",adminRouter);
+app.use("/api",apiRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
