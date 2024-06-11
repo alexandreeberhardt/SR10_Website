@@ -29,24 +29,24 @@
 
 <body>
     <div class="topbar">
-        <div class="left-side">
+        <div class="rig-side">
             <a class="link-wrapper link" href="/" >
                 <div class="button button-home">
                     <img class="img-topbar"  src="/images/home.png">
                     <p>Home</p>
                 </div>
             </a>
-        
         </div>
-
+        
         <h1>Pannel de gestion administrateur</h1>
-        <div class="right-side">
             <div class="info">
                 <p><b>Utilisateur :</b> <%= info.prenom %> <%= info.nom %></p>
                 <p><b>Role :</b> <%= info.role %></p>
                 <p><b>Email : </b><%= info.email %></p>
                 <p><b>Tel :</b> <%= info.tel %></p>
             </div>
+            <div class="right-side">
+
             <a class="link" href="/admin/users">
                 <div class="button account">
                     <img class="img-topbar" src="/images/account.png">
@@ -118,7 +118,7 @@
                     <% data.users.forEach((res)=> { %>
                         <tr class="row-clickable" onclick="location.href='/admin/makeadmin/<%= res.id %>/<%= res.role%>'" style="cursor:pointer;">
                             <td class="offre_row"><%= res.role %></td>
-                            <td><%= res.prenom %><%= res.nom %></td>
+                            <td><%= res.prenom %> <%= res.nom %></td>
                             <td><%= res.reason %></td>
                             <td><%= res.organisation %></td>
                         </tr>
