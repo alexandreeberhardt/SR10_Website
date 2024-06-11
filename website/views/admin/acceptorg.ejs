@@ -30,9 +30,18 @@
     <div>
         <br>
         <h3>Voulez-vous valider cette demande ?</h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
         <div class="wrapper-all">
 
         <div class="form-wrapper">
+            <div class="frame">
+
             <div class="form-group validation-button">
                 <div>
                     <p> Organisation : <%=data.orgname %></p>
@@ -42,6 +51,7 @@
                     <p> Pays : <%=data.pays %></p>
                 </div>
                 <br>
+
                 <div class="buttons">
                 
             <form method='post' action="/admin/acceptorg">
@@ -55,6 +65,7 @@
             <input type="button" onclick="location.href='/';" value="Retour" />
             </div>
             </div>
+        </div>
         </div>
     </div>
 </body>
