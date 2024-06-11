@@ -271,7 +271,21 @@ router.post('/ban', function (req, res) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');
         }
-        res.redirect('/')
+        adminModel.getAllFromUser(id, function(err, result) {
+            if (err) {
+                console.error('Error fetching org details', err);
+                return res.status(500).send('Error fetching org details');
+            }   
+            result = JSON.stringify(result)
+            data = JSON.parse(result)[0]
+    
+            res.render('admin/gestusr', 
+            { 
+                title: "Utilisateur banni", 
+                result: data
+
+            });
+        });
     });
 });
 
@@ -287,7 +301,21 @@ router.post('/unban', function (req, res) {
             console.error('Error fetching org details', err);
             return res.status(500).send('Error fetching org details');
         }
-        res.redirect('/')
+        adminModel.getAllFromUser(id, function(err, result) {
+            if (err) {
+                console.error('Error fetching org details', err);
+                return res.status(500).send('Error fetching org details');
+            }   
+            result = JSON.stringify(result)
+            data = JSON.parse(result)[0]
+    
+            res.render('admin/gestusr', 
+            { 
+                title: "Utilisateur débanni", 
+                result: data
+                
+            });
+        });    
     });
 });
 
