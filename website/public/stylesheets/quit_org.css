@@ -58,6 +58,8 @@ select {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   background-color: #f3f1ff;
+  width:100px;
+
 }
 .zone {
   background-color: #a99cff;
