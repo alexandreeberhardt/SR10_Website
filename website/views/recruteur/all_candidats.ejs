@@ -68,6 +68,10 @@
                             <th class="offre_th">Prénom</th>
                             <th class="offre_th">Téléphone</th>
                             <th class="offre_th">Offre</th>
+                            <th class="offre_th"> Fichier 1</th>
+                            <th class="offre_th"> Fichier 2</th>
+                            <th class="offre_th"> Fichier 3</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +82,12 @@
                             <td><%= res.prenom %></td>
                             <td><%= res.tel %></td>
                             <td><%= res.offre %></td>
+                            <% for(var i = 0; i < res.files.length; i++) { %>
+                                <td> <a href="/recruteur/<%= res.files[i].replace('/uploads','/download') %>">Download</a></td>
+                            <% } %>
+                            <% for(var i = 0; i < 3-res.files.length; i++) { %>
+                                <td> Pas de fichier </td>
+                            <% } %>
                         </tr>
                         <% }) %>
                     </tbody>

@@ -34,7 +34,7 @@ module.exports = {
   },
   getAllCandidats: function (id_offre, callback) {
     db.query(
-      "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.tel, u.is_active, c.offre, c.state FROM Candidature c JOIN Utilisateur u ON c.candidat = u.id_utilisateur WHERE c.offre = ? AND u.is_active = 1;",
+      "SELECT u.id_utilisateur, u.email, u.nom, u.prenom, u.tel, u.is_active, c.offre, c.state, c.id_candidature FROM Candidature c JOIN Utilisateur u ON c.candidat = u.id_utilisateur WHERE c.offre = ? AND u.is_active = 1;",
       [id_offre],
       function (err, results) {
         if (err) callback(err, null);

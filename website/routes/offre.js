@@ -165,7 +165,7 @@ router.get('/:id_offre', function (req, res) {
   });
 });
 
-
+/*
 router.post('/:id_offre', function (req, res) {
     const session = req.session;
     if (!session){
@@ -194,5 +194,5 @@ router.post('/:id_offre', function (req, res) {
         }
     });
 });
-
+*/
 module.exports = router;
