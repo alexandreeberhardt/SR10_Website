@@ -17,7 +17,15 @@
                     </div>
                 </a>
             </div>
+            
             <div class="right-side">
+                <div class="info">
+                
+                    <p><b>Utilisateur :</b> <%= info.prenom %> <%= info.nom %></p>
+                    <p><b>Role :</b> <%= info.role %></p>
+                    <p><b>Email : </b><%= info.email %></p>
+                    <p><b>Tel :</b> <%= info.tel %></p>
+                </div>
                 <a class="link" href="candidatures">
                     <div class="button button-candidat">
                         <img class="img-topbar" src="/images/candidatures.png">
@@ -36,15 +44,6 @@
         <div class="title-mid-page">
             <h1>Demande de droit</h1>
             <h3>Devenez administrateur ou recruteur ! </h3>
-        </div>
-
-        <div class="title-mid-page">
-            <div class="info">
-                <p><b>Utilisateur :</b> <%= info.prenom %> <%= info.nom %></p>
-                <p><b>Role :</b> <%= info.role %></p>
-                <p><b>Email : </b><%= info.email %></p>
-                <p><b>Tel :</b> <%= info.tel %></p>
-            </div>
         </div>
 
         <div class="main-page">

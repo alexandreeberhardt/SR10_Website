@@ -43,7 +43,7 @@
             <% } %>
         </div>
     </div>
-    <div class="notification">
+    <div class="frame">
         <p>Votre demande pour devenir administrateur est en cours.</p>
         <p>Pour retourner à votre compte cliquez ici </p>
         <% if (role === 'Recruteur') { %>
@@ -61,6 +61,8 @@
         <form method="post" action="/users/askedadmin">
             <button  type="submit" class="postuler">Retirer ma demande</button> 
         </form>
+        <br>
+
     </div>
 </body>
 </html>
