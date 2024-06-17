@@ -109,7 +109,6 @@ router.get("/quit_org", function (req, res, next) {
 });
 
 
-// à sécuriser dans le futur 
 router.post('/quit_org', function (req, res, next) {
   const session = req.session;
   if (session.role != "Recruteur"){
@@ -128,6 +127,22 @@ router.post('/quit_org', function (req, res, next) {
     });
 });
 
+router.post('/disable_offer', function (req, res) {
+  const session = req.session;
+  const id_offer = req.body.id_offre;
+  console.log(id_offer)
+  if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+    
+  }
+    result = recruteurModel.disableOffre(id_offer, function (err,result) {
+      if(err){
+        console.log("erreur disable offer")
+      }
+      // afficher un message d'erreur ?
+      res.redirect('/recruteur/recruter')
+    });
+});
 
 router.get("/recruter", function (req, res, next) {
   const session = req.session;

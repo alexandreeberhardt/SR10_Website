@@ -67,6 +67,7 @@
                         <th class="offre_th">Salaire min</th>
                         <th class="offre_th">Salaire max</th>
                         <th class="offre_th">Métier</th>
+                        <th class="offre_th">Action</th>
                     </tr>
                     <% result.forEach((res)=> { %>
                         <tr class="row-clickable" onclick="location.href='/recruteur/recruter/<%= res.id_offre %>'" style="cursor:pointer;">
@@ -75,6 +76,10 @@
                             <td><%= res.salaire_min %></td>
                             <td><%= res.salaire_max %></td>
                             <td><%= res.statuts_poste %></td>
+                            <td><form method="post" action="/recruteur/disable_offer">
+                                <input type="hidden" name="id_offre" value="<%= res.id_offre %>">
+                                <input type="submit" value="Désactiver">
+                            </form></td>
                         </tr>
                     <% }) %>
                 </table>

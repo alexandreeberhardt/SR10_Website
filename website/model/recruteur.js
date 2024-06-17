@@ -24,7 +24,7 @@ module.exports = {
   },
   readAllOffres: function (id_recruteur, callback) {
     db.query(
-      "SELECT fp.id_fiche_poste, fp.intitule, fp.rythme_travail, fp.salaire_min, fp.salaire_max, fp.statuts_poste, o.id_offre FROM Offre o INNER JOIN Fiche_poste fp ON o.fiche_poste = fp.id_fiche_poste INNER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = fp.recruteur WHERE Utilisateur_Roles.organisation IN ( SELECT organisation FROM Utilisateur_Roles WHERE Utilisateur_Roles.id_utilisateur = ? )",
+      "SELECT fp.id_fiche_poste, fp.intitule, fp.rythme_travail, fp.salaire_min, fp.salaire_max, fp.statuts_poste, o.id_offre FROM Offre o INNER JOIN Fiche_poste fp ON o.fiche_poste = fp.id_fiche_poste INNER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = fp.recruteur WHERE Utilisateur_Roles.organisation IN ( SELECT organisation FROM Utilisateur_Roles WHERE Utilisateur_Roles.id_utilisateur = ? ) AND o.etat = 'Active' ",
       id_recruteur,
       function (err, results) {
         if (err) throw err;
@@ -170,6 +170,17 @@ getIntitule: function(id_recruteur,callback){
 modifyCand: function(id_candidature, state,callback){
   const sql = "UPDATE `Candidature` SET state=? WHERE id_candidature=?";
   db.query(sql, [state,id_candidature], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
+disableOffre: function(id_offer,callback){
+  const sql = "UPDATE Offre SET etat = 'Inactive' WHERE id_offre = ?";
+  db.query(sql, [id_offer], function (err, results) {
     if (err) {
         callback(err, null);
     } else {
