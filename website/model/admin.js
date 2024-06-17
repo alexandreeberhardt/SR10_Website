@@ -134,7 +134,7 @@ module.exports = {
 
   getAllFromUser: function (id,callback) {
     const query = `
-      SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.prenom,Utilisateur.nom,Utilisateur.is_active,Utilisateur_Roles.type_utilisateur,Utilisateur_Roles.state_user,Utilisateur_Roles.organisation FROM Utilisateur LEFT OUTER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = Utilisateur.id_utilisateur WHERE Utilisateur.id_utilisateur = ?
+      SELECT Utilisateur.id_utilisateur,Utilisateur.email,Utilisateur.prenom,Utilisateur.nom,Utilisateur.tel,Utilisateur.is_active,Utilisateur_Roles.type_utilisateur,Utilisateur_Roles.state_user,Utilisateur_Roles.organisation FROM Utilisateur LEFT OUTER JOIN Utilisateur_Roles ON Utilisateur_Roles.id_utilisateur = Utilisateur.id_utilisateur WHERE Utilisateur.id_utilisateur = ?
     `;
     db.query(query,id, function(err, results) {
       if (err) throw err;
@@ -148,6 +148,46 @@ module.exports = {
         UPDATE Utilisateur SET is_active = ? WHERE id_utilisateur = ?
     `;
     db.query(query,[val,id], function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  modifyUserName : function(id_user, new_var, callback){
+    const query = `
+        UPDATE Utilisateur SET nom = ? WHERE id_utilisateur = ?
+    `;
+    db.query(query,[new_var,id_user], function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  modifyUserMail : function(id_user, new_var, callback){
+    const query = `
+        UPDATE Utilisateur SET email = ? WHERE id_utilisateur = ?
+    `;
+    db.query(query,[new_var,id_user], function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  modifyUserSurname : function(id_user, new_var, callback){
+    const query = `
+        UPDATE Utilisateur SET prenom = ? WHERE id_utilisateur = ?
+    `;
+    db.query(query,[new_var,id_user], function(err, results) {
+      if (err) throw err;
+      callback(err,results);
+    });
+  },
+
+  modifyUserTel : function(id_user, new_var, callback){
+    const query = `
+        UPDATE Utilisateur SET tel = ? WHERE id_utilisateur = ?
+    `;
+    db.query(query,[new_var,id_user], function(err, results) {
       if (err) throw err;
       callback(err,results);
     });

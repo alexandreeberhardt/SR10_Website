@@ -289,6 +289,9 @@ router.post('/ban', function (req, res) {
     });
 });
 
+
+
+
 router.post('/unban', function (req, res) {
     const id = req.body.id;
     const session = req.session;
@@ -318,5 +321,84 @@ router.post('/unban', function (req, res) {
         });    
     });
 });
+
+
+router.post('/modifytel', function(req,res){
+    const id_user = req.body.id_user;
+    const new_var = req.body.tel;
+    const result = req.body.values;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.modifyUserTel(id_user,new_var,function(err,result){
+        if(err){
+            console.error('Error updating phone number', err);
+            return res.status(500).send('Error updating phone number');
+        }
+        console.log(id_user,new_var)
+        const path = '/admin/gestuser/'+id_user
+        res.redirect(path)
+    })
+});
+
+router.post('/modifyname', function(req,res){
+    const id_user = req.body.id_user;
+    const new_var = req.body.name;
+    const result = req.body.values;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.modifyUserName(id_user,new_var,function(err,result){
+        if(err){
+            console.error('Error updating phone number', err);
+            return res.status(500).send('Error updating phone number');
+        }
+        console.log(id_user,new_var)
+        const path = '/admin/gestuser/'+id_user
+        res.redirect(path)
+    })
+});
+
+router.post('/modifymail', function(req,res){
+    const id_user = req.body.id_user;
+    const new_var = req.body.email;
+    const result = req.body.values;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.modifyUserMail(id_user,new_var,function(err,result){
+        if(err){
+            console.error('Error updating phone number', err);
+            return res.status(500).send('Error updating phone number');
+        }
+        console.log(id_user,new_var)
+        const path = '/admin/gestuser/'+id_user
+        res.redirect(path)
+    })
+});
+
+router.post('/modifyprenom', function(req,res){
+    const id_user = req.body.id_user;
+    const new_var = req.body.prenom;
+    const result = req.body.values;
+    const session = req.session;
+    if (session.role !== "Administrateur") {
+        return res.status(403).send("Accès interdit.");
+    }
+    adminModel.modifyUserSurname(id_user,new_var,function(err,result){
+        if(err){
+            console.error('Error updating phone number', err);
+            return res.status(500).send('Error updating phone number');
+        }
+        console.log(id_user,new_var)
+        const path = '/admin/gestuser/'+id_user
+        res.redirect(path)
+    })
+});
+
+
 
 module.exports = router;
