@@ -189,6 +189,50 @@ disableOffre: function(id_offer,callback){
 });
 },
 
+modifyIntitule: function(id_fp,value,callback){
+  const sql = "UPDATE Fiche_poste SET intitule = ? WHERE id_fiche_poste = ? ";
+  db.query(sql, [value,id_fp], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
+modifyRTravail: function(id_fp,value,callback){
+  const sql = "UPDATE Fiche_poste SET rythme_travail = ? WHERE id_fiche_poste = ? ";
+  db.query(sql, [value,id_fp], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
+modifySalMin: function(id_fp,value,callback){
+  const sql = "UPDATE Fiche_poste SET salaire_min = ? WHERE id_fiche_poste = ? ";
+  db.query(sql, [value,id_fp], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
+modifySalMax: function(id_fp,value,callback){
+  const sql = "UPDATE Fiche_poste SET salaire_max = ? WHERE id_fiche_poste = ? ";
+  db.query(sql, [value,id_fp], function (err, results) {
+    if (err) {
+        callback(err, null);
+    } else {
+        callback(null, results);
+    }
+});
+},
+
 
 };
 

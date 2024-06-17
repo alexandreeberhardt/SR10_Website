@@ -130,7 +130,6 @@ router.post('/quit_org', function (req, res, next) {
 router.post('/disable_offer', function (req, res) {
   const session = req.session;
   const id_offer = req.body.id_offre;
-  console.log(id_offer)
   if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
     
@@ -143,6 +142,73 @@ router.post('/disable_offer', function (req, res) {
       res.redirect('/recruteur/recruter')
     });
 });
+
+
+router.post('/modifyint', function (req, res) {
+  const session = req.session;
+  const id_fp = req.body.id_fp;
+  const new_int = req.body.int;
+  if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+    
+  }
+    result = recruteurModel.modifyIntitule(id_fp,new_int, function (err,result) {
+      if(err){
+        console.log("erreur disable offer")
+      }
+      res.redirect('/recruteur/recruter')
+    });
+});
+
+router.post('/modifysmax', function (req, res) {
+  const session = req.session;
+  const id_fp = req.body.id_fp;
+  const smax = req.body.smax;
+  if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+    
+  }
+    result = recruteurModel.modifySalMax(id_fp,smax, function (err,result) {
+      if(err){
+        console.log("erreur disable offer")
+      }
+      res.redirect('/recruteur/recruter')
+    });
+});
+
+router.post('/modifysmin', function (req, res) {
+  const session = req.session;
+  const id_fp = req.body.id_fp;
+  const smin = req.body.smin;
+  if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+    
+  }
+    result = recruteurModel.modifySalMin(id_fp,smin, function (err,result) {
+      if(err){
+        console.log("erreur disable offer")
+      }
+      res.redirect('/recruteur/recruter')
+    });
+});
+
+router.post('/modifyrt', function (req, res) {
+  const session = req.session;
+  const id_fp = req.body.id_fp;
+  const value = req.body.rythme;
+  if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+    
+  }
+    result = recruteurModel.modifyRTravail(id_fp,value, function (err,result) {
+      if(err){
+        console.log("erreur disable offer")
+      }
+      res.redirect('/recruteur/recruter')
+    });
+});
+
+
 
 router.get("/recruter", function (req, res, next) {
   const session = req.session;

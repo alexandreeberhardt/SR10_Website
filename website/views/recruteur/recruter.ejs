@@ -1,10 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="/stylesheets/candidature.css" rel="stylesheet" type="text/css" />        
+    <link href="/stylesheets/candidature.css" rel="stylesheet" type="text/css">        
     <title><%= title %></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -13,18 +14,51 @@
             $('.search-input').keyup(function(){
                 var value = $(this).val().toLowerCase();
                 $('.Offre_table tr').filter(function(){
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    $(this).toggle(
+                        $(this).text().toLowerCase().indexOf(value) > -1 ||
+                        $(this).find('input').toArray().some(input => $(input).val().toLowerCase().indexOf(value) > -1)
+                    );
                 });
             });
         });
     </script>
+    <style>
+        .Offre_table td form {
+            display: flex;
+            align-items: center;
+        }
+        .Offre_table input[type="text"] {
+            width: 100%;
+            margin-right: 10px;
+            background: transparent;
+            border: none;
+        }
+        .Offre_table .intitule-input {
+            width: 1000px;
+        }
+        .Offre_table input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        .Offre_table input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .Offre_table td {
+            padding: 10px;
+            min-width: 200px; 
+        }
+    </style>
 </head>
 <body>
     <div class="topbar">
         <div class="left-side">
             <a class="link-wrapper link" href="/offres/offer" >
                 <div class="button button-home">
-                    <img class="img-topbar"  src="/images/home.png">
+                    <img class="img-topbar" src="/images/home.png">
                     <p>Home</p>
                 </div>
             </a>
@@ -56,30 +90,55 @@
     <div class="main-page">
         <div class="left-side-main">
             <div class="header-left-side">
-                <h1>Voir les offre que vous avez déposé</h1>
+                <h1>Voir les offres que vous avez déposées</h1>
                 <h3>Cherchez les candidats à recruter !</h3>
                 <input placeholder="Search..." class="search-input" type="text">
                 <br>
                 <table class="Offre_table">
                     <tr>
-                        <th class="offre_th">Intitule</th>
+                        <th class="offre_th">Intitulé</th>
                         <th class="offre_th">Rythme de travail</th>
                         <th class="offre_th">Salaire min</th>
                         <th class="offre_th">Salaire max</th>
-                        <th class="offre_th">Métier</th>
+                        <th class="offre_th">Statut du poste</th>
                         <th class="offre_th">Action</th>
                     </tr>
-                    <% result.forEach((res)=> { %>
-                        <tr class="row-clickable" onclick="location.href='/recruteur/recruter/<%= res.id_offre %>'" style="cursor:pointer;">
-                            <td class="offre_row"><%= res.intitule %></td>
-                            <td><%= res.rythme_travail %></td>
-                            <td><%= res.salaire_min %></td>
-                            <td><%= res.salaire_max %></td>
+                    <% result.forEach((res) => { %>
+                        <tr class="row-clickable" onclick="location.href='/recruteur/recruter/<%= res.id_offre %>'" style="cursor:pointer;">                            <td>
+                                <form method="post" action="/recruteur/modifyint">
+                                    <input type="hidden" id="id_fp" name="id_fp" value="<%= res.id_fiche_poste %>">
+                                    <input type="text" class="intitule-input" id="int" name="int" value="<%= res.intitule %>">
+                                    <input type="submit" value="V">
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="/recruteur/modifyrt">
+                                    <input type="hidden" id="id_fp" name="id_fp" value="<%= res.id_fiche_poste %>">
+                                    <input type="text" id="rythme" name="rythme" value="<%= res.rythme_travail %>">
+                                    <input type="submit" value="V">
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="/recruteur/modifysmin">
+                                    <input type="hidden" id="id_fp" name="id_fp" value="<%= res.id_fiche_poste %>">
+                                    <input type="text" id="smin" name="smin" value="<%= res.salaire_min %>">
+                                    <input type="submit" value="V">
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="/recruteur/modifysmax">
+                                    <input type="hidden" id="id_fp" name="id_fp" value="<%= res.id_fiche_poste %>">
+                                    <input type="text" id="smax" name="smax" value="<%= res.salaire_max %>">
+                                    <input type="submit" value="V">
+                                </form>
+                            </td>
                             <td><%= res.statuts_poste %></td>
-                            <td><form method="post" action="/recruteur/disable_offer">
-                                <input type="hidden" name="id_offre" value="<%= res.id_offre %>">
-                                <input type="submit" value="Désactiver">
-                            </form></td>
+                            <td>
+                                <form method="post" action="/recruteur/disable_offer">
+                                    <input type="hidden" name="id_offre" value="<%= res.id_offre %>">
+                                    <input type="submit" value="Désactiver">
+                                </form>
+                            </td>
                         </tr>
                     <% }) %>
                 </table>
