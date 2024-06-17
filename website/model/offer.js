@@ -91,6 +91,7 @@ postule: function (id_offre, id_utilisateur, callback) {
         if (err) {
             callback(err, null);
         } else {
+            console.log(results)
             callback(null, results);
         }
     });

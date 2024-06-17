@@ -39,7 +39,7 @@ app.all("*", function (req, res, next) {
     "/recruteur/", "/recruteur/account_recruteur"
     ,"/recruteur/visualisation_offre", "/recruteur/home_recruteur"
     ,"/recruteur/home_recruteur", "/recruteur/quit_org",
-    "/recruteur/" // mettre toutes nos routes admin
+    "/recruteur/" // mettre toutes nos routes recruteur
 ]; // list of recruteurs urls
 
 

@@ -7,6 +7,7 @@ const recruteur = require("../model/recruteur");
 const session = require('../utils/session.js');
 const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 const fs = require('fs');
+const { doesNotMatch } = require("assert");
 
 
 router.get("/account_recruteur", function (req, res, next) {``
@@ -42,7 +43,8 @@ router.get("/visualisation_offre", function (req, res, next) {
 router.get("/download/:filename", function (req, res) {
   console.log("coucou")
   const filename = req.params.filename;
-  const filePath = `./upload/${filename}`; 
+  console.log(filename)
+  const filePath = `./uploads/${filename}`; 
   console.log(filePath)
   fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
       if (err) {
@@ -148,8 +150,7 @@ result = recruteurModel.readAllOffres(id, function (result) {
 });
 
 
-
-router.get('/recruter/:id_offre', function (req, res) {
+router.get("/historique", function (req, res, next) {
   const session = req.session;
 
   if (!session){
@@ -158,20 +159,163 @@ router.get('/recruter/:id_offre', function (req, res) {
     if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
   }
-const id_offre = req.params.id_offre;
-
-recruteurModel.getAllCandidats(id_offre, function(err, result) {
-    if (err) {
-        console.error('Error fetching offer details', err);
-        return res.status(500).send('Error fetching offer details');
-    }
-    if (result.length > 0) {
-        res.render('recruteur/all_candidats', {role: session.role, id_offre:id_offre, candidats: result});
-    } else {
-
-        res.status(304).send('Aucun utilisateur n\'a postulé ou votre offre n\'existe pas');
-    }
+  id = session.user.id_utilisateur;
+result = recruteurModel.readAllOffres(id, function (result) {
+  console.log(result);
+  res.render("recruteur/historique", {
+    title: "Historique",
+    result: result,
+    role: session.role
+  });
 });
+});
+
+
+router.get('/historique/:id_offre', async function (req, res) {
+  const session = req.session;
+
+  if (!session) {
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+  if (session.role !== "Recruteur") {
+    return res.status(403).send("Accès interdit.");
+  }
+
+  const id_offre = req.params.id_offre;
+
+  try {
+    const candidats = await new Promise((resolve, reject) => {
+      recruteurModel.getAllCandidatsVerified(id_offre, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    if (candidats.length > 0) {
+      await Promise.all(candidats.map(async (element) => {
+        const id_cand = element['id_candidature'];
+        element['files'] = [];
+        try {
+          const files = await new Promise((resolve, reject) => {
+            offreModel.getFile(id_cand, (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            });
+          });
+          if (files.length > 0) {
+            files.forEach(item => {
+              const path = String(item['path']);
+              const downloadPath = path.replace('uploads','download');
+              console.log(downloadPath)
+              element['files'].push(downloadPath);
+            });
+          } else {
+            console.log(`Aucun fichier trouvé pour l'id_candidature: ${id_cand}`);
+          }
+        } catch (err) {
+          console.error("Erreur lors de la récupération des fichiers", err);
+          return res.status(500).send('Error fetching files');
+        }
+      }));
+      console.log(candidats)
+      res.render('recruteur/all_candidats_historique', { role: session.role, id_offre: id_offre, candidats: candidats });
+    } else {
+      res.status(304).send('Aucun utilisateur n\'a postulé ou votre offre n\'existe pas');
+    }
+  } catch (err) {
+    console.error('Error fetching offer details', err);
+    res.status(500).send('Error fetching offer details');
+  }
+});
+
+router.get('/recruter/:id_offre', async function (req, res) {
+  const session = req.session;
+
+  if (!session) {
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+  if (session.role !== "Recruteur") {
+    return res.status(403).send("Accès interdit.");
+  }
+
+  const id_offre = req.params.id_offre;
+
+  try {
+    const candidats = await new Promise((resolve, reject) => {
+      recruteurModel.getAllCandidats(id_offre, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    if (candidats.length > 0) {
+      await Promise.all(candidats.map(async (element) => {
+        const id_cand = element['id_candidature'];
+        element['files'] = [];
+        try {
+          const files = await new Promise((resolve, reject) => {
+            offreModel.getFile(id_cand, (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            });
+          });
+          if (files.length > 0) {
+            files.forEach(item => {
+              const path = String(item['path']);
+              const downloadPath = path.replace('uploads','download');
+              console.log(downloadPath)
+              element['files'].push(downloadPath);
+            });
+          } else {
+            console.log(`Aucun fichier trouvé pour l'id_candidature: ${id_cand}`);
+          }
+        } catch (err) {
+          console.error("Erreur lors de la récupération des fichiers", err);
+          return res.status(500).send('Error fetching files');
+        }
+      }));
+      console.log(candidats)
+      res.render('recruteur/all_candidats', { role: session.role, id_offre: id_offre, candidats: candidats });
+    } else {
+      res.status(304).send('Aucun utilisateur n\'a postulé ou votre offre n\'existe pas');
+    }
+  } catch (err) {
+    console.error('Error fetching offer details', err);
+    res.status(500).send('Error fetching offer details');
+  }
+});
+
+
+router.get('/candidature/:id_candidature/:state',async function (req, res){
+  const session = req.session;
+  const id_candidature = req.params.id_candidature;
+  const state = req.params.state;
+  if (!session) {
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+  if (session.role !== "Recruteur") {
+    return res.status(403).send("Accès interdit.");
+  }
+  recruteurModel.modifyCand(id_candidature,state,function(err,result){
+    if(err){
+      console.error('Erreur de la requete', err);
+      return res.status(500).send('Erreur lors du traitement de votre demande.');
+    }else{
+      res.redirect('/recruteur/recruter')
+    }
+  })
 });
 
 router.get("/poster_offre", function (req, res, next) {
