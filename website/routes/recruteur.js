@@ -150,6 +150,90 @@ result = recruteurModel.readAllOffres(id, function (result) {
 });
 
 
+router.get("/historique", function (req, res, next) {
+  const session = req.session;
+
+  if (!session){
+      return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+    }
+    if (session.role != "Recruteur"){
+      return res.status(403).send("Accès interdit.");
+  }
+  id = session.user.id_utilisateur;
+result = recruteurModel.readAllOffres(id, function (result) {
+  console.log(result);
+  res.render("recruteur/historique", {
+    title: "Historique",
+    result: result,
+    role: session.role
+  });
+});
+});
+
+
+router.get('/historique/:id_offre', async function (req, res) {
+  const session = req.session;
+
+  if (!session) {
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+  if (session.role !== "Recruteur") {
+    return res.status(403).send("Accès interdit.");
+  }
+
+  const id_offre = req.params.id_offre;
+
+  try {
+    const candidats = await new Promise((resolve, reject) => {
+      recruteurModel.getAllCandidatsVerified(id_offre, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    if (candidats.length > 0) {
+      await Promise.all(candidats.map(async (element) => {
+        const id_cand = element['id_candidature'];
+        element['files'] = [];
+        try {
+          const files = await new Promise((resolve, reject) => {
+            offreModel.getFile(id_cand, (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            });
+          });
+          if (files.length > 0) {
+            files.forEach(item => {
+              const path = String(item['path']);
+              const downloadPath = path.replace('uploads','download');
+              console.log(downloadPath)
+              element['files'].push(downloadPath);
+            });
+          } else {
+            console.log(`Aucun fichier trouvé pour l'id_candidature: ${id_cand}`);
+          }
+        } catch (err) {
+          console.error("Erreur lors de la récupération des fichiers", err);
+          return res.status(500).send('Error fetching files');
+        }
+      }));
+      console.log(candidats)
+      res.render('recruteur/all_candidats_historique', { role: session.role, id_offre: id_offre, candidats: candidats });
+    } else {
+      res.status(304).send('Aucun utilisateur n\'a postulé ou votre offre n\'existe pas');
+    }
+  } catch (err) {
+    console.error('Error fetching offer details', err);
+    res.status(500).send('Error fetching offer details');
+  }
+});
+
 router.get('/recruter/:id_offre', async function (req, res) {
   const session = req.session;
 
