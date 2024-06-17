@@ -213,6 +213,27 @@ router.get('/recruter/:id_offre', async function (req, res) {
   }
 });
 
+
+router.get('/candidature/:id_candidature/:state',async function (req, res){
+  const session = req.session;
+  const id_candidature = req.params.id_candidature;
+  const state = req.params.state;
+  if (!session) {
+    return res.status(403).send("Accès interdit. Veuillez vous connecter.");
+  }
+  if (session.role !== "Recruteur") {
+    return res.status(403).send("Accès interdit.");
+  }
+  recruteurModel.modifyCand(id_candidature,state,function(err,result){
+    if(err){
+      console.error('Erreur de la requete', err);
+      return res.status(500).send('Erreur lors du traitement de votre demande.');
+    }else{
+      res.redirect('/recruteur/recruter')
+    }
+  })
+});
+
 router.get("/poster_offre", function (req, res, next) {
   const session = req.session;
 

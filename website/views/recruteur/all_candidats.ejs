@@ -71,7 +71,8 @@
                             <th class="offre_th"> Fichier 1</th>
                             <th class="offre_th"> Fichier 2</th>
                             <th class="offre_th"> Fichier 3</th>
-
+                            <th class="offre_th"> Accepter</th>
+                            <th class="offre_th"> Refuser</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +89,8 @@
                             <% for(var i = 0; i < 3-res.files.length; i++) { %>
                                 <td> Pas de fichier </td>
                             <% } %>
+                            <td><a href="/recruteur/candidature/<%= res.id_candidature %>/Approuvée">Valider</a></td>
+                            <td><a href="/recruteur/candidature/<%= res.id_candidature %>/Rejetée">Rejeter</a></td>
                         </tr>
                         <% }) %>
                     </tbody>
