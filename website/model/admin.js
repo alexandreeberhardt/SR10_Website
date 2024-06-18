@@ -53,9 +53,7 @@ module.exports = {
   },
 
   denyOrg: function (siret,callback) {
-    const query = `
-      UPDATE Organisation SET state = 'Rejetée' WHERE siret = ?
-    `;
+    const query = `UPDATE Organisation SET state = 'Rejetée' WHERE siret = ?`;
     db.query(query,siret, function(err, results) {
       if (err) throw err;
       callback(err,results);

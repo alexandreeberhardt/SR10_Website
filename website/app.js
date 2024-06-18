@@ -4,12 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const session = require('./utils/session');
-
 var cors=require('cors');
-
-
 require("dotenv").config();
-
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var recruteurRouter = require("./routes/recruteur");
@@ -17,14 +13,12 @@ var loginRouter = require("./routes/auth");
 var offerRouter = require("./routes/offre");
 var adminRouter = require("./routes/admin");
 var apiRouter = require('./routes/api');
-
 var app = express();
 app.use(session.init());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
-
-
-app.all("*", function (req, res, next) {
+app.all("*", function (req, res, next) { // paths protected
+  //vérifications
 
   const nonSecurePaths = [
     "/login/login/", "/login/register/", "/", "/404",
@@ -86,12 +80,10 @@ app.all("*", function (req, res, next) {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/recruteur", recruteurRouter);
@@ -99,7 +91,6 @@ app.use("/login",loginRouter);
 app.use("/offres",offerRouter);
 app.use("/admin",adminRouter);
 app.use("/api",apiRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

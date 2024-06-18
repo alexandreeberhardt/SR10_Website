@@ -15,24 +15,18 @@ module.exports = {
         session.user = user;
         session.usermail = mail;
         console.log(user);
-
         if(role == null){
             session.role = "candidat"
-        }else{
-            session.role = role;
-        }
+        }else{session.role = role;}
         session.save(function (err) {
             // console.log(err);
         });
-        
         return session;
     },
-
     isConnected: (session, role) => {
         if (!session.usermail) return false;
         return !(role && session.role !== role);
     },
-
     deleteSession: function (session) {
         session.destroy();
     },

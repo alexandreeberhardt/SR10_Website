@@ -104,7 +104,7 @@
                         <th class="offre_th">Action</th>
                     </tr>
                     <% result.forEach((res) => { %>
-                        <tr class="row-clickable" onclick="location.href='/recruteur/recruter/<%= res.id_offre %>'" style="cursor:pointer;">                            <td>
+                        <tr class="row-clickable">                            <td>
                                 <form method="post" action="/recruteur/modifyint">
                                     <input type="hidden" id="id_fp" name="id_fp" value="<%= res.id_fiche_poste %>">
                                     <input type="text" class="intitule-input" id="int" name="int" value="<%= res.intitule %>">
@@ -134,6 +134,7 @@
                             </td>
                             <td><%= res.statuts_poste %></td>
                             <td>
+                                <a href="/recruteur/recruter/<%= res.id_offre %>">Voir les candidats</a>
                                 <form method="post" action="/recruteur/disable_offer">
                                     <input type="hidden" name="id_offre" value="<%= res.id_offre %>">
                                     <input type="submit" value="Désactiver">

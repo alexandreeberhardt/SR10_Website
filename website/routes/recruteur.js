@@ -18,7 +18,6 @@ router.get("/account_recruteur", function (req, res, next) {``
   if (session.role != "Recruteur"){
       return res.status(403).send("Accès interdit.");
   }
-
   res.render("recruteur/account_recruteur", { title: "Account Recruteur",info:info });
 });
 
@@ -94,14 +93,7 @@ router.get("/candidatures", function (req, res, next) {
 /* GET organisation of user. */
 router.get("/quit_org", function (req, res, next) {
   const session = req.session;
-
-
-  if (session.role != "Recruteur"){
-    
-      return res.status(403).send("Accès interdit.");
-    
-  }
-
+  if (session.role != "Recruteur"){return res.status(403).send("Accès interdit.");}
   id = req.session.user.id_utilisateur;
   result = recruteurModel.getOrgForRecruteur(id, function (result) {
     res.render("recruteur/quit_org", { title: "Quitter une organisation", result: result });
