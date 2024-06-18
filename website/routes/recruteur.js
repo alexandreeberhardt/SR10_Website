@@ -3,11 +3,7 @@ var router = express.Router();
 var recruteurModel = require("../model/recruteur");
 var offreModel = require("../model/offer");
 var userModel = require("../model/user");
-const recruteur = require("../model/recruteur");
-const session = require('../utils/session.js');
-const { PassThrough } = require("nodemailer/lib/xoauth2/index.js");
 const fs = require('fs');
-const { doesNotMatch } = require("assert");
 
 
 router.get("/account_recruteur", function (req, res, next) {``
