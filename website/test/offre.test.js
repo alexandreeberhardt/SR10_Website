@@ -3,7 +3,7 @@ const offer = require("../model/offer.js");
 
 jest.mock("../model/db.js");
 
-describe("Offer Module", () => {
+describe("Offer Model", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -21,15 +21,16 @@ describe("Offer Module", () => {
       });
     });
 
-    it("should throw an error if query fails", () => {
+    it("should throw an error if query fails", (done) => {
       const mockError = new Error("Database error");
       db.query.mockImplementation((sql, params, callback) => {
         callback(mockError, null);
       });
 
-      expect(() => {
-        offer.read(1, () => {});
-      }).toThrow("Database error");
+      offer.read(1, (results) => {
+        expect(results).toBeNull();
+        done();
+      });
     });
   });
 
@@ -48,21 +49,22 @@ describe("Offer Module", () => {
       });
     });
 
-    it("should throw an error if query fails", () => {
+    it("should throw an error if query fails", (done) => {
       const mockError = new Error("Database error");
       db.query.mockImplementation((sql, params, callback) => {
         callback(mockError, null);
       });
 
-      expect(() => {
-        offer.readAll("Open", () => {});
-      }).toThrow("Database error");
+      offer.readAll("Open", (results) => {
+        expect(results).toBeNull();
+        done();
+      });
     });
   });
 
   describe("offreDetail", () => {
     it("should return detailed offer information for the given ID", (done) => {
-      const mockResults = [{ IdOffre: 1, Intitule_Poste: "Developer" }];
+      const mockResults = [{ id_offre: 1, intitule: "Developer" }];
       db.query.mockImplementation((sql, params, callback) => {
         callback(null, mockResults);
       });
@@ -81,7 +83,7 @@ describe("Offer Module", () => {
       });
 
       offer.offreDetail(1, (err, results) => {
-        expect(err).toBe(mockError);
+        expect(err).toEqual(mockError);
         expect(results).toBeNull();
         done();
       });
@@ -109,7 +111,7 @@ describe("Offer Module", () => {
       });
 
       offer.already(1, 1, (err, results) => {
-        expect(err).toBe(mockError);
+        expect(err).toEqual(mockError);
         expect(results).toBeNull();
         done();
       });
@@ -137,7 +139,91 @@ describe("Offer Module", () => {
       });
 
       offer.postule(1, 1, (err, results) => {
-        expect(err).toBe(mockError);
+        expect(err).toEqual(mockError);
+        expect(results).toBeNull();
+        done();
+      });
+    });
+  });
+
+  describe("enterFile", () => {
+    it("should insert a file path for the given candidature", (done) => {
+      const mockResults = { insertId: 1 };
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(null, mockResults);
+      });
+
+      offer.enterFile('path/to/file', 'CV', 1, (err, results) => {
+        expect(err).toBeNull();
+        expect(results).toEqual(mockResults);
+        done();
+      });
+    });
+
+    it("should return an error if query fails", (done) => {
+      const mockError = new Error("Database error");
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(mockError, null);
+      });
+
+      offer.enterFile('path/to/file', 'CV', 1, (err, results) => {
+        expect(err).toEqual(mockError);
+        expect(results).toBeNull();
+        done();
+      });
+    });
+  });
+
+  describe("getCandId", () => {
+    it("should return candidature ID for the given user and offer ID", (done) => {
+      const mockResults = [{ id_candidature: 1 }];
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(null, mockResults);
+      });
+
+      offer.getCandId(1, 1, (err, results) => {
+        expect(err).toBeNull();
+        expect(results).toEqual(mockResults);
+        done();
+      });
+    });
+
+    it("should return an error if query fails", (done) => {
+      const mockError = new Error("Database error");
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(mockError, null);
+      });
+
+      offer.getCandId(1, 1, (err, results) => {
+        expect(err).toEqual(mockError);
+        expect(results).toBeNull();
+        done();
+      });
+    });
+  });
+
+  describe("getFile", () => {
+    it("should return file details for the given candidature ID", (done) => {
+      const mockResults = [{ id: 1, path: 'path/to/file' }];
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(null, mockResults);
+      });
+
+      offer.getFile(1, (err, results) => {
+        expect(err).toBeNull();
+        expect(results).toEqual(mockResults);
+        done();
+      });
+    });
+
+    it("should return an error if query fails", (done) => {
+      const mockError = new Error("Database error");
+      db.query.mockImplementation((sql, params, callback) => {
+        callback(mockError, null);
+      });
+
+      offer.getFile(1, (err, results) => {
+        expect(err).toEqual(mockError);
         expect(results).toBeNull();
         done();
       });
@@ -176,7 +262,7 @@ describe("Offer Module", () => {
       });
 
       offer.areValid("test@example.com", "password", (err, result) => {
-        expect(err).toBe(mockError);
+        expect(err).toEqual(mockError);
         expect(result).toBeUndefined();
         done();
       });
