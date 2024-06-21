@@ -1,24 +1,21 @@
-# sr10
+# Projet site-web UV SR10 
 
-## Project setup
-```
-npm install
-```
+## Organisation du répertoire :
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- Le dossier `maquette` regroupe les schémas du site et les maquettes.
+- Le dossier `structure` regroupe la structure du projet au niveau `SQL`, `MLD` et `UML`.
+- Le dossier `template` contient nos pages html de départ.
+- Le dossier `website`contient notre application construite en suivant le modèle MVC.
+- Le dossier `vue-js.d` contient le test de requete API REST fait en TD.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## How to run 
+> Note : l'application utilise un .env, pour lancer l'application vous aurez besoin de rentrer vos propres données à l'intérieur
+> N'oubliez pas d'utiliser les scripts SQL pour remplir la base de donnée avec des données de test si besoin
+- clone le repo
+- `cd website` && `npm install` 
+- `npm start`
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+> Credits: `leopold.chappuis@etu.utc.fr` `alexandre.eberhardt@etu.utc.fr`

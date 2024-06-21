@@ -5,7 +5,6 @@ var adminModel = require("../model/admin");
 
 const session = require('../utils/session.js');
 
-/* GET users listing. */
 
 router.post('/makeadmin', function (req, res, next) {
     const session = req.session;
@@ -17,7 +16,6 @@ router.post('/makeadmin', function (req, res, next) {
     const id = session.user.id_utilisateur
     userModel.makeAdmin(id, req.body.reason, function (err, email) {
         if(err){
-            // gérer l'erreur; afficher un mesage d'erreur ? 
             res.redirect('/users/account');
         }
         else if (email) {
@@ -119,29 +117,6 @@ router.get('/users', function (req, res) {
         }
         return;
     }
-
-/*
-data = []
-    for(let i=0;i<result.length;i++){
-        let element = result[i]
-        let mail = element.email;
-        let role = element.state_user;
-
-        
-        if(role === 'Approuvée'){
-            if(!isIn(data,mail)){
-                data.push(element)
-            }else{
-                let compared = getFromArray(data,mail)
-                if(compared.state_user === 'Recruteur' && element.state_user === 'Administrateur'){
-                    data.compared.state_user = element.state_user;
-                }
-            }
-        }else if(!isIn(data,mail)){
-            // Si c'est pas dedans on doit vérifier 
-        }
-        console.log(element.state_user)
-        }*/
 
         res.render('admin/users', 
         { 

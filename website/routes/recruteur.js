@@ -109,7 +109,6 @@ router.post('/quit_org', function (req, res, next) {
       if(result){
         res.redirect("/recruteur/account_recruteur")
       }else{
-        // afficher un message d'erreur ?
         res.render('/recruteur/account_recruteur', {title: 'Quittez une organisation', error: 'Une erreur est survenue lors de l opération.'});
       }
     });
@@ -126,7 +125,6 @@ router.post('/disable_offer', function (req, res) {
       if(err){
         console.log("erreur disable offer")
       }
-      // afficher un message d'erreur ?
       res.redirect('/recruteur/recruter')
     });
 });
